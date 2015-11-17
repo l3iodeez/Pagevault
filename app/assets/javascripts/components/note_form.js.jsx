@@ -10,7 +10,7 @@ var NoteForm = React.createClass({
       id: id,
       title: title,
       body: body,
-      is_archived: is_archived
+      is_archived: is_archived,
     };
   },
   componentWillReceiveProps: function (newProps) {
@@ -33,8 +33,8 @@ var NoteForm = React.createClass({
       ApiUtil.editNote(note);
     } else {
       ApiUtil.createNote({
-        title: title,
-        body: body,
+        title: this.state.title,
+        body: this.state.body,
       });
     }
     this.setState({
@@ -58,9 +58,24 @@ var NoteForm = React.createClass({
       body: "",
       is_archived: ""
     });
+    this.props.setSelected(null);
   },
-
+  titlePlaceholder: function () {
+    if (this.state.title === "" ) {
+      return "Enter a title...";
+    } else {
+      return "";
+    }
+  },
+  bodyPlaceholder: function () {
+    if (this.state.body === "" ) {
+      return "Enter body text...";
+    } else {
+      return "";
+    }
+  },
   render: function() {
+    
     return (
       <form className="note-form" onSubmit={this.handleSubmit}>
         <button>Save note</button>
@@ -68,12 +83,12 @@ var NoteForm = React.createClass({
         <br />
         <label>Note Title
           <br />
-          <input type="text" name="title" valueLink={this.linkState("title")} />
+          <input type="text" placeholder={this.titlePlaceholder()} name="title" valueLink={this.linkState("title")} />
         </label>
         <br />
         <label>
           <br />
-          <textarea name="body" value={this.state.body} onChange={this.updateAttribute.bind(this, "body")} ></textarea>
+          <textarea name="body" placeholder={this.bodyPlaceholder()} value={this.state.body} onChange={this.updateAttribute.bind(this, "body")} ></textarea>
         </label>
         <br />
 

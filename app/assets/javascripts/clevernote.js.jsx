@@ -17,7 +17,7 @@ $(document).on('ready', function () {
           <h1>Clevernote</h1>
           <div className="notes">
             <NotesIndex setSelected={this.setSelected} />
-            <NoteForm note={this.state.selectedNote} />
+            <NoteForm note={this.state.selectedNote} setSelected={this.setSelected} />
           </div>
         </div>
       );
