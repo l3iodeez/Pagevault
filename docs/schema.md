@@ -34,7 +34,7 @@ column name | data type | details
 id          | integer   | not null, primary key
 note_id     | integer   | not null
 user_id     | integer   | not null
-write_access| integer   | not null
+write_access| boolean   | not null
 
 ## tags
 column name | data type | details
@@ -54,6 +54,7 @@ tag_id      | integer   | not null, foreign key (references tags), indexed
 column name     | data type | details
 ----------------|-----------|-----------------------
 id              | integer   | not null, primary key
+email           | string    | not null, indexed, unique
 username        | string    | not null, indexed, unique
 password_digest | string    | not null
 session_token   | string    | not null, indexed, unique
