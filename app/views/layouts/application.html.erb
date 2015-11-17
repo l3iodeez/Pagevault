@@ -7,6 +7,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <% if logged_in? %>
+  <p>Logged in as: <%= current_user.username %>
+    <form action="/api/session" method="post">
+      <%= auth_token %>
+      <input type="hidden" name="_method" value="delete">
+      <input type="submit" value="Logout">
+    </form> </p>
+  <% end %>
+
+  <% flash.now[:errors] && flash.now[:errors].each do |error| %>
+    <p><%= error %></p>
+  <% end %>
 
 <%= yield %>
 

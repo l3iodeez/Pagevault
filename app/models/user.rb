@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
-  validates: :email, :username, :session_token, presence: true
-  validates: :password, length: { minimum: 8, allow_nil: true }
+  validates :email, :username, :session_token, presence: true
+  validates :password, length: { minimum: 8, allow_nil: true }
+  after_initialize :ensure_session_token
+
 
   def self.find_by_credentials(username, password)
     user = User.find_by_username(username)
@@ -16,7 +18,7 @@ class User < ActiveRecord::Base
 
   def password=(input_password)
     @password = input_password
-    this.password_digest = BCrypt.create(input_password)
+    self.password_digest = BCrypt::Password.create(input_password)
   end
 
   def is_password?(input_password)

@@ -1,16 +1,17 @@
 class Api::UsersController < ApplicationController
 
   before_action :set_user, only: [:update, :destroy]
-  before_action :verify_logged_in, except: [:create]
-  before_action :verify_logged_out, only: [:create]
+  before_action :verify_logged_in, except: [:new, :create]
+  before_action :verify_logged_out, only: [:new, :create]
 
   def create
     @user = User.new(user_params)
+    byebug
     if @user.save
       login!(@user)
-      redirect_to user_url(@user)
+      render json: @user
     else
-      render :new, status: :unprocessable_entity
+      render json: 422, status: :unprocessable_entity
     end
   end
 
@@ -21,24 +22,25 @@ class Api::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to user_url(@user)
+      render json: @user
     else
-      render :edit, status: :unprocessable_entity
+      render json: 422, status: :unprocessable_entity
     end
   end
 
   def destroy
     @user.destroy
-    redirect_to root_url
+    render json: @user
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:username, :password)
+    params.require(:user).permit(:username, :password, :email)
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = current_user
+    # @user = User.find(params[:id])
   end
 end

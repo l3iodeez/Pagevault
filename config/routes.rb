@@ -3,8 +3,11 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'user#show'
-
+   root 'static_pages#root'
+   namespace :api do
+     resources :users, only: [:new, :create, :destroy]
+     resource :session, only: [:new, :create, :destroy]
+   end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

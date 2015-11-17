@@ -1,4 +1,4 @@
-class Api::SessionController < ApplicationController
+class Api::SessionsController < ApplicationController
 
   before_action :verify_logged_in, only: [:destroy]
   before_action :verify_logged_out, only: [:new, :create]
@@ -16,7 +16,7 @@ class Api::SessionController < ApplicationController
 
     if user
       login!(user)
-      redirect_to user_url(user)
+      redirect_to root_url
     else
       @user = User.new(username: params[:user][:username])
       add_to_flash("Invalid username or password", :errors, true)
@@ -28,6 +28,6 @@ class Api::SessionController < ApplicationController
   def destroy
       logout!
       add_to_flash("You have been logged out.", :errors)
-      redirect_to new_session_url
+      redirect_to new_api_session_url
   end
 end
