@@ -6,7 +6,7 @@ column name | data type | details
 id          | integer   | not null, primary key
 title       | string    | not null
 body        | text      | not null
-author_id   | integer   | not null, foreign key (references users), indexed
+user_id     | integer   | not null, foreign key (references users), indexed
 notebook_id | integer   | not null, foreign key (references notebooks), indexed
 archived    | boolean   | not null, default: false
 
@@ -14,7 +14,7 @@ archived    | boolean   | not null, default: false
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
-author_id   | integer   | not null, foreign key (references users), indexed
+user_id     | integer   | not null, foreign key (references users), indexed
 title       | string    | not null
 description | string    |
 

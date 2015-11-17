@@ -1,4 +1,24 @@
 Rails.application.routes.draw do
+  namespace :api do
+  get 'notes/index'
+  end
+
+  namespace :api do
+  get 'notes/show'
+  end
+
+  namespace :api do
+  get 'notes/create'
+  end
+
+  namespace :api do
+  get 'notes/update'
+  end
+
+  namespace :api do
+  get 'notes/destroy'
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -7,6 +27,7 @@ Rails.application.routes.draw do
    namespace :api do
      resources :users, only: [:new, :create, :destroy]
      resource :session, only: [:new, :create, :destroy]
+     resources :notes
    end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
