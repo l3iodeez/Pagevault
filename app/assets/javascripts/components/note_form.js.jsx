@@ -23,6 +23,9 @@ var NoteForm = React.createClass({
   },
   handleSubmit: function (e) {
     e.preventDefault();
+    if (this.state.title.length === 0 || this.state.body.length === 0 ) {
+      return;
+    }
     if (this.props.note) {
       var note = {
         id: this.props.note.id,
@@ -75,7 +78,7 @@ var NoteForm = React.createClass({
     }
   },
   render: function() {
-    
+
     return (
       <form className="note-form" onSubmit={this.handleSubmit}>
         <button>Save note</button>

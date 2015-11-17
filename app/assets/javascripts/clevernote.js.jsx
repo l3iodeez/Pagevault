@@ -13,11 +13,15 @@ $(document).on('ready', function () {
     },
     render: function () {
       return(
-        <div>
-          <h1>Clevernote</h1>
-          <div className="notes">
-            <NotesIndex setSelected={this.setSelected} />
-            <NoteForm note={this.state.selectedNote} setSelected={this.setSelected} />
+        <div className="app-container group">
+          <div className="sidebar" />
+          <div className="main-view">
+
+            <h1>Clevernote</h1>
+            <div className="notes">
+              <NotesIndex setSelected={this.setSelected} />
+              <NoteForm note={this.state.selectedNote} setSelected={this.setSelected} />
+            </div>
           </div>
         </div>
       );

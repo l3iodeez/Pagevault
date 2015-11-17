@@ -1,0 +1,11 @@
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background-color: red;
+}
+.main-view, .status-bar {
+  margin-left: 60px;
+}
