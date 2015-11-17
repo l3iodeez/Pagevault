@@ -5,8 +5,8 @@
 CleverNote is a web application inspired by Evernote built using Ruby on Rails
 and React.js. CleverNote allows users to:
 
-- [ ] Create an account
-- [ ] Log in / Log out
+- [X] Create an account
+- [X] Log in / Log out
 - [ ] Create, read, edit, and delete notes
 - [ ] Organize notes within Notebooks
 - [ ] Tag notes with multiple tags and search notes by tag
