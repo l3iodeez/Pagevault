@@ -29,6 +29,7 @@ gem 'faker'
 gem 'bcrypt'
 # Use Puma as the web server
 gem 'puma'
+gem 'rails_12factor'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
