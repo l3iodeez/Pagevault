@@ -27,7 +27,8 @@ and React.js. CleverNote allows users to:
 
 In Phase 1, I will begin by implementing user registration and authentication (using
 BCrypt). Next I will build out the JSON API for the Notes model. Last I will create
-a simple landing page with a container for the app's root React component.
+a simple landing page with a container for the app's root React component and do some
+basic styling.
 
 [Details][phase-one]
 
@@ -71,7 +72,7 @@ access. Other users can be searched by username or email.
 
 ### Phase 6: Styling Cleanup and Seeding (1 day)
 
-In Phase 6 I will overhaul the styling from top to bottom. I will create seed
+In Phase 6 I will go through and revamp the styling from top to bottom. I will create seed
 data. I will also convert some of my React views to modal overlay forms.
 
 ### Bonus Features (TBD)

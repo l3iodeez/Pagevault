@@ -8,7 +8,7 @@ title       | string    | not null
 body        | text      | not null
 user_id     | integer   | not null, foreign key (references users), indexed
 notebook_id | integer   | not null, foreign key (references notebooks), indexed
-archived    | boolean   | not null, default: false
+is_archived | boolean   | not null, default: false
 
 ## notebooks
 column name | data type | details
@@ -34,7 +34,7 @@ column name | data type | details
 id          | integer   | not null, primary key
 note_id     | integer   | not null
 user_id     | integer   | not null
-write_access| boolean   | not null
+is_writable | boolean   | not null
 
 ## tags
 column name | data type | details
