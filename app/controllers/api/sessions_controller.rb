@@ -10,7 +10,7 @@ class Api::SessionsController < ApplicationController
 
   def create
     user = User.find_by_credentials(
-      params[:user][:username],
+      params[:user][:email],
       params[:user][:password]
     )
 
@@ -18,8 +18,8 @@ class Api::SessionsController < ApplicationController
       login!(user)
       redirect_to root_url
     else
-      @user = User.new(username: params[:user][:username])
-      add_to_flash("Invalid username or password", :errors, true)
+      @user = User.new(email: params[:user][:email])
+      add_to_flash("Invalid email or password", :errors, true)
       render :new
     end
   end

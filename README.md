@@ -61,7 +61,7 @@ image uploads.
 
 [Details][phase-four]
 
-### Phase 5: Reminders and Garbage Collection (1 day)
+### Phase 5: Sharing (1 day)
 
 In Phase 5 I will add the ability to share Notes and Notebooks with other users.
 Notes and Notebooks that are shared can be shared with read only or read/write

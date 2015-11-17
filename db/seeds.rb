@@ -5,11 +5,32 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+lorem = <<-TEXT
+Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna
+aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit
+esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+occaecat cupidatat non proident, sunt in culpa qui officia
+deserunt mollit anim id est laborum."
+TEXT
 10.times do |i|
-  user = {
+  user_data = {
     email: Faker::Internet.email,
-    username: Faker::Internet.user_name,
+    name: Faker::Internet.user_name,
     password: "password",
   }
-  User.create!(user)
+  user = User.create!(user_data)
+  5.times do |j|
+    note_data = {
+      title: "#{user.name}'s Note Number #{j+1}'",
+      body: lorem,
+      is_archived: false
+    }
+    user.notes.create!(note_data)
+  end
+
+
 end

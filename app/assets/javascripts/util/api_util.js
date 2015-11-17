@@ -1,16 +1,26 @@
 (function(root) {
   'use strict';
   var ApiUtil = root.ApiUtil = {
-    signIn: function (username, password) {
+    fetchNotes: function () {
       $.ajax({
-        url: '/api/benches',
+        url: '/api/notes',
+        method: 'GET',
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function (data) {
+          ApiActions.receiveAllNotes(data);
+        }
+      });
+    },
+    createNote: function (note) {
+      $.ajax({
+        url: '/api/notes',
         method: 'POST',
         dataType: 'json',
         contentType: 'application/json',
-        data: JSON.stringify({username: username, password: password}),
+        data: JSON.stringify({note: note}),
         success: function (data) {
-          debugger
-          ApiActions.receiveSingle(data);
+          ApiActions.receiveSingleNote(data);
         }
       });
     }

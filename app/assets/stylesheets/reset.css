@@ -1,0 +1,23 @@
+html, body, ul, li, div {
+  margin: 0;
+  padding: 0;
+  border: 0;
+
+  color: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+  font: inherit;
+
+  background: transparent;
+}
+body {
+  font-family: "Futura" sans-serif;
+}
+li, ul {
+  list-style: none;
+}
+.group:after{
+  content: "";
+  display: block;
+  clear: both;
+}
