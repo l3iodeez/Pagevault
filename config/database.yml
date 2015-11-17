@@ -80,6 +80,7 @@ test:
 #
 production:
   <<: *default
-  database: Clevernote_production
-  username: Clevernote
-  password: <%= ENV['CLEVERNOTE_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+  # database: Clevernote_production
+  # username: <%= ENV['CLEVERNOTE_DATABASE_USER'] %>
+  # password: <%= ENV['CLEVERNOTE_DATABASE_PASSWORD'] %>
