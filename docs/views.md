@@ -9,11 +9,15 @@
 ## NotesIndex / NoteIndexItem / NoteForm
 ![notes]
 
+## ShareNoteForm
+![share-note-form]
+
 ## NotebooksIndex / NotebookIndexItem
 ![notebooks]
 
 ## NoteBookForm
 ![notebook-form]
+
 
 ## Component Heirarchy
 ![component-heirarchy]
@@ -24,3 +28,4 @@
 [notebooks]: ./wireframes/root_notebooks.png
 [notebook-form]: ./wireframes/notebook_form.png
 [component-heirarchy]: ./wireframes/component_heirarchy.png
+[share-note-form]: ./wireframes/share_note.png
