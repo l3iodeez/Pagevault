@@ -25,10 +25,9 @@
       return foundNote;
     },
 
+
     storeNote: function (recvdNote) {
-      var storedNote = _notes.find(function (note) {
-        return note.id === recvdNote.id;
-      });
+      var storedNote = NoteStore.getByID(recvdNote.id);
       if (storedNote) {
         var idx = _notes.indexOf(storedNote);
         _notes[idx] = recvdNote;
@@ -36,8 +35,15 @@
         _notes.push(recvdNote);
       }
       NoteStore._notesChanged();
-
     },
+
+    deleteNote: function (note) {
+      var storedNote = NoteStore.getByID(note.id);
+      var idx = _notes.indexOf(storedNote);
+      _notes.splice(idx, 1);
+      NoteStore._notesChanged();
+    },
+    
     resetNotes: function (notes) {
       _notes = notes;
       NoteStore._notesChanged();
@@ -52,6 +58,8 @@
         NoteStore.resetNotes(payload.notes);
       } else if (payload.actionType === NoteConstants.NOTE_RECEIVED) {
         NoteStore.storeNote(payload.note);
+      } else if (payload.actionType === NoteConstants.NOTE_DELETED) {
+        NoteStore.deleteNote(payload.note);
       }
     }),
 

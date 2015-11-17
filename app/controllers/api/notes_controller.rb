@@ -3,26 +3,31 @@ class Api::NotesController < ApplicationController
 
 
   def index
-    @notes = Note.all
-    render json: @notes
+    @notes = current_user.notes
+    render :index
   end
 
   def show
-    render json: @note
+    if @note.user_id == current_user.id
+      render :show
+    else
+      render json: 403, status: :forbidden
+    end
   end
 
   def create
     @note = Note.new(note_params)
+    @note.user_id = current_user.id
     if @note.save
-      render json: @note
+      render :show
     else
       render json: 422, status: :unprocessable_entity
     end
   end
 
   def update
-    if @user.update(user_params)
-      render json: @user
+    if @note.update(note_params)
+      render :show
     else
       render json: 422, status: :unprocessable_entity
     end
@@ -30,8 +35,9 @@ class Api::NotesController < ApplicationController
 
   def destroy
     @note.destroy
-    render json: @note
+    render :show
   end
+
   private
 
   def note_params

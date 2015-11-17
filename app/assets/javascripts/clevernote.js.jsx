@@ -3,14 +3,22 @@ $(document).on('ready', function () {
   var Route =  ReactRouter.Route;
   var IndexRoute = ReactRouter.IndexRoute;
   var root = document.getElementById('root');
+
   var App = React.createClass({
+    getInitialState: function () {
+      return { selectedNote: null };
+    },
+    setSelected: function (note) {
+      this.setState({selectedNote: note});
+    },
     render: function () {
       return(
         <div>
-
-                <h1>Clevernote</h1>
-
-            <NotesIndex />
+          <h1>Clevernote</h1>
+          <div className="notes">
+            <NotesIndex setSelected={this.setSelected} />
+            <NoteForm note={this.state.selectedNote} />
+          </div>
         </div>
       );
     }

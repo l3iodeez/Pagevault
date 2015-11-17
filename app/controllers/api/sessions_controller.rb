@@ -20,7 +20,7 @@ class Api::SessionsController < ApplicationController
     else
       @user = User.new(email: params[:user][:email])
       add_to_flash("Invalid email or password", :errors, true)
-      render :new
+      redirect_to new_api_session_url
     end
   end
 

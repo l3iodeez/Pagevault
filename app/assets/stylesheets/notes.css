@@ -1,0 +1,33 @@
+.notes {
+}
+.note-index {
+  display: block;
+  float: left;
+  width: 20%;
+  border: 2px solid red;
+  background-color: lightgreen;
+
+}
+
+.note-index-item {
+  padding: 5px;
+  border: 2px solid black;
+}
+
+.note-form {
+  display: block;
+  float: left;
+  width: 75%;
+  display: block;
+  padding-left: 10px;
+}
+.note-form input, textarea {
+  width: 80%;
+}
+.note-form input{
+  font-size: 36px;
+}
+.note-form textarea {
+  font-size: 16px;
+  height: 100%;
+}

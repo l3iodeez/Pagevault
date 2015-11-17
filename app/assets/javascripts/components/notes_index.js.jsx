@@ -9,24 +9,24 @@ var NotesIndex = React.createClass({
   },
   componentDidMount: function () {
     NoteStore.addChangeListener(this.notesChanged);
-    ApiUtil.fetchNotes();
+    ApiUtil.fetchAllNotes();
   },
   componentWillUnmount: function () {
     NoteStore.removeChangeListener(this.notesChanged);
   },
+  handleClick: function (note) {
+
+    this.props.setSelected(note);
+  },
   render: function () {
     return(
-      <ul>
+      <ul className="note-index">
       { typeof this.state.notes === "undefined" ? null :
         this.state.notes.map(function (note) {
           return (
-            <ul>
-              <li>{note.title}</li>
-              <li>{note.body}</li>
-              <li>{note.is_archived}</li>
-            </ul>
+            <NotesIndexItem key={note.id} note={note} clickCallback={this.handleClick}/>
           );
-        })
+        }.bind(this))
       }
       </ul>
     );

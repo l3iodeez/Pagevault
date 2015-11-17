@@ -12,6 +12,12 @@
         actionType: NoteConstants.NOTE_RECEIVED,
         note: note
       });
+    },
+    deleteNote: function (note) {
+      AppDispatcher.dispatch({
+        actionType: NoteConstants.NOTE_DELETED,
+        note: note
+      });
     }
   };
 }(this));
