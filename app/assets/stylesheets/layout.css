@@ -1,11 +1,7 @@
 
-.sidebar {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 60px;
-  border-right: 1px solid lightgray;
-}
 .main-view, .status-bar {
   margin-left: 60px;
+}
+.main-view.fullscreen, .status-bar.fullscreen {
+  margin-left: 0px;
 }

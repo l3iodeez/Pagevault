@@ -20,6 +20,7 @@
 
     setNote: function (note) {
       _note = note;
+      this._noteChanged();
     },
 
     _noteChanged : function () {

@@ -23,7 +23,7 @@
         }
       });
     },
-    createNote: function (note) {
+    createNote: function (note, callback) {
       $.ajax({
         url: '/api/notes',
         method: 'POST',
@@ -32,10 +32,11 @@
         data: JSON.stringify({note: note}),
         success: function (data) {
           ApiActions.receiveSingleNote(data);
+          callback(data);
         }
       });
     },
-    editNote: function (note) {
+    editNote: function (note, callback) {
       var noteId = note.id;
       delete note.id;
       $.ajax({
@@ -46,6 +47,7 @@
         data: JSON.stringify({note: note}),
         success: function (data) {
           ApiActions.receiveSingleNote(data);
+          callback(data);
         }
       });
     },

@@ -1,0 +1,29 @@
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  border-right: 1px solid lightgray;
+  overflow: hidden;
+  -webkit-transition: left 0.25s ease-in-out;
+  -moz-transition: left 0.25s ease-in-out;
+  -o-transition: left 0.25s ease-in-out;
+  transition: left 0.25s ease-in-out;
+}
+.sidebar.hidden{
+  left: -60px;
+}
+.sidebar-item {
+  display: block;
+
+  margin: 20px 17px;
+  width: 26px;
+  height: 26px;
+
+}
+
+.sidebar-item.logo{
+  border: 1px solid black;
+}

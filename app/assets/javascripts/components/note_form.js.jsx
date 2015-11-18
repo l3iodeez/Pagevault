@@ -23,29 +23,35 @@ var NoteForm = React.createClass({
   },
   handleSubmit: function (e) {
     e.preventDefault();
-    if (this.state.title.length === 0 || this.state.body.length === 0 ) {
+    if (this.state.title.length === 0 && this.state.body.length === 0 ) {
       return;
     }
+    var note;
     if (this.props.note) {
-      var note = {
+      note = {
         id: this.props.note.id,
         title: this.state.title,
         body: this.state.body,
         is_archived: this.state.is_archived
       };
-      ApiUtil.editNote(note);
+      ApiUtil.editNote(note, function (data) {
+        var note = NoteStore.getByID(data.id);
+        SelectedStore.setNote(note);
+      });
+      this.setState(note);
     } else {
-      ApiUtil.createNote({
+      note = {
         title: this.state.title,
         body: this.state.body,
+      };
+      ApiUtil.createNote(note, function (data) {
+        var note = NoteStore.getByID(data.id);
+        SelectedStore.setNote(note);
       });
     }
-    this.setState({
-      id: "",
-      title: "",
-      body: "",
-      is_archived: ""
-    });
+    if (this.props.fullWidth) {
+      this.props.toggleIndex();
+    }
   },
 
   updateAttribute: function(attr, e) {
@@ -63,36 +69,37 @@ var NoteForm = React.createClass({
     });
     this.props.setSelected(null);
   },
-  titlePlaceholder: function () {
-    if (this.state.title === "" ) {
-      return "Enter a title...";
-    } else {
-      return "";
-    }
-  },
-  bodyPlaceholder: function () {
-    if (this.state.body === "" ) {
-      return "Enter body text...";
-    } else {
-      return "";
-    }
+  cancel: function () {
+    this.props.toggleIndex();
   },
   render: function() {
-
+    var formClass = "note-form ";
+    var cancelButtonClass = "cancel-button";
+    if (this.props.fullWidth) {
+      formClass += "new";
+    } else {
+      formClass += "edit";
+      cancelButtonClass += " hidden";
+    }
     return (
-      <form className="note-form" onSubmit={this.handleSubmit}>
+      <form className={formClass} onSubmit={this.handleSubmit}>
         <button>Save note</button>
         <button onClick={this.newNote}>New note</button>
+        <button className={cancelButtonClass} onClick={this.cancel}>Cancel</button>
         <br />
-        <label>Note Title
+        <label htmlFor="noteTitle">Note Title</label>
           <br />
-          <input type="text" placeholder={this.titlePlaceholder()} name="title" valueLink={this.linkState("title")} />
-        </label>
+          <input id="noteTitle" type="text" placeholder={"Title your note"} name="title" valueLink={this.linkState("title")} />
         <br />
-        <label>
+        <label htmlFor="noteBody">Note Body</label>
           <br />
-          <textarea name="body" placeholder={this.bodyPlaceholder()} value={this.state.body} onChange={this.updateAttribute.bind(this, "body")} ></textarea>
-        </label>
+          <textarea
+            id="noteBody"
+            name="body"
+            placeholder={"Drag files here or just start typing..."}
+            value={this.state.body}
+            onChange={this.updateAttribute.bind(this, "body")}
+          />
         <br />
 
       </form>

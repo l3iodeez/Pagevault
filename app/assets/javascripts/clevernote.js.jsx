@@ -6,22 +6,27 @@ $(document).on('ready', function () {
 
   var App = React.createClass({
     getInitialState: function () {
-      return { selectedNote: null };
+      return { selectedNote: null, showIndex: true };
+    },
+    toggleIndex: function () {
+      this.setState({showIndex: !this.state.showIndex});
+      if (!this.state.showIndex) {
+        SelectedActions.setSelected(NoteStore.getFirst());
+      }
     },
     setSelected: function (note) {
       this.setState({selectedNote: note});
     },
     render: function () {
+      var mainViewClass = "main-view";
+      if (!this.state.showIndex) {
+        mainViewClass += " fullscreen";
+      }
       return(
         <div className="app-container group">
-          <Sidebar />
-          <div className="main-view">
-
-            <h1>Clevernote</h1>
-            <div className="notes">
-              <NotesIndex setSelected={this.setSelected} />
-              <NoteForm note={this.state.selectedNote} setSelected={this.setSelected} />
-            </div>
+          <Sidebar showIndex={this.state.showIndex} toggleIndex={this.toggleIndex} />
+          <div className={mainViewClass}>
+            <MainContainer showIndex={this.state.showIndex} toggleIndex={this.toggleIndex} />
           </div>
         </div>
       );

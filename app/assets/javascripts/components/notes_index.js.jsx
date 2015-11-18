@@ -14,17 +14,17 @@ var NotesIndex = React.createClass({
   componentWillUnmount: function () {
     NoteStore.removeChangeListener(this.notesChanged);
   },
-  handleClick: function (note) {
-
-    this.props.setSelected(note);
-  },
   render: function () {
+    var indexClass = "note-index";
+    if (!this.props.show) {
+      indexClass +=" hidden";
+    }
     return(
-      <ul className="note-index">
+      <ul className={indexClass}>
       { typeof this.state.notes === "undefined" ? null :
         this.state.notes.map(function (note) {
           return (
-            <NotesIndexItem key={note.id} note={note} clickCallback={this.handleClick}/>
+            <NotesIndexItem key={note.id} note={note} />
           );
         }.bind(this))
       }

@@ -2,6 +2,7 @@ html, body, ul, li, div {
   margin: 0;
   padding: 0;
   border: 0;
+  outline: 0;
 
   color: inherit;
   text-align: inherit;
@@ -21,4 +22,11 @@ li, ul {
   content: "";
   display: block;
   clear: both;
+}
+input:focus {
+  outline: 0;
+
+}
+textarea:focus {
+  outline: 0;
 }

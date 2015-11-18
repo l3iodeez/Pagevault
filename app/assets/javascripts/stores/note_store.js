@@ -25,6 +25,9 @@
       return foundNote;
     },
 
+    getFirst: function () {
+      return _notes[0];
+    },
 
     storeNote: function (recvdNote) {
       var storedNote = NoteStore.getByID(recvdNote.id);
@@ -43,7 +46,7 @@
       _notes.splice(idx, 1);
       NoteStore._notesChanged();
     },
-    
+
     resetNotes: function (notes) {
       _notes = notes;
       NoteStore._notesChanged();

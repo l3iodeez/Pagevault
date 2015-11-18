@@ -4,9 +4,20 @@
   display: inline-block;
   float: left;
   width: 335px;
-  /*background-color: lightgreen;*/
   border-right: 1px solid lightgray;
+  -webkit-transition: width 0.25s ease-in-out;
+  -moz-transition: width 0.25s ease-in-out;
+  -o-transition: width 0.25s ease-in-out;
+  transition: width 0.25s ease-in-out;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 100%;
 }
+.note-index.hidden{
+
+  width: 0px;
+}
+
 .note-index ul:first-child {
   border-top: 1px solid lightgray;
 }
@@ -62,17 +73,39 @@
 .note-form {
   display: block;
   float: left;
-  width: 75%;
   display: block;
   padding-left: 10px;
+  -webkit-transition: width 0.25s ease-in-out;
+  -moz-transition: width 0.25s ease-in-out;
+  -o-transition: width 0.25s ease-in-out;
+  transition: width 0.25s ease-in-out;
+}
+.note-form .hidden{
+  display: none;
+}
+
+.note-form.edit {
+    width: 75%;
+}
+.note-form.new {
+    width: 99%;
+    text-align: center;
 }
 .note-form input, textarea {
-  width: 80%;
+  width: 60%;
 }
 .note-form input{
   font-size: 36px;
+  color: rgb(45, 190, 96);
+  font-weight: 100;
+  border: none;
+  border-bottom: 1px solid lightgray;
+}
+.note-form > label {
+  display: none;
 }
 .note-form textarea {
   font-size: 16px;
   height: 200px;
+  border: none;
 }

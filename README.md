@@ -57,7 +57,7 @@ of Notes by tag and text. Once this is done, I will implement fuzzy search.
 
 ### Phase 4: Allow Complex Styling in Notes and Image uploading (2 days)
 
-Using quill.js, allow for complex styling of notes. Using paperclip and S3, allow
+Using tinymce, allow for complex styling of notes. Using paperclip and S3, allow
 for image uploads, and embedding of images in note text.
 
 [Details][phase-four]

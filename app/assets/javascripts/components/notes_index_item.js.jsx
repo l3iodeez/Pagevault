@@ -1,6 +1,7 @@
 var NotesIndexItem = React.createClass({
   handleClick: function (e) {
-    this.props.clickCallback(this.props.note);
+    e.preventDefault();
+    SelectedActions.setSelected(this.props.note);
   },
   render: function() {
     var modifiedDate = Helpers.formatDate(new Date(this.props.note.updated_at));

@@ -15,5 +15,5 @@
 ### Actions
 
 ## Gems/Libraries
-* Quill.js
+* tinymce
 * paperclip
