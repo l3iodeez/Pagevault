@@ -33,10 +33,9 @@
       var storedNote = NoteStore.getByID(recvdNote.id);
       if (storedNote) {
         var idx = _notes.indexOf(storedNote);
-        _notes[idx] = recvdNote;
-      } else {
-        _notes.push(recvdNote);
+        _notes.splice(idx, 1);
       }
+      _notes.unshift(recvdNote);
       NoteStore._notesChanged();
     },
 

@@ -26,8 +26,11 @@ var NoteForm = React.createClass({
     if (this.state.title.length === 0 && this.state.body.length === 0 ) {
       return;
     }
+
     var note;
+
     if (this.props.note) {
+
       note = {
         id: this.props.note.id,
         title: this.state.title,
@@ -39,7 +42,9 @@ var NoteForm = React.createClass({
         SelectedStore.setNote(note);
       });
       this.setState(note);
+
     } else {
+
       note = {
         title: this.state.title,
         body: this.state.body,
@@ -48,6 +53,7 @@ var NoteForm = React.createClass({
         var note = NoteStore.getByID(data.id);
         SelectedStore.setNote(note);
       });
+
     }
     if (this.props.fullWidth) {
       this.props.toggleIndex();
@@ -57,6 +63,12 @@ var NoteForm = React.createClass({
   updateAttribute: function(attr, e) {
     this.state[attr] = e.currentTarget.value;
     this.forceUpdate();
+    // usage:
+    // this.updateAttribute.bind(this, "body")
+  },
+
+  updateBody: function(e) {
+    this.setState({body: e.currentTarget.value});
   },
 
   newNote: function (e) {
@@ -75,18 +87,28 @@ var NoteForm = React.createClass({
   render: function() {
     var formClass = "note-form ";
     var cancelButtonClass = "cancel-button";
+    var saveButtonClass = "save-button";
+
     if (this.props.fullWidth) {
       formClass += "new";
     } else {
       formClass += "edit";
+      saveButtonClass += " hidden";
       cancelButtonClass += " hidden";
     }
+    if (this.state.title.length === 0 && this.state.body.length === 0) {
+      saveButtonClass += " hidden";
+    } else {
+      cancelButtonClass += " hidden";
+
+    }
+
     return (
       <form className={formClass} onSubmit={this.handleSubmit}>
-        <button>Save note</button>
-        <button onClick={this.newNote}>New note</button>
-        <button className={cancelButtonClass} onClick={this.cancel}>Cancel</button>
-        <br />
+        <div className="button-container">
+          <button className={saveButtonClass}>Done</button>
+          <button className={cancelButtonClass} onClick={this.cancel}>Cancel</button>
+        </div>
         <label htmlFor="noteTitle">Note Title</label>
           <br />
           <input id="noteTitle" type="text" placeholder={"Title your note"} name="title" valueLink={this.linkState("title")} />
@@ -98,7 +120,7 @@ var NoteForm = React.createClass({
             name="body"
             placeholder={"Drag files here or just start typing..."}
             value={this.state.body}
-            onChange={this.updateAttribute.bind(this, "body")}
+            onChange={this.updateBody}
           />
         <br />
 

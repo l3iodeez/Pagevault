@@ -1,25 +1,55 @@
+html, body {
+  height: 100%;
+}
 .notes {
+  height: 100%;
 }
 .note-index {
-  display: inline-block;
+  position: absolute;
+  left: 60px;
   float: left;
   width: 335px;
   border-right: 1px solid lightgray;
-  -webkit-transition: width 0.25s ease-in-out;
-  -moz-transition: width 0.25s ease-in-out;
-  -o-transition: width 0.25s ease-in-out;
-  transition: width 0.25s ease-in-out;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
-}
-.note-index.hidden{
-
-  width: 0px;
-}
-
-.note-index ul:first-child {
   border-top: 1px solid lightgray;
+  -webkit-transition: left 0.25s ease-in-out;
+  -moz-transition: left 0.25s ease-in-out;
+  -o-transition: left 0.25s ease-in-out;
+  transition: left 0.25s ease-in-out;
+}
+
+.note-index-container {
+  position: absolute;
+  bottom: 0;
+  top: 121px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.note-index.hidden{
+  left: -400px;
+}
+
+.note-index-header {
+  height: 120px;
+  width: 335px;
+  border-bottom: 1px solid lightgray;
+  color: #878787;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 21px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.note-index-header p{
+  padding-left: 15px;
+  padding-top: 15px;
+}
+.note-index-header p:last-child {
+  font-size: 12px;
 }
 
 .note-index-item {
@@ -27,6 +57,7 @@
   height: 120px;
   width: 335px;
   border-bottom: 1px solid lightgray;
+  cursor: pointer;
 }
 .note-index-item ul {
   padding: 3px;
@@ -72,13 +103,30 @@
 
 .note-form {
   display: block;
-  float: left;
-  display: block;
-  padding-left: 10px;
+  position: absolute;
   -webkit-transition: width 0.25s ease-in-out;
   -moz-transition: width 0.25s ease-in-out;
   -o-transition: width 0.25s ease-in-out;
   transition: width 0.25s ease-in-out;
+}
+.note-form .button-container{
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px;
+}
+.note-form button {
+  font-size: 13px;
+  font-weight: 500;
+  height: 28px;
+  color: white;
+  outline: none;
+  border-color: rgb(45, 190, 96);
+  border-radius: 4px;
+  background-color: rgb(45, 190, 96);
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-right: 16px;
 }
 .note-form .hidden{
   display: none;
@@ -86,13 +134,17 @@
 
 .note-form.edit {
     width: 75%;
+    left: 425px;
+
 }
 .note-form.new {
     width: 99%;
     text-align: center;
 }
-.note-form input, textarea {
+.note-form input, .note-form textarea {
   width: 60%;
+  text-align: left;
+
 }
 .note-form input{
   font-size: 36px;

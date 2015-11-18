@@ -1,7 +1,16 @@
-
+body {
+  overflow: hidden;
+}
 .main-view, .status-bar {
   margin-left: 60px;
 }
 .main-view.fullscreen, .status-bar.fullscreen {
   margin-left: 0px;
+}
+
+.status-bar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 5;
 }
