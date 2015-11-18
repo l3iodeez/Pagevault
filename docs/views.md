@@ -18,6 +18,8 @@
 ## NoteBookForm
 ![notebook-form]
 
+## TagsIndex
+![tags]
 
 ## Component Heirarchy
 ![component-heirarchy]
@@ -29,3 +31,4 @@
 [notebook-form]: ./wireframes/notebook_form.png
 [component-heirarchy]: ./wireframes/component_heirarchy.png
 [share-note-form]: ./wireframes/share_note.png
+[tags]: ./wireframes/tags_index.png

@@ -35,7 +35,6 @@
 * ApiUtil.createNotebook
 * ApiUtil.editNotebook
 * ApiUtil.destroyNotebook
-* ApiUtil.tagNote
-* ApiUtil.untagNote
+
 
 ## Gems/Libraries

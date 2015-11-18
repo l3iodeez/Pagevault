@@ -40,7 +40,7 @@ data, and the requisite action to implement CRUD functionality via the JSON API.
 Lastly I will create React components for the `NoteIndex`, `NoteIndexItem` and
 `NoteForm` objects. When this phase is over Notes can be created edited and deleted
 in the browser, and will be persisted to the database when the editor is left
-idle.
+idle. I will also style for structure and visibility.
 
 [Details][phase-two]
 
@@ -57,8 +57,8 @@ of Notes by tag and text. Once this is done, I will implement fuzzy search.
 
 ### Phase 4: Allow Complex Styling in Notes and Image uploading (2 days)
 
-Using quill.js, allow for complex styling of notes. Using paperclip, allow for
-image uploads.
+Using quill.js, allow for complex styling of notes. Using paperclip and S3, allow
+for image uploads, and embedding of images in note text.
 
 [Details][phase-four]
 
@@ -72,13 +72,14 @@ access. Other users can be searched by username or email.
 
 ### Phase 6: Styling Cleanup and Seeding (1 day)
 
-In Phase 6 I will go through and revamp the styling from top to bottom. I will create seed
-data. I will also convert some of my React views to modal overlay forms.
+In Phase 6 I will go through and revamp the styling from top to bottom. I will
+create seed data. I will also convert some of my React views to modal overlay
+forms.
 
 ### Bonus Features (TBD)
 - [ ] Prettify transitions
 - [ ] Simultaneous Editing
-- [ ] Use javascript library for cleaner tag selection
+- [ ] Reminders
 - [ ] Changelogs for Notes
 - [ ] Pagination / infinite scroll for Notes Index
 - [ ] Multiple sessions
