@@ -14,7 +14,7 @@ $(document).on('ready', function () {
     render: function () {
       return(
         <div className="app-container group">
-          <div className="sidebar" />
+          <Sidebar />
           <div className="main-view">
 
             <h1>Clevernote</h1>

@@ -11,7 +11,8 @@ html, body, ul, li, div {
   background: transparent;
 }
 body {
-  font-family: "Futura" sans-serif;
+  font-family: "gotham",helvetica,arial,sans-serif;
+
 }
 li, ul {
   list-style: none;

@@ -4,7 +4,7 @@
   top: 0;
   bottom: 0;
   width: 60px;
-  background-color: red;
+  border-right: 1px solid lightgray;
 }
 .main-view, .status-bar {
   margin-left: 60px;

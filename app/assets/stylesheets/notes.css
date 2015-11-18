@@ -3,16 +3,61 @@
 .note-index {
   display: inline-block;
   float: left;
-  width: 20%;
-  border: 2px solid red;
-  background-color: lightgreen;
-
+  width: 335px;
+  /*background-color: lightgreen;*/
+  border-right: 1px solid lightgray;
+}
+.note-index ul:first-child {
+  border-top: 1px solid lightgray;
 }
 
 .note-index-item {
-  padding: 5px;
-  border: 2px solid black;
+  position: relative;
+  height: 120px;
+  width: 335px;
+  border-bottom: 1px solid lightgray;
 }
+.note-index-item ul {
+  padding: 3px;
+}
+.note-index-item img {
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  margin: auto;
+}
+.note-index-item li {
+  display: block;
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 5px;
+  padding-left: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 12px;
+  font-weight: 400;
+  color: #878787
+}
+
+.note-index-item li:first-child {
+  font-size: 16px;
+  font-weight: 400;
+  padding-top: 5px;
+  height: 17px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: black;
+}
+.note-index-item li:nth-child(2) {
+  height 14px;
+}
+.note-index-item li:nth-child(3) {
+  height: 58px;
+}
+
 
 .note-form {
   display: block;
