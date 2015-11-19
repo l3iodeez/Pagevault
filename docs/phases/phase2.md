@@ -15,6 +15,7 @@
 
 ### Stores
 * Note
+* Selected
 
 ### Actions
 * ApiActions.receiveAllNotes

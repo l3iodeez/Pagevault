@@ -23,10 +23,10 @@ var Sidebar = React.createClass({
     return (
       <div className={sidebarClass} >
         <div className="sidebar-item logo" />
-        <button className="sidebar-item new-note" onClick={this.newNote}>+</button>
-        <button className="sidebar-item search-note" >🔎</button>
-        <button className="sidebar-item notes" >&#128441;</button>
-      <button className="sidebar-item notebooks" >📓</button>
+        <button className="sidebar-item new-note" onClick={this.newNote}><div></div></button>
+        <button className="sidebar-item search" ><div></div></button>
+        <button className="sidebar-item view-notes" ><div></div></button>
+      <button className="sidebar-item notebooks" ><div></div></button>
       </div>
     );
   }

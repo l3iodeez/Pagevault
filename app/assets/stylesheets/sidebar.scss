@@ -1,0 +1,61 @@
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 73px;
+  border-right: 1px solid lightgrey;
+  overflow: hidden;
+  -webkit-transition: left 0.25s ease-in-out;
+  -moz-transition: left 0.25s ease-in-out;
+  -o-transition: left 0.25s ease-in-out;
+  transition: left 0.25s ease-in-out;
+}
+
+.sidebar button{
+  color: white;
+  clear: both;
+}
+.sidebar.hidden{
+  left: -73px;
+}
+.sidebar-item {
+  display: block;
+  position: relative;
+  background-color: #2DBE60;
+  border-radius: 18px;
+  margin: 20px 17px;
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  font-weight: bold;
+  color: #FFF;
+  font-size: 20px;
+}
+.sidebar-item:hover {
+  color: #2DBE60;
+  border: 0;
+  background-color: transparent;
+}
+
+.sidebar-item.logo {
+  border: 0;
+  background-color: transparent;
+  background-image: image_url("logo.png");
+}
+
+.sidebar-item.new-note::before {
+  content: "+";
+}
+.sidebar-item.search::before {
+  content: "🔎";
+}
+.sidebar-item.view-notes::before {
+
+  content: "📄";
+}
+
+.sidebar-item.notebooks::before {
+  content: "📓";
+}
