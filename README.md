@@ -37,10 +37,12 @@ basic styling.
 During Phase 2 I will implement my Flux setup as well as the React Router and
 view structure. I will implement a Note store class to manage the client side
 data, and the requisite action to implement CRUD functionality via the JSON API.
-Lastly I will create React components for the `NoteIndex`, `NoteIndexItem` and
-`NoteForm` objects. When this phase is over Notes can be created edited and deleted
-in the browser, and will be persisted to the database when the editor is left
-idle. I will also style for structure and visibility.
+I will also create a Selected store class to manage the transfer of information
+from the index to the main view component. Lastly I will create React components
+for the `NoteIndex`, `NoteIndexItem` and `NoteForm` objects. When this phase
+is over Notes can be created edited and deleted in the browser, and will be
+persisted to the database when the editor is left idle. I will also style for
+structure and visibility, add a logo and a few icons.
 
 [Details][phase-two]
 
@@ -72,8 +74,8 @@ access. Other users can be searched by username or email.
 
 ### Phase 6: Styling Cleanup and Seeding (1 day)
 
-In Phase 6 I will go through and revamp the styling from top to bottom. I will
-create seed data. I will also convert some of my React views to modal overlay
+In Phase 6 I will prettify all of the things and fix any remaining styling issues.
+I will create seed data. I will also convert some of my React views to modal overlay
 forms.
 
 ### Bonus Features (TBD)
