@@ -20,42 +20,59 @@
 .sidebar.hidden{
   left: -73px;
 }
+@font-face {
+      font-family: "Bitstream Vera Serif Bold";
+      src: url("https://mdn.mozillademos.org/files/2468/VeraSeBd.ttf");
+      unicode-range: U+1F50D;
+}
 .sidebar-item {
   display: block;
   position: relative;
   background-color: #2DBE60;
   border-radius: 18px;
-  margin: 20px 17px;
+  margin: 20px auto;
   width: 36px;
   height: 36px;
   text-align: center;
   font-weight: bold;
   color: #FFF;
   font-size: 20px;
+  font-family: "Bitstream Vera Serif Bold";
+
 }
 .sidebar-item:hover {
   color: #2DBE60;
-  border: 0;
+  border: 2px solid #2DBE60;
   background-color: transparent;
 }
-
 .sidebar-item.logo {
   border: 0;
   background-color: transparent;
   background-image: image_url("logo.png");
 }
+.sidebar-item.new-note div {
+  font-size: 32px;
+  font-weight: bolder;
+  position: absolute;
+  top: -3px;
+  left: 10px
+}
+.sidebar-item.new-note:hover div {
+  top: -5px;
+  left: 8px;
+}
 
-.sidebar-item.new-note::before {
+.sidebar-item.new-note div::before {
   content: "+";
 }
-.sidebar-item.search::before {
+.sidebar-item.search div::before  {
   content: "🔎";
 }
-.sidebar-item.view-notes::before {
+.sidebar-item.view-notes div::before  {
 
   content: "📄";
 }
 
-.sidebar-item.notebooks::before {
+.sidebar-item.notebooks div::before  {
   content: "📓";
 }
