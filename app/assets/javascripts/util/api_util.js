@@ -1,7 +1,7 @@
 (function(root) {
   'use strict';
   var ApiUtil = root.ApiUtil = {
-    fetchAllNotes: function () {
+    fetchAllNotes: function (callback) {
       $.ajax({
         url: '/api/notes',
         method: 'GET',
@@ -9,10 +9,11 @@
         contentType: 'application/json',
         success: function (data) {
           ApiActions.receiveAllNotes(data);
+          callback && callback(data);
         }
       });
     },
-    fetchSingleNote: function (id) {
+    fetchSingleNote: function (id, callback) {
       $.ajax({
         url: '/api/notes/' + id,
         method: 'GET',
@@ -20,6 +21,7 @@
         contentType: 'application/json',
         success: function (data) {
           ApiActions.receiveSingleNotes(data);
+          callback && callback(data);
         }
       });
     },
@@ -32,7 +34,7 @@
         data: JSON.stringify({note: note}),
         success: function (data) {
           ApiActions.receiveSingleNote(data);
-          callback(data);
+          callback && callback(data);
         }
       });
     },
@@ -47,11 +49,11 @@
         data: JSON.stringify({note: note}),
         success: function (data) {
           ApiActions.receiveSingleNote(data);
-          callback(data);
+          callback && callback(data);
         }
       });
     },
-    destroyNote: function (note) {
+    destroyNote: function (note, callback) {
       $.ajax({
         url: '/api/notes/' + note.id,
         method: 'DELETE',
@@ -59,6 +61,7 @@
         contentType: 'application/json',
         success: function (data) {
           ApiActions.deleteNote(data);
+          callback && callback(data);
         }
       });
     }

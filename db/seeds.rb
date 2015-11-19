@@ -23,6 +23,7 @@ TEXT
     password: "password",
   }
   user = User.create!(user_data)
+  
   5.times do |j|
     note_data = {
       title: "#{user.name}'s Note Number #{j+1}'",

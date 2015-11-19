@@ -11,66 +11,85 @@ var NoteForm = React.createClass({
       title: title,
       body: body,
       is_archived: is_archived,
+      saving: "saved"
     };
   },
   componentWillReceiveProps: function (newProps) {
+    if (this.timeoutID) {
+      this.handleSubmit();
+    }
     var title = newProps.note ? newProps.note.title : "";
     var body = newProps.note ? newProps.note.body : "";
     this.setState({
       title: title,
-      body: body
+      body: body,
+      saving: "saved"
     });
   },
-  handleSubmit: function (e) {
-    e.preventDefault();
-    if (this.state.title.length === 0 && this.state.body.length === 0 ) {
-      return;
+  componentWillUnmount: function () {
+    this.handleSubmit();
+  },
+  handleSubmit: function (e, callback) {
+    clearTimeout(this.timeoutID);
+    this.timeoutID = null;
+
+    if (e) {
+      e.preventDefault();
     }
-
-    var note;
-
-    if (this.props.note) {
-
-      note = {
-        id: this.props.note.id,
-        title: this.state.title,
-        body: this.state.body,
-        is_archived: this.state.is_archived
-      };
-      ApiUtil.editNote(note, function (data) {
+    if (this.state.saving === "saving" || this.state.saving === "dirty") {
+      var apiCallback = function (data) {
         var note = NoteStore.getByID(data.id);
-        SelectedStore.setNote(note);
-      });
-      this.setState(note);
-
-    } else {
-
-      note = {
-        title: this.state.title,
-        body: this.state.body,
+        // SelectedStore.setNote(note);
+        if (typeof callback === "function") {
+          callback();
+        }
       };
-      ApiUtil.createNote(note, function (data) {
-        var note = NoteStore.getByID(data.id);
-        SelectedStore.setNote(note);
-      });
 
+      var note;
+        note = {
+          title: this.state.title,
+          body: this.state.body,
+        };
+      if (this.props.note) {
+        note.id = this.props.note.id;
+        note.is_archived = this.state.is_archived;
+        ApiUtil.editNote(note, apiCallback);
+      } else {
+        if (this.state.title.length === 0 && this.state.body.length === 0 ) {
+          this.setState({saving: "saved"});
+          return;
+        }
+        note = {
+          title: this.state.title,
+          body: this.state.body,
+        };
+        ApiUtil.createNote(note, apiCallback);
+      }
     }
-    if (this.props.fullWidth) {
+    if (e) {
       this.props.toggleIndex();
     }
+
   },
 
-  updateAttribute: function(attr, e) {
-    this.state[attr] = e.currentTarget.value;
-    this.forceUpdate();
-    // usage:
-    // this.updateAttribute.bind(this, "body")
-  },
 
+  saveTimeout: function () {
+    clearTimeout(this.timeoutID);
+    this.timeoutID = setTimeout(function () {
+      this.setState({saving: "saving"});
+      this.handleSubmit(null, function () {
+        this.setState({saving: "saved"});
+      }.bind(this));
+    }.bind(this), 2000);
+  },
   updateBody: function(e) {
-    this.setState({body: e.currentTarget.value});
+    this.setState({body: e.currentTarget.value, saving: "dirty"});
+    this.saveTimeout();
   },
-
+  updateTitle: function(e) {
+    this.setState({title: e.currentTarget.value, saving: "dirty"});
+    this.saveTimeout();
+  },
   newNote: function (e) {
     e.preventDefault();
     this.setState({
@@ -81,13 +100,16 @@ var NoteForm = React.createClass({
     });
     this.props.setSelected(null);
   },
-  cancel: function () {
+  cancel: function (e) {
+    e.preventDefault();
     this.props.toggleIndex();
   },
   render: function() {
     var formClass = "note-form ";
     var cancelButtonClass = "cancel-button";
     var saveButtonClass = "save-button";
+
+
 
     if (this.props.fullWidth) {
       formClass += "new";
@@ -100,31 +122,41 @@ var NoteForm = React.createClass({
       saveButtonClass += " hidden";
     } else {
       cancelButtonClass += " hidden";
-
     }
 
     return (
-      <form className={formClass} onSubmit={this.handleSubmit}>
-        <div className="button-container">
-          <button className={saveButtonClass}>Done</button>
-          <button className={cancelButtonClass} onClick={this.cancel}>Cancel</button>
-        </div>
-        <label htmlFor="noteTitle">Note Title</label>
+      <div className={formClass} >
+      <NoteFormHeader note={this.props.note} containerClass={formClass} />
+        <form onSubmit={this.handleSubmit}>
+          <div className="button-container">
+            <button className={saveButtonClass}>Done</button>
+            <button className={cancelButtonClass} onClick={this.cancel}>Cancel</button>
+          </div>
+          <label htmlFor="noteTitle">Note Title</label>
+            <br />
+            <input
+              id="noteTitle"
+              type="text"
+              placeholder={"Title your note"}
+              name="title"
+              value={this.state.title}
+              onChange={this.updateTitle}
+            />
+            <div className={"save-indicator " + this.state.saving} />
           <br />
-          <input id="noteTitle" type="text" placeholder={"Title your note"} name="title" valueLink={this.linkState("title")} />
-        <br />
-        <label htmlFor="noteBody">Note Body</label>
+          <label htmlFor="noteBody">Note Body</label>
+            <br />
+            <textarea
+              id="noteBody"
+              name="body"
+              placeholder={"Drag files here or just start typing..."}
+              value={this.state.body}
+              onChange={this.updateBody}
+            />
           <br />
-          <textarea
-            id="noteBody"
-            name="body"
-            placeholder={"Drag files here or just start typing..."}
-            value={this.state.body}
-            onChange={this.updateBody}
-          />
-        <br />
 
-      </form>
+        </form>
+      </div>
     );
   }
 });

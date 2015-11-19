@@ -1,6 +1,6 @@
 class Api::NotesController < ApplicationController
   before_action :set_note, only: [:show, :update, :destroy]
-
+  before_action :simulate_latency, except: [:index, :destroy]
 
   def index
     @notes = current_user.notes.order("updated_at DESC")
@@ -39,6 +39,9 @@ class Api::NotesController < ApplicationController
   end
 
   private
+  def simulate_latency
+    sleep(2)
+  end
 
   def note_params
     params.require(:note).permit(:title, :body, :user_id, :is_archived)

@@ -10,7 +10,7 @@ input, textarea {
   text-decoration: inherit;
   font: inherit;
   -webkit-font-smoothing: antialiased;
-  
+
   background: transparent;
 }
 body {
@@ -37,4 +37,5 @@ button:focus {
 }
 button {
   outline: 0;
+  cursor: pointer;
 }

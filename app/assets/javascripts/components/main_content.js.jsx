@@ -3,10 +3,10 @@ var MainContainer = React.createClass({
     return { selectedNote: NoteStore.getFirst(), showIndex: this.props.showIndex };
   },
   selectedChange: function () {
-  
     if (SelectedStore.getNote()) {
       this.setState({ selectedNote: SelectedStore.getNote() });
     } else {
+      debugger
       this.setState({ selectedNote: NoteStore.getFirst() });
     }
 
@@ -18,11 +18,11 @@ var MainContainer = React.createClass({
   },
   componentDidMount: function () {
     SelectedStore.addChangeListener(this.selectedChange);
-    NoteStore.addChangeListener(this.selectedChange);
+    // NoteStore.addChangeListener(this.selectedChange);
   },
   componentWillUnmount: function () {
     SelectedStore.removeChangeListener(this.selectedChange);
-    NoteStore.addChangeListener(this.notesChange);
+    // NoteStore.addChangeListener(this.selectedChange);
 
   },
   render: function() {

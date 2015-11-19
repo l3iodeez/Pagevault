@@ -1,0 +1,89 @@
+
+.note-form {
+  display: block;
+  position: absolute;
+  margin-top: 50px;
+  -webkit-transition: width 0.25s ease-in-out;
+  -moz-transition: width 0.25s ease-in-out;
+  -o-transition: width 0.25s ease-in-out;
+  transition: width 0.25s ease-in-out;
+}
+.note-form .button-container{
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px;
+}
+.note-form button {
+  font-size: 13px;
+  font-weight: 500;
+  height: 28px;
+  color: white;
+  outline: none;
+  border-color: rgb(45, 190, 96);
+  border-radius: 4px;
+  background-color: rgb(45, 190, 96);
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-right: 16px;
+}
+.note-form .hidden{
+  display: none;
+}
+
+.note-form.edit {
+    width: 75%;
+    left: 425px;
+
+}
+.note-form.new {
+    width: 99%;
+    text-align: center;
+}
+.note-form input, .note-form textarea {
+  width: 60%;
+  text-align: left;
+
+}
+
+.note-form input{
+  font-size: 36px;
+  color: rgb(45, 190, 96);
+  font-weight: 100;
+  border: none;
+  border-bottom: 1px solid lightgray;
+}
+.note-form label {
+  display: none;
+}
+.note-form textarea {
+  font-size: 16px;
+  height: 5000px;
+  border: none;
+}
+.save-indicator {
+  position: absolute;
+  display: block;
+  height: 20px;
+  width: 20px;
+  left: 58%;
+  top: 35px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.new .save-indicator{
+  left: 78%
+}
+
+.saving.save-indicator  {
+  background-image: image_url("spinner.gif");
+
+}
+.saved.save-indicator {
+  background-image: image_url("green-check.png");
+  opacity: 0.7;
+}
+.dirty.save-indicator {
+    background-image: image_url("gray-check.png");
+}

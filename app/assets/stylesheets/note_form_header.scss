@@ -1,0 +1,29 @@
+.note-form.header {
+  width: 60%;
+  height: 50px;
+  top: -100px;
+  left: 20%;
+  border: 1px solid black;
+}
+.note-form.edit.header {
+  width: 60%;
+  left: 0px;
+}
+.note-form.new.header {
+  width: 60%;
+  text-align: center;
+}
+.note-form.header div.icon{
+  height: 30px;
+  width: 30px;
+  color: "#7c7c7c";
+}
+.header-delete.icon {
+  background-image: image_url("wastebasket.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.header-delete.icon:hover {
+  background-image: image_url("wastebasket-hover.svg");
+
+}

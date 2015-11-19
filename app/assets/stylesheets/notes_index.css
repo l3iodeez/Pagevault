@@ -1,9 +1,4 @@
-html, body {
-  height: 100%;
-}
-.notes {
-  height: 100%;
-}
+
 .note-index {
   position: absolute;
   left: 73px;
@@ -85,79 +80,16 @@ html, body {
 
 .note-index-item li:first-child {
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 300;
   padding-top: 5px;
   height: 17px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: black;
 }
 .note-index-item li:nth-child(2) {
   height: 14px;
 }
 .note-index-item li:nth-child(3) {
   height: 58px;
-}
-
-
-.note-form {
-  display: block;
-  position: absolute;
-  -webkit-transition: width 0.25s ease-in-out;
-  -moz-transition: width 0.25s ease-in-out;
-  -o-transition: width 0.25s ease-in-out;
-  transition: width 0.25s ease-in-out;
-}
-.note-form .button-container{
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 12px;
-}
-.note-form button {
-  font-size: 13px;
-  font-weight: 500;
-  height: 28px;
-  color: white;
-  outline: none;
-  border-color: rgb(45, 190, 96);
-  border-radius: 4px;
-  background-color: rgb(45, 190, 96);
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-right: 16px;
-}
-.note-form .hidden{
-  display: none;
-}
-
-.note-form.edit {
-    width: 75%;
-    left: 425px;
-
-}
-.note-form.new {
-    width: 99%;
-    text-align: center;
-}
-.note-form input, .note-form textarea {
-  width: 60%;
-  text-align: left;
-
-}
-.note-form input{
-  font-size: 36px;
-  color: rgb(45, 190, 96);
-  font-weight: 100;
-  border: none;
-  border-bottom: 1px solid lightgray;
-}
-.note-form > label {
-  display: none;
-}
-.note-form textarea {
-  font-size: 16px;
-  height: 200px;
-  border: none;
 }
