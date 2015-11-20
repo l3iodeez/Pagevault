@@ -17,7 +17,7 @@ var SessionsApiUtil = {
     });
   },
 
-  logout: function (  ) {
+  logout: function () {
     $.ajax({
       url: '/api/session',
       type: 'DELETE',
@@ -25,6 +25,8 @@ var SessionsApiUtil = {
       success: function () {
         console.log("logged out!");
         CurrentUserActions.receiveCurrentUser({});
+        SelectedActions.setSelected(null);
+        ApiActions.receiveAllNotes([]);
       }
     });
   },

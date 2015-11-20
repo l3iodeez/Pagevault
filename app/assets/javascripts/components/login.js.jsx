@@ -17,6 +17,7 @@
       }.bind(this);
 
       var showErrors = function (data) {
+        debugger
         this.setState({errorMessages: data.responseJSON.errors});
       }.bind(this);
 
