@@ -20,11 +20,15 @@ var NoteForm = React.createClass({
     }
     var title = newProps.note ? newProps.note.title : "";
     var body = newProps.note ? newProps.note.body : "";
-    this.setState({
+    var newNote = {
       title: title,
       body: body,
       saving: "saved"
-    });
+    };
+    if (newProps.note ? newProps.note.id : null) {
+      newNote.id = newProps.note.id;
+    }
+    this.setState(newNote);
   },
   componentWillUnmount: function () {
     this.handleSubmit();
@@ -74,13 +78,15 @@ var NoteForm = React.createClass({
 
 
   saveTimeout: function () {
-    clearTimeout(this.timeoutID);
-    this.timeoutID = setTimeout(function () {
-      this.setState({saving: "saving"});
-      this.handleSubmit(null, function () {
-        this.setState({saving: "saved"});
-      }.bind(this));
-    }.bind(this), 2000);
+    if (this.state.saving !== "saving") {
+      clearTimeout(this.timeoutID);
+      this.timeoutID = setTimeout(function () {
+        this.setState({saving: "saving"});
+        this.handleSubmit(null, function () {
+          this.setState({saving: "saved"});
+        }.bind(this));
+      }.bind(this), 2000);
+    }
   },
   updateBody: function(e) {
     this.setState({body: e.currentTarget.value, saving: "dirty"});

@@ -1,6 +1,6 @@
 (function(root) {
   'use strict';
-  var _note = null;
+  var _note = {};
   var CHANGE_EVENT = "selectedChange";
 
 
@@ -30,6 +30,10 @@
     dispatcherId: AppDispatcher.register(function (payload) {
       if (payload.actionType === NoteConstants.NOTE_SELECTED) {
         SelectedStore.setNote(payload.note);
+      } else if ( payload.actionType === NoteConstants.NOTE_RECEIVED) {
+        debugger
+        if (typeof _note === "undefined") {
+        }
       }
     }),
 

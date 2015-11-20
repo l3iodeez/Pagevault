@@ -3,7 +3,7 @@ var MainContainer = React.createClass({
     return { selectedNote: NoteStore.getFirst(), showIndex: this.props.showIndex };
   },
   selectedChange: function () {
-    if (SelectedStore.getNote()) {
+    if (SelectedStore.getNote() && SelectedStore.getNote().id) {
       this.setState({ selectedNote: SelectedStore.getNote() });
     } else {
       this.setState({ selectedNote: NoteStore.getFirst() });
