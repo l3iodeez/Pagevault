@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   has_many :notes, dependent: :destroy
+  has_many :notebooks, dependent: :destroy
+
 
 
   def self.find_by_credentials(email, password)
