@@ -8,6 +8,9 @@
       if (CurrentUserStore.isLoggedIn()) {
         this.history.pushState(null, "/");
       }
+      UsersApiUtil.fetchUsers(function (users) {
+        this.setState({users: users});
+      }.bind(this));
     },
 
     submit: function (e) {
@@ -40,7 +43,14 @@
 
 
     render: function() {
-
+      var demoUsers;
+      if (this.state.users) {
+        demoUsers = <div>
+                      {this.state.users.map(function (user) {
+                          return <p>user.email</p>;
+                        }.bind(this))}
+                    </div>;
+      }
       return (
         <div className="modal loginform group">
           <div>
@@ -64,6 +74,8 @@
               <button>Log In</button>
                 <br></br>
               <a href="#/register">Register</a>
+              <p>Login with a demo account using password 'password'</p>
+              {demoUsers}
             </form>
           </div>
         </div>

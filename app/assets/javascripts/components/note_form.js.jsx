@@ -1,10 +1,12 @@
 var NoteForm = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
   getInitialState: function() {
-    var id = this.props.note ? this.props.note.id : "";
-    var title = this.props.note ? this.props.note.title : "";
-    var body = this.props.note ? this.props.note.body : "";
-    var is_archived = this.props.note ? this.props.note.is_archived : false;
+
+    var selectedNote = SelectedStore.getNote();
+    var id = selectedNote ? selectedNote.id : "";
+    var title = selectedNote ? selectedNote.title : "";
+    var body = selectedNote ? selectedNote.body : "";
+    var is_archived  = selectedNote ? selectedNote.is_archived : "";
 
     return {
       id: id,
@@ -14,21 +16,37 @@ var NoteForm = React.createClass({
       saving: "saved"
     };
   },
-  componentWillReceiveProps: function (newProps) {
-    if (this.timeoutID) {
-      this.handleSubmit();
-    }
-    var title = newProps.note ? newProps.note.title : "";
-    var body = newProps.note ? newProps.note.body : "";
-    var newNote = {
-      title: title,
-      body: body,
+  importID: function () {
+    this.setState({ id: SelectedStore.getNote().id });
+  },
+  changeSelectedNote: function () {
+    this.setState($.extend({saving: "saved"}, SelectedStore.getNote() ));
+  },
+  resetForm: function () {
+    this.setState({
+      id: "",
+      title: "",
+      body: "",
+      is_archived: "",
       saving: "saved"
-    };
-    if (newProps.note ? newProps.note.id : null) {
-      newNote.id = newProps.note.id;
+    });
+  },
+  importNote: function () {
+    this.setState(SelectedStore.getNote());
+  },
+  newNoteReceived: function () {
+    if (!this.state.id && this.state.creating) {
+      this.importID();
+    } else if (!this.state.id ) {
+      this.importNote();
+    } else if (SelectedStore.getNote() && (this.state.id !== SelectedStore.getNote().id)) {
+      this.changeSelectedNote();
+    } else if (!SelectedStore.getNote()) {
+      this.resetForm();
     }
-    this.setState(newNote);
+  },
+  componentDidMount: function () {
+    SelectedStore.addChangeListener(this.newNoteReceived);
   },
   componentWillUnmount: function () {
     this.handleSubmit();
@@ -40,22 +58,25 @@ var NoteForm = React.createClass({
     if (e) {
       e.preventDefault();
     }
+    if (this.state.creating) {
+      return;
+    }
     if (this.state.saving === "saving" || this.state.saving === "dirty") {
+
       var apiCallback = function (data) {
         var note = NoteStore.getByID(data.id);
-        // SelectedStore.setNote(note);
+        this.setState({creating: false});
         if (typeof callback === "function") {
           callback();
         }
-      };
+      }.bind(this);
 
-      var note;
-        note = {
+      var note = {
           title: this.state.title,
           body: this.state.body,
-        };
-      if (this.props.note) {
-        note.id = this.props.note.id;
+      };
+      if (this.state.id) {
+        note.id = this.state.id;
         note.is_archived = this.state.is_archived;
         NotesAPIUtil.editNote(note, apiCallback);
       } else {
@@ -67,6 +88,7 @@ var NoteForm = React.createClass({
           title: this.state.title,
           body: this.state.body,
         };
+        this.setState({creating: true});
         NotesAPIUtil.createNote(note, apiCallback);
       }
     }
@@ -132,7 +154,7 @@ var NoteForm = React.createClass({
 
     return (
       <div className={formClass} >
-      <NoteFormHeader note={this.props.note} containerClass={formClass} />
+      <NoteFormHeader note={SelectedStore.getNote()} containerClass={formClass} />
         <form onSubmit={this.handleSubmit}>
           <div className="button-container">
             <button className={saveButtonClass}>Done</button>

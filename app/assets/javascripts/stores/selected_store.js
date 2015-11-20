@@ -1,6 +1,6 @@
 (function(root) {
   'use strict';
-  var _note = {};
+  var _note = null;
   var CHANGE_EVENT = "selectedChange";
 
 
@@ -31,8 +31,12 @@
       if (payload.actionType === NoteConstants.NOTE_SELECTED) {
         SelectedStore.setNote(payload.note);
       } else if ( payload.actionType === NoteConstants.NOTE_RECEIVED) {
-        debugger
-        if (typeof _note === "undefined") {
+        if (!_note) {
+          SelectedStore.setNote(payload.note);
+        }
+      } else if ( payload.actionType === NoteConstants.NOTES_RECEIVED) {
+        if (!_note) {
+          SelectedStore.setNote(NoteStore.getFirst());
         }
       }
     }),

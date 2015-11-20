@@ -29,7 +29,6 @@ var MainContainer = React.createClass({
       <div className="notes">
         <NotesIndex show={this.props.showIndex}/>
         <NoteForm
-          note={this.state.selectedNote}
           fullWidth={!this.props.showIndex}
           toggleIndex={this.props.toggleIndex} />
       </div>

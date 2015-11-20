@@ -1,11 +1,14 @@
 var UsersApiUtil = {
-  fetchUsers: function () {
+  fetchUsers: function (successCallback, failureCallback ) {
     $.ajax({
       url: '/api/users',
       type: 'GET',
       dataType: 'json',
-      success: function (users) {
-        UserActions.receiveUsers(users);
+      success: function (user) {
+        successCallback && successCallback();
+      },
+      error: function (errors) {
+        failureCallback && failureCallback(errors)
       }
     });
   },
@@ -28,8 +31,6 @@ var UsersApiUtil = {
       dataType: 'json',
       data: attrs,
       success: function (user) {
-        // UserActions.receiveUser(user);
-
         successCallback && successCallback();
       },
       error: function (errors) {
