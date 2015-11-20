@@ -1,5 +1,5 @@
 var SessionsApiUtil = {
-  login: function (credentials, success) {
+  login: function (credentials, successCallback, failureCallback) {
     $.ajax({
       url: '/api/session',
       type: 'POST',
@@ -8,7 +8,11 @@ var SessionsApiUtil = {
       success: function (currentUser) {
         console.log("logged in!");
         CurrentUserActions.receiveCurrentUser(currentUser);
-        success && success();
+        successCallback && successCallback();
+      },
+      error: function (errors) {
+        console.log("login failure!");
+        failureCallback && failureCallback(errors)
       }
     });
   },

@@ -23,13 +23,13 @@ class Api::SessionsController < ApplicationController
       render '/api/users/show'
     else
       @user = User.new(email: params[:user][:email])
-      render json: {status: "invalid login"}, status: 401
+      render json: {errors: ["Invalid email or password."]}, status: 401
     end
   end
 
 
   def destroy
     logout!
-    render json: {status: "logged out"}
+    render json: {errors: ["You have been logged out."]}
   end
 end

@@ -53,6 +53,8 @@ $(document).on('ready', function () {
     <Router>
       <Route path="/login" component={SessionForm}>
       </Route>
+      <Route path="/register" component={RegistrationForm}>
+      </Route>
       <Route path="/" component={App}>
       </Route>
     </Router>

@@ -1,0 +1,23 @@
+div.loginform {
+  text-align: center;
+}
+
+div.loginform input, div.loginform button{
+   background-color: lightblue;
+   border-radius: 5px;
+   font-size: 24px;
+   margin: 5px;
+
+}
+
+div.loginform button{
+  background-color: #2DBE60;
+  padding: 3px 10px;
+}
+div.loginform input{
+  width: 80%
+}
+
+.error-text {
+  color: tomato;
+}
