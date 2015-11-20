@@ -3,31 +3,33 @@ class Api::SessionsController < ApplicationController
   before_action :verify_logged_in, only: [:destroy]
   before_action :verify_logged_out, only: [:new, :create]
 
-  def new
-    @user = User.new
-    render :new
+  def show
+    if logged_in?
+      @user = current_user
+      render '/api/users/show'
+    else
+      render json: {}, status: 200
+    end
   end
 
   def create
-    user = User.find_by_credentials(
+    @user = User.find_by_credentials(
       params[:user][:email],
       params[:user][:password]
     )
 
-    if user
-      login!(user)
-      redirect_to root_url
+    if !@user.nil?
+      login!(@user)
+      render '/api/users/show'
     else
       @user = User.new(email: params[:user][:email])
-      add_to_flash("Invalid email or password", :errors, true)
-      redirect_to new_api_session_url
+      render json: {status: "invalid login"}, status: 401
     end
   end
 
 
   def destroy
-      logout!
-      add_to_flash("You have been logged out.", :errors)
-      redirect_to new_api_session_url
+    logout!
+    render json: {status: "logged out"}
   end
 end

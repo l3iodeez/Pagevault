@@ -53,7 +53,7 @@ var NoteForm = React.createClass({
       if (this.props.note) {
         note.id = this.props.note.id;
         note.is_archived = this.state.is_archived;
-        ApiUtil.editNote(note, apiCallback);
+        NotesAPIUtil.editNote(note, apiCallback);
       } else {
         if (this.state.title.length === 0 && this.state.body.length === 0 ) {
           this.setState({saving: "saved"});
@@ -63,7 +63,7 @@ var NoteForm = React.createClass({
           title: this.state.title,
           body: this.state.body,
         };
-        ApiUtil.createNote(note, apiCallback);
+        NotesAPIUtil.createNote(note, apiCallback);
       }
     }
     if (e) {

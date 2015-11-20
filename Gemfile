@@ -28,11 +28,14 @@ gem 'faker'
 gem 'bcrypt'
 # Use Puma as the web server
 gem 'puma'
-gem 'rails_12factor'
 gem 'react-rails', '~> 1.3.0'
 gem 'flux-rails-assets', '~> 2.1.0'
 # Use Unicorn as the app server
 # gem 'unicorn'
+group :production do
+  gem 'rails_12factor'
+
+end
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

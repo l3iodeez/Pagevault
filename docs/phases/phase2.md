@@ -22,12 +22,12 @@
 * ApiActions.receiveSingleNote
 * ApiActions.deleteNote
 
-### ApiUtil
-* ApiUtil.fetchAllNotes
-* ApiUtil.fetchSingleNote
-* ApiUtil.createNote
-* ApiUtil.editNote
-* ApiUtil.destroyNote
+### NotesAPIUtil
+* NotesAPIUtil.fetchAllNotes
+* NotesAPIUtil.fetchSingleNote
+* NotesAPIUtil.createNote
+* NotesAPIUtil.editNote
+* NotesAPIUtil.destroyNote
 
 ## Gems/Libraries
 * Flux Dispatcher

@@ -23,7 +23,7 @@
 
 ### Actions
 
-### ApiUtil
+### NotesAPIUtil
 
 ## Gems/Libraries
 * BCrypt

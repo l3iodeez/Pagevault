@@ -29,12 +29,12 @@
 * ApiActions.receiveSingleNotebook
 * ApiActions.deleteNotebook
 
-### ApiUtil
-* ApiUtil.fetchAllNotebooks
-* ApiUtil.fetchSingleNotebook
-* ApiUtil.createNotebook
-* ApiUtil.editNotebook
-* ApiUtil.destroyNotebook
+### NotesAPIUtil
+* NotesAPIUtil.fetchAllNotebooks
+* NotesAPIUtil.fetchSingleNotebook
+* NotesAPIUtil.createNotebook
+* NotesAPIUtil.editNotebook
+* NotesAPIUtil.destroyNotebook
 
 
 ## Gems/Libraries

@@ -5,8 +5,10 @@ $(document).on('ready', function () {
   var root = document.getElementById('root');
 
   var App = React.createClass({
+    mixins: [ReactRouter.History],
+
     getInitialState: function () {
-      return { selectedNote: null, showIndex: true };
+      return { selectedNote: null, showIndex: true, currentUser: null  };
     },
     toggleIndex: function () {
       this.setState({showIndex: !this.state.showIndex});
@@ -16,6 +18,20 @@ $(document).on('ready', function () {
     },
     setSelected: function (note) {
       this.setState({selectedNote: note});
+    },
+
+
+    componentWillMount: function () {
+      CurrentUserStore.addChangeHandler(this._ensureLoggedIn);
+      SessionsApiUtil.fetchCurrentUser();
+    },
+
+    _ensureLoggedIn: function () {
+      if (!CurrentUserStore.isLoggedIn()) {
+        this.history.pushState(null, "/login");
+      }
+      this.setState({currentUser: CurrentUserStore.currentUser()});
+
     },
     render: function () {
       var mainViewClass = "main-view";
@@ -35,6 +51,8 @@ $(document).on('ready', function () {
   });
   var router = (
     <Router>
+      <Route path="/login" component={SessionForm}>
+      </Route>
       <Route path="/" component={App}>
       </Route>
     </Router>

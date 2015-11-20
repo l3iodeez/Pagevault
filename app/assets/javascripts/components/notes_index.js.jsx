@@ -9,7 +9,7 @@ var NotesIndex = React.createClass({
   },
   componentDidMount: function () {
     NoteStore.addChangeListener(this.notesChanged);
-    ApiUtil.fetchAllNotes();
+    NotesAPIUtil.fetchAllNotes();
   },
   componentWillUnmount: function () {
     NoteStore.removeChangeListener(this.notesChanged);

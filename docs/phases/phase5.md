@@ -23,10 +23,10 @@
 * ApiActions.receiveAllShares
 * ApiActions.deleteShare
 
-### ApiUtil
-* ApiUtil.fetchAllShares
-* ApiUtil.createShare
-* ApiUtil.updateShare
-* ApiUtil.destroyShare
+### NotesAPIUtil
+* NotesAPIUtil.fetchAllShares
+* NotesAPIUtil.createShare
+* NotesAPIUtil.updateShare
+* NotesAPIUtil.destroyShare
 
 ## Gems/Libraries

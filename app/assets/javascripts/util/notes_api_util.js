@@ -1,6 +1,6 @@
 (function(root) {
   'use strict';
-  var ApiUtil = root.ApiUtil = {
+  var NotesAPIUtil = root.NotesAPIUtil = {
     fetchAllNotes: function (callback) {
       $.ajax({
         url: '/api/notes',

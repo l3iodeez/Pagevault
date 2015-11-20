@@ -6,7 +6,6 @@ var MainContainer = React.createClass({
     if (SelectedStore.getNote()) {
       this.setState({ selectedNote: SelectedStore.getNote() });
     } else {
-      debugger
       this.setState({ selectedNote: NoteStore.getFirst() });
     }
 
