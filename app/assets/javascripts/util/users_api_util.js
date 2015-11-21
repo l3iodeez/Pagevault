@@ -4,8 +4,8 @@ var UsersApiUtil = {
       url: '/api/users',
       type: 'GET',
       dataType: 'json',
-      success: function (user) {
-        successCallback && successCallback();
+      success: function (users) {
+        successCallback && successCallback(users);
       },
       error: function (errors) {
         failureCallback && failureCallback(errors)

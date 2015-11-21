@@ -45,11 +45,12 @@
     render: function() {
       var demoUsers;
       if (this.state.users) {
-        demoUsers = <div>
+        demoUsers = <span>
+                      <h4>Demo accounts</h4>
                       {this.state.users.map(function (user) {
-                          return <p>user.email</p>;
+                          return <p>{user.email}</p>;
                         }.bind(this))}
-                    </div>;
+                    </span>;
       }
       return (
         <div className="modal loginform group">
