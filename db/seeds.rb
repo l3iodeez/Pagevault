@@ -23,14 +23,25 @@ TEXT
     password: "password",
   }
   user = User.create!(user_data)
-  
-  5.times do |j|
-    note_data = {
-      title: "#{user.name}'s Note Number #{j+1}'",
-      body: lorem,
-      is_archived: false
+
+  3.times do |k|
+    notebook_data = {
+      title:  "#{user.name}'s Notebook Number #{k+1}'",
+      description: "#{user.name}'s Notebook Number #{k+1}'",
+      user_id: user.id
     }
-    user.notes.create!(note_data)
+
+    nb = Notebook.create!(notebook_data)
+
+    5.times do |j|
+      note_data = {
+        title: "#{user.name}'s Note Number #{(j+1) * (k+1)}'",
+        body: lorem,
+        is_archived: false,
+        notebook_id: nb.id
+      }
+      user.notes.create!(note_data)
+    end
   end
 
 

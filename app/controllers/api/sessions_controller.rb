@@ -1,7 +1,7 @@
 class Api::SessionsController < ApplicationController
 
-  before_action :verify_logged_in, only: [:destroy]
-  before_action :verify_logged_out, only: [:new, :create]
+  # before_action :verify_logged_in, only: [:destroy]
+  # before_action :verify_logged_out, only: [:new, :create]
 
   def show
     if logged_in?

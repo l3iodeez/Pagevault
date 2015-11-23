@@ -8,6 +8,7 @@ Rails.application.routes.draw do
    namespace :api, defaults: {format: :json} do
      resources :users, only: [:index, :new, :create, :destroy]
      resources :notes
+     resources :notebooks
      resource :session, only: [:create, :destroy, :show]
    end
   # Example of regular route:

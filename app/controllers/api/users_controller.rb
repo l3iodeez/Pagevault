@@ -1,8 +1,8 @@
 class Api::UsersController < ApplicationController
 
   before_action :set_user, only: [:update, :destroy]
-  before_action :verify_logged_in, except: [:index, :new, :create]
-  before_action :verify_logged_out, only: [:new, :create]
+  # before_action :verify_logged_in, except: [:index, :new, :create]
+  # before_action :verify_logged_out, only: [:new, :create]
   def index
     @users = []
     5.times do
