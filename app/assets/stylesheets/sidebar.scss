@@ -52,8 +52,8 @@
 
 .sidebar-item.logout{
   position: absolute;
-  bottom: 0;
-  left: 10px;
+  bottom: 10px;
+  left: calc(50% - 18px);
 }
 .sidebar-item.new-note div {
   font-size: 32px;

@@ -38,7 +38,7 @@
 
     setNotebook: function (notebook) {
       _notebook = notebook;
-      this._noteChanged();
+      this._notebookChanged();
     },
 
     _noteChanged : function () {
@@ -60,8 +60,15 @@
           SelectedStore.setNote(NoteStore.getFirst());
         }
       } else if ( payload.actionType === NotebookConstants.NOTEBOOKS_RECEIVED) {
-        if (!_note) {
-          SelectedStore.setNote(NoteStore.getFirst());
+        if (!_notebook) {
+          SelectedStore.setNotebook(NoteStore.getFirst());
+        }
+      } else if ( payload.actionType === NotebookConstants.NOTEBOOK_SELECTED) {
+        SelectedStore.setNotebook(payload.notebook);
+        if (!_note && payload.notebook) {
+          debugger
+          SelectedStore.setNote(payload.notebook.firstNote);
+
         }
       }
     }),

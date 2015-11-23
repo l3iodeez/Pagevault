@@ -13,7 +13,7 @@ $(document).on('ready', function () {
     toggleIndex: function () {
       this.setState({showIndex: !this.state.showIndex});
       if (!this.state.showIndex) {
-        SelectedActions.setSelected(NoteStore.getFirst());
+        SelectedActions.setSelectedNote(NoteStore.getFirst());
       }
     },
     setSelected: function (note) {

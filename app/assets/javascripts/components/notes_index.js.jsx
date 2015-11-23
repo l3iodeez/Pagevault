@@ -1,18 +1,40 @@
 var NotesIndex = React.createClass({
   getInitialState: function () {
     return({
-      notes: NoteStore.all()
+      notes: [],
+      notebook: null
     });
   },
   notesChanged: function () {
-    this.setState({ notes: NoteStore.all() });
+    if (!this.state.notebook) {
+      return;
+    }
+    this.setState({ notes: NoteStore.getByNotebookID(this.state.notebook.id) });
+  },
+  selectedNotebookChanged : function () {
+    var selectedNotebook = SelectedStore.getNotebook();
+    if (selectedNotebook) {
+      this.setState({notebook: SelectedStore.getNotebook()});
+      this.notesChanged();
+    }
+  },
+  notebooksChanged: function () {
+    if (this.state.notebook) {
+      return;
+    }
+    SelectedStore.setNotebook(NotebookStore.getFirst());
   },
   componentDidMount: function () {
     NoteStore.addChangeListener(this.notesChanged);
-    NotesAPIUtil.fetchAllNotes();
+    NotebookStore.addChangeListener(this.notebooksChanged);
+
+    SelectedStore.addNotebookChangeListener(this.selectedNotebookChanged);
+    NotesAPIUtil.fetchAllNotes(NotebooksAPIUtil.fetchAllNotebooks);
   },
   componentWillUnmount: function () {
     NoteStore.removeChangeListener(this.notesChanged);
+    SelectedStore.removeNotebookChangeListener(this.selectedNotebookChanged);
+    NotebookStore.removeChangeListener(this.notebooksChanged);
   },
   render: function () {
     var indexClass = "note-index";

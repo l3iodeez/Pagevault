@@ -1,6 +1,5 @@
 var SessionsApiUtil = {
   login: function (credentials, successCallback, failureCallback) {
-    debugger
     $.ajax({
       url: '/api/session',
       type: 'POST',
@@ -12,7 +11,6 @@ var SessionsApiUtil = {
         successCallback && successCallback();
       },
       error: function (errors) {
-        debugger
         console.log("login failure!");
         failureCallback && failureCallback(errors)
       }

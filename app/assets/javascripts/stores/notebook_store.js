@@ -56,12 +56,12 @@
     },
 
     dispatcherId: AppDispatcher.register(function (payload) {
-      if (payload.actionType === NoteConstants.NOTEBOOKS_RECEIVED) {
-        NotebookStore.resetNotebooks(payload.notes);
+      if (payload.actionType === NotebookConstants.NOTEBOOKS_RECEIVED) {
+        NotebookStore.resetNotebooks(payload.notebooks);
       } else if (payload.actionType === NotebookConstants.NOTEBOOK_RECEIVED) {
-        NotebookStore.storeNotebook(payload.note);
+        NotebookStore.storeNotebook(payload.notebook);
       } else if (payload.actionType === NotebookConstants.NOTEBOOK_DELETED) {
-        NotebookStore.deleteNotebook(payload.note);
+        NotebookStore.deleteNotebook(payload.notebook);
       }
     }),
 

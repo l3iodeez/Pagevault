@@ -28,6 +28,12 @@
       });
       return foundNote;
     },
+    getByNotebookID: function (notebookId) {
+      if (_notes[notebookId]) {
+        return _notes[notebookId].slice(0);
+      }
+        return [];
+    },
 
     getFirst: function (notebookId) {
       if (!notebookId) {

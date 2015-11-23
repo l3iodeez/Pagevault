@@ -13,6 +13,7 @@ var NoteForm = React.createClass({
       title: title,
       body: body,
       is_archived: is_archived,
+      notebook_id: "",
       saving: "saved"
     };
   },
@@ -28,16 +29,31 @@ var NoteForm = React.createClass({
       title: "",
       body: "",
       is_archived: "",
+      notebook_id: "",
       saving: "saved"
     });
   },
   importNote: function () {
-    this.setState(SelectedStore.getNote());
+    var note = SelectedStore.getNote();
+    if (note) {
+      this.setState({
+        id: note.id,
+        title: note.title,
+        body: note.body,
+        notebook_id: note.notebook_id,
+        is_archived: note.is_archived
+      });
+    }
+  },
+  componentWillReceiveProps: function () {
+    this.handleSubmit();
   },
   newNoteReceived: function () {
+    clearTimeout(this.timeoutID);
+
     if (!this.state.id && this.state.creating) {
       this.importID();
-    } else if (!this.state.id ) {
+    } else if (!this.state.id || this.state.id === "") {
       this.importNote();
     } else if (SelectedStore.getNote() && (this.state.id !== SelectedStore.getNote().id)) {
       this.changeSelectedNote();
@@ -45,10 +61,19 @@ var NoteForm = React.createClass({
       this.resetForm();
     }
   },
+  newNotebookSelected: function () {
+    this.handleSubmit();
+    SelectedStore.setNote(SelectedStore.getNotebook().firstNote);
+  },
   componentDidMount: function () {
     SelectedStore.addNoteChangeListener(this.newNoteReceived);
+    SelectedStore.addNotebookChangeListener(this.newNotebookSelected);
+
   },
   componentWillUnmount: function () {
+    SelectedStore.removeNoteChangeListener(this.newNoteReceived);
+    SelectedStore.removeNotebookChangeListener(this.newNotebookSelected);
+
     this.handleSubmit();
   },
   handleSubmit: function (e, callback) {
@@ -74,6 +99,8 @@ var NoteForm = React.createClass({
       var note = {
           title: this.state.title,
           body: this.state.body,
+          notebook_id: SelectedStore.getNotebook().id
+
       };
       if (this.state.id) {
         note.id = this.state.id;
@@ -87,6 +114,7 @@ var NoteForm = React.createClass({
         note = {
           title: this.state.title,
           body: this.state.body,
+          notebook_id: SelectedStore.getNotebook().id
         };
         this.setState({creating: true});
         NotesAPIUtil.createNote(note, apiCallback);

@@ -21,6 +21,24 @@
         note: note
       });
     },
+    receiveAllNotebooks: function(notebooks){
+      AppDispatcher.dispatch({
+        actionType: NotebookConstants.NOTEBOOKS_RECEIVED,
+        notebooks: notebooks
+      });
+    },
+    receiveSingleNotebook: function (notebook) {
+      AppDispatcher.dispatch({
+        actionType: NotebookConstants.NOTEBOOK_RECEIVED,
+        notebook: notebook
+      });
+    },
+    deleteNotebook: function (notebook) {
+      AppDispatcher.dispatch({
+        actionType: NotebookConstants.NOTEBOOK_DELETED,
+        notebook: notebook
+      });
+    },
   // sessions api functions
 
 
