@@ -1,13 +1,13 @@
-# CleverNote
+# PageVault
 
 ## Minimum Viable Product
 
-CleverNote is a web application inspired by Evernote built using Ruby on Rails
-and React.js. CleverNote allows users to:
+PageVault is a web application inspired by Evernote built using Ruby on Rails
+and React.js. PageVault allows users to:
 
 - [X] Create an account
 - [X] Log in / Log out
-- [ ] Create, read, edit, and delete notes
+- [X] Create, read, edit, and delete notes
 - [ ] Organize notes within Notebooks
 - [ ] Tag notes with multiple tags and search notes by tag
 - [ ] Search through notes for blocks of text
@@ -79,6 +79,7 @@ I will create seed data. I will also convert some of my React views to modal ove
 forms.
 
 ### Bonus Features (TBD)
+- [ ] Client-side note encryption
 - [ ] Prettify transitions
 - [ ] Simultaneous Editing
 - [ ] Reminders
