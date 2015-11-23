@@ -1,9 +1,22 @@
 var NotebooksIndex = React.createClass({
+  mixins: [React.addons.LinkedStateMixin],
+
   getInitialState: function() {
-    return {notebooks: NotebookStore.all()};
+    return {notebooks: NotebookStore.all(), displayNewNoteForm: false, newNotebookTitle: "", newNotebookDescription: ""};
   },
   notebooksChanged: function () {
     this.setState({notebooks: NotebookStore.all()});
+  },
+  newNotebook: function () {
+    this.setState({displayNewNoteForm: true});
+  },
+  createNotebook: function (e) {
+      debugger
+    e.preventDefault();
+    this.setState({displayNewNoteForm: false});
+    if (this.state.newNotebookTitle.length > 0) {
+      NotebooksAPIUtil.createNotebook({title: this.state.newNotebookTitle, description: this.state.newNotebookDescription});
+    }
   },
   componentDidMount: function() {
     NotebookStore.addChangeListener(this.notebooksChanged);
@@ -22,11 +35,30 @@ var NotebooksIndex = React.createClass({
     } else {
       notebookCount = this.state.notebooks.length + " notebooks";
     }
+      var newNoteForm;
+    if (this.state.displayNewNoteForm) {
+      newNoteForm = (
+        <div className="new-notebook-form modal">
+          <div>
+            <form onSubmit={this.createNote}>
+              <label htmlFor="notebookTitle">Notebook title:</label>
+              <input type="text" name="notebookTitle" valueLink={this.linkState('newNotebookTitle')} />
+              <label htmlFor="notebookTitle">Notebook description:</label>
+              <input type="text" name="notebookTitle" valueLink={this.linkState('newNotebookDescription')} />
+
+              <button>Create notebook</button>
+            </form>
+          </div>
+        </div>
+      );
+    }
     return (
       <ul className={indexClass}>
+        {newNoteForm}
         <li className="notebook-index-header">
           <p>NOTEBOOKS</p>
           <p>{notebookCount}</p>
+          <a className="new-notebook" onClick={this.newNotebook}>New Notebook</a>
         </li>
         <div className="notebook-index-container">
           { typeof this.state.notebooks === "undefined" ? null :
