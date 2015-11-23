@@ -46,7 +46,7 @@ var NoteForm = React.createClass({
     }
   },
   componentDidMount: function () {
-    SelectedStore.addChangeListener(this.newNoteReceived);
+    SelectedStore.addNoteChangeListener(this.newNoteReceived);
   },
   componentWillUnmount: function () {
     this.handleSubmit();

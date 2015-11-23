@@ -16,7 +16,7 @@ var MainContainer = React.createClass({
     }
   },
   componentDidMount: function () {
-    SelectedStore.addChangeListener(this.selectedChange);
+    SelectedStore.addNoteChangeListener(this.selectedChange);
     // NoteStore.addChangeListener(this.selectedChange);
   },
   componentWillUnmount: function () {

@@ -1,6 +1,6 @@
 (function(root) {
   'use strict';
-  var _notes = [];
+  var _notes = {};
   var CHANGE_EVENT = "notesChange";
 
 
@@ -15,40 +15,49 @@
     },
 
     all: function () {
-      return _notes.slice(0);
+      var collection = [];
+      for (var key in _notes) {
+        collection = collection.concat(_notes[key]);
+      }
+      return collection;
     },
 
     getByID: function (noteId) {
-      var foundNote = _notes.find(function (note) {
+      var foundNote = NoteStore.all().find(function (note) {
         return note.id === noteId;
       });
       return foundNote;
     },
 
-    getFirst: function () {
-      return _notes[0];
+    getFirst: function (notebookId) {
+      if (!notebookId) {
+        return;
+      }
+      return _notes[notebookId][0];
     },
 
     storeNote: function (recvdNote) {
       var storedNote = NoteStore.getByID(recvdNote.id);
       if (storedNote) {
-        var idx = _notes.indexOf(storedNote);
-        _notes.splice(idx, 1);
+        var idx = _notes[storedNote.notebook_id].indexOf(storedNote);
+        _notes[storedNote.notebook_id].splice(idx, 1);
       }
-      _notes.unshift(recvdNote);
+      _notes[recvdNote.notebook_id]= _notes[recvdNote.notebook_id] || [];
+      _notes[recvdNote.notebook_id].unshift(recvdNote);
       NoteStore._notesChanged();
     },
 
     deleteNote: function (note) {
       var storedNote = NoteStore.getByID(note.id);
-      var idx = _notes.indexOf(storedNote);
-      _notes.splice(idx, 1);
+      var idx = _notes[storedNote.notebook_id].indexOf(storedNote);
+      _notes[storedNote.notebook_id].splice(idx, 1);
       NoteStore._notesChanged();
     },
 
     resetNotes: function (notes) {
-      _notes = notes;
-      NoteStore._notesChanged();
+      notes.forEach(function (note) {
+        this.storeNote(note);
+      }.bind(this));
     },
 
     _notesChanged : function () {
