@@ -25,6 +25,7 @@ var MainContainer = React.createClass({
 
   },
   render: function() {
+    var index =
     return (
       <div className="notes">
         <NotesIndex show={this.props.showIndex}/>
