@@ -49,3 +49,7 @@ div.modal div {
 div.modal button{
   margin: 8px;
 }
+
+.modal {
+  z-index: 100;
+}

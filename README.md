@@ -8,7 +8,7 @@ and React.js. PageVault allows users to:
 - [X] Create an account
 - [X] Log in / Log out
 - [X] Create, read, edit, and delete notes
-- [ ] Organize notes within Notebooks
+- [X] Organize notes within Notebooks
 - [ ] Tag notes with multiple tags and search notes by tag
 - [ ] Search through notes for blocks of text
 - [ ] Apply complex styling to notes while editing
