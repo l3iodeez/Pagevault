@@ -121,7 +121,7 @@ var NoteForm = React.createClass({
       }
     }
     if (e) {
-      this.props.toggleIndex();
+      this.props.toggleNoteIndex();
     }
 
   },
@@ -158,7 +158,7 @@ var NoteForm = React.createClass({
   },
   cancel: function (e) {
     e.preventDefault();
-    this.props.toggleIndex();
+    this.props.toggleNoteIndex();
   },
   render: function() {
     var formClass = "note-form ";

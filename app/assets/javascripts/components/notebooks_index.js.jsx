@@ -22,7 +22,6 @@ var NotebooksIndex = React.createClass({
     } else {
       notebookCount = this.state.notebooks.length + " notebooks";
     }
-
     return (
       <ul className={indexClass}>
         <li className="notebook-index-header">
@@ -30,10 +29,13 @@ var NotebooksIndex = React.createClass({
           <p>{notebookCount}</p>
         </li>
         <div className="notebook-index-container">
-          { typeof this.state.notebook === "undefined" ? null :
-            this.state.notebook.map(function (note) {
+          { typeof this.state.notebooks === "undefined" ? null :
+            this.state.notebooks.map(function (notebook) {
               return (
-                <NotebookIndexItem key={notebook.id} notebook={notebook} />
+                <NotebooksIndexItem
+                  key={notebook.id}
+                  notebook={notebook}
+                  toggleNotebookIndex={this.props.toggleNotebookIndex} />
               );
             }.bind(this))
           }

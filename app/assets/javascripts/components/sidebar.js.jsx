@@ -5,12 +5,15 @@ var Sidebar = React.createClass({
   },
   newNote: function () {
     SelectedStore.setNote(null);
-    this.props.toggleIndex();
+    this.props.toggleNoteIndex();
+  },
+  viewNotebooks: function () {
+    this.props.toggleNotebookIndex();
   },
 
   render: function() {
     var sidebarClass = "sidebar";
-    if (!this.props.showIndex) {
+    if (!this.props.showNoteIndex) {
       sidebarClass += " hidden";
     }
     return (
@@ -19,7 +22,7 @@ var Sidebar = React.createClass({
         <button className="sidebar-item new-note" onClick={this.newNote}><div></div></button>
         <button className="sidebar-item search" ><div></div></button>
         <button className="sidebar-item view-notes" ><div></div></button>
-        <button className="sidebar-item notebooks" ><div></div></button>
+        <button className="sidebar-item notebooks" onClick={this.viewNotebooks} ><div></div></button>
         <button className="sidebar-item logout" onClick={this.logout}><div></div></button>
       </div>
     );

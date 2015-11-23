@@ -2,6 +2,7 @@ var NotebooksIndexItem = React.createClass({
   handleClick: function (e) {
     e.preventDefault();
     SelectedActions.setSelectedNotebook(this.props.notebook);
+    this.props.toggleNotebookIndex();
   },
   render: function() {
     var modifiedDate = Helpers.formatDate(new Date(this.props.notebook.updated_at));

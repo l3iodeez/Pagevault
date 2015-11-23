@@ -66,7 +66,6 @@
       } else if ( payload.actionType === NotebookConstants.NOTEBOOK_SELECTED) {
         SelectedStore.setNotebook(payload.notebook);
         if (!_note && payload.notebook) {
-          debugger
           SelectedStore.setNote(payload.notebook.firstNote);
 
         }

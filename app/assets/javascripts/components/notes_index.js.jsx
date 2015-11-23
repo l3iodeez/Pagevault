@@ -14,8 +14,7 @@ var NotesIndex = React.createClass({
   selectedNotebookChanged : function () {
     var selectedNotebook = SelectedStore.getNotebook();
     if (selectedNotebook) {
-      this.setState({notebook: SelectedStore.getNotebook()});
-      this.notesChanged();
+      this.setState({notebook: SelectedStore.getNotebook(), notes: NoteStore.getByNotebookID(SelectedStore.getNotebook().id) });
     }
   },
   notebooksChanged: function () {
@@ -48,10 +47,12 @@ var NotesIndex = React.createClass({
       noteCount = this.state.notes.length + " notes";
     }
 
+    var notebooklabel = this.state.notebook ? <p className="notebook-label">Notebook:{this.state.notebook.title}</p> : null ;
     return(
       <ul className={indexClass}>
         <li className="note-index-header">
           <p>NOTES</p>
+          {notebooklabel}
           <p>{noteCount}</p>
         </li>
         <div className="note-index-container">

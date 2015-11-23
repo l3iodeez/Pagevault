@@ -1,6 +1,10 @@
 var MainContainer = React.createClass({
   getInitialState: function () {
-    return { selectedNote: NoteStore.getFirst(), showIndex: this.props.showIndex };
+    return {
+      selectedNote: NoteStore.getFirst(),
+      showNoteIndex: this.props.showNoteIndex,
+      showNotebookIndex: this.props.showNotebookIndex
+     };
   },
   selectedChange: function () {
     if (SelectedStore.getNote() && SelectedStore.getNote().id) {
@@ -11,7 +15,7 @@ var MainContainer = React.createClass({
 
   },
   componentWillReceiveProps: function (newProps) {
-    if (!newProps.showIndex) {
+    if (!newProps.showNoteIndex) {
       this.setState({ selectedNote: null });
     }
   },
@@ -25,13 +29,15 @@ var MainContainer = React.createClass({
 
   },
   render: function() {
-    var index =
     return (
       <div className="notes">
-        <NotesIndex show={this.props.showIndex}/>
+        <NotesIndex show={this.props.showNoteIndex} />
+        <NotebooksIndex
+          show={this.props.showNotebookIndex}
+          toggleNotebookIndex={this.props.toggleNotebookIndex} />
         <NoteForm
-          fullWidth={!this.props.showIndex}
-          toggleIndex={this.props.toggleIndex} />
+          fullWidth={!this.props.showNoteIndex}
+          toggleNoteIndex={this.props.toggleNoteIndex} />
       </div>
     );
   }

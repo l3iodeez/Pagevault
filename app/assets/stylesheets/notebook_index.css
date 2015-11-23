@@ -1,10 +1,12 @@
 
-.note-index {
+.notebook-index {
   position: absolute;
+  background-color: #FFF;
   left: 73px;
   float: left;
   width: 335px;
   border-right: 1px solid lightgray;
+  border-left: 1px solid lightgray;
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
@@ -13,10 +15,10 @@
   -moz-transition: left 0.25s ease-in-out;
   -o-transition: left 0.25s ease-in-out;
   transition: left 0.25s ease-in-out;
-  z-index: 1;
+  z-index: 5;
 }
 
-.note-index-container {
+.notebook-index-container {
   position: absolute;
   bottom: 0;
   top: 121px;
@@ -24,11 +26,11 @@
   overflow-y: auto;
 }
 
-.note-index.hidden{
+.notebook-index.hidden{
   left: -400px;
 }
 
-.note-index-header {
+.notebook-index-header {
   height: 120px;
   width: 335px;
   border-bottom: 1px solid lightgray;
@@ -40,32 +42,32 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
-.note-index-header p{
+.notebook-index-header p{
   padding-left: 15px;
-  margin-bottom: 2px;
+  padding-top: 15px;
 }
-.note-index-header p:last-child {
+.notebook-index-header p:last-child {
   font-size: 12px;
 }
 
-.note-index-item {
+.notebook-index-item {
   position: relative;
   height: 120px;
   width: 335px;
   border-bottom: 1px solid lightgray;
   cursor: pointer;
 }
-.note-index-item ul {
+.notebook-index-item ul {
   padding: 3px;
 }
-.note-index-item img {
+.notebook-index-item img {
   display: block;
   position: absolute;
   top: 10px;
   right: 20px;
   margin: auto;
 }
-.note-index-item li {
+.notebook-index-item li {
   display: block;
   width: 200px;
   overflow: hidden;
@@ -79,7 +81,7 @@
   color: #878787
 }
 
-.note-index-item li:first-child {
+.notebook-index-item li:first-child {
   font-size: 16px;
   font-weight: 300;
   padding-top: 5px;
@@ -88,12 +90,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.note-index-item li:nth-child(2) {
+.notebook-index-item li:nth-child(2) {
   height: 14px;
 }
-.note-index-item li:nth-child(3) {
+.notebook-index-item li:nth-child(3) {
   height: 58px;
-}
-.notebook-label {
-  font-size: 14px;
 }

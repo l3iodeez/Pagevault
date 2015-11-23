@@ -11,6 +11,8 @@
   -moz-transition: left 0.25s ease-in-out;
   -o-transition: left 0.25s ease-in-out;
   transition: left 0.25s ease-in-out;
+  z-index: 10;
+  background-color: #FFF;
 }
 
 .sidebar button{

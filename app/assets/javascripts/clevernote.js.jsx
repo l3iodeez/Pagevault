@@ -8,13 +8,16 @@ $(document).on('ready', function () {
     mixins: [ReactRouter.History],
 
     getInitialState: function () {
-      return { selectedNote: null, showIndex: true, currentUser: null  };
+      return { selectedNote: null, showNoteIndex: true, currentUser: null, showNotebookIndex: false,  };
     },
-    toggleIndex: function () {
-      this.setState({showIndex: !this.state.showIndex});
-      if (!this.state.showIndex) {
-        SelectedActions.setSelectedNote(NoteStore.getFirst());
+    toggleNoteIndex: function () {
+      this.setState({showNoteIndex: !this.state.showNoteIndex});
+      if (!this.state.showNoteIndex) {
+        SelectedActions.setSelectedNote(SelectedStore.getNotebook().firstNote);
       }
+    },
+    toggleNotebookIndex: function () {
+      this.setState({showNotebookIndex: !this.state.showNotebookIndex});
     },
     setSelected: function (note) {
       this.setState({selectedNote: note});
@@ -35,14 +38,22 @@ $(document).on('ready', function () {
     },
     render: function () {
       var mainViewClass = "main-view";
-      if (!this.state.showIndex) {
+      if (!this.state.showNoteIndex) {
         mainViewClass += " fullscreen";
       }
       return(
         <div className="app-container group">
-          <Sidebar showIndex={this.state.showIndex} toggleIndex={this.toggleIndex} />
+          <Sidebar
+            showNoteIndex={this.state.showNoteIndex}
+            toggleNoteIndex={this.toggleNoteIndex}
+            showNotebookIndex={this.state.showNotebookIndex}
+            toggleNotebookIndex={this.toggleNotebookIndex} />
           <div className={mainViewClass}>
-            <MainContainer showIndex={this.state.showIndex} toggleIndex={this.toggleIndex} />
+            <MainContainer
+              showNoteIndex={this.state.showNoteIndex}
+              toggleNoteIndex={this.toggleNoteIndex}
+              showNotebookIndex={this.state.showNotebookIndex}
+              toggleNotebookIndex={this.toggleNotebookIndex} />
           </div>
         </div>
       );
