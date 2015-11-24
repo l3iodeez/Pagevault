@@ -24,3 +24,6 @@ if show_notes && notebook.notes.first
     end
   end
 end
+json.tags do
+  json.array!(notebook.tags.map{|tag| tag.tag }) 
+end
