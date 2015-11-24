@@ -5,12 +5,12 @@
   left: 73px;
   float: left;
   width: 335px;
-  border-right: 1px solid lightgray;
-  border-left: 1px solid lightgray;
+  border-right: 1px solid #D3D3D3;
+  border-left: 1px solid #D3D3D3;
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
-  border-top: 1px solid lightgray;
+  border-top: 1px solid #D3D3D3;
   -webkit-transition: left 0.25s ease-in-out;
   -moz-transition: left 0.25s ease-in-out;
   -o-transition: left 0.25s ease-in-out;
@@ -33,7 +33,7 @@
 .notebook-index-header {
   height: 120px;
   width: 335px;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid #D3D3D3;
   color: #878787;
   display: inline-block;
   vertical-align: top;
@@ -54,7 +54,7 @@
   position: relative;
   height: 120px;
   width: 335px;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid #D3D3D3;
   cursor: pointer;
 }
 .notebook-index-item ul {
@@ -75,10 +75,30 @@
   padding-top: 5px;
   padding-left: 15px;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: #808080scale;
   font-size: 12px;
   font-weight: 400;
   color: #878787
+}
+.notebook-index-item button.delete-notebook{
+  position: absolute;
+  background-image: image_url("wastebasket.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 20px;
+  width: 20px;
+  bottom: 20px;
+  left: 20px;
+}
+.notebook-index-item button.delete-notebook:hover {
+  background-image: image_url("wastebasket-hover.svg");
+}
+.notebook-index-header > a {
+  position: absolute;
+  top: 100px;
+  right: 5px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .notebook-index-item li:first-child {
@@ -89,13 +109,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.notebook-index-header > a {
-  position: absolute;
-  top: 100px;
-  right: 5px;
-  font-size: 16px;
-  cursor: pointer;
 }
 .notebook-index-item li:nth-child(2) {
   height: 14px;

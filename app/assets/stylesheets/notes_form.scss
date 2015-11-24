@@ -51,7 +51,7 @@
   color: rgb(45, 190, 96);
   font-weight: 100;
   border: none;
-  border-top: 1px solid lightgray;
+  border-top: 1px solid #D3D3D3;
 }
 .note-form label {
   display: none;
@@ -85,5 +85,5 @@
   opacity: 0.7;
 }
 .dirty.save-indicator {
-    background-image: image_url("gray-check.png");
+    background-image: image_url("#808080-check.png");
 }
