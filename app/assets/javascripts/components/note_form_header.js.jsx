@@ -13,11 +13,11 @@ var NoteFormHeader = React.createClass({
   deleteNote: function () {
     if (this.props.note) {
       NotesAPIUtil.destroyNote(this.props.note, function (data) {
-        SelectedActions.setSelected(NoteStore.getFirst());
+        SelectedActions.setSelectedNote(NoteStore.getFirst(SelectedStore.getNotebook().id));
       });
     }
     else {
-      SelectedActions.setSelected(NoteStore.getFirst());
+      SelectedActions.setSelectedNote(NoteStore.getFirst(SelectedStore.getNotebook().id));
     }
     this.hideConfirm();
   },
