@@ -13,10 +13,10 @@ var NotebooksIndex = React.createClass({
   createNotebook: function (e) {
       debugger
     e.preventDefault();
-    this.setState({displayNewNoteForm: false});
     if (this.state.newNotebookTitle.length > 0) {
       NotebooksAPIUtil.createNotebook({title: this.state.newNotebookTitle, description: this.state.newNotebookDescription});
     }
+    this.setState({displayNewNoteForm: false});
   },
   componentDidMount: function() {
     NotebookStore.addChangeListener(this.notebooksChanged);
@@ -40,7 +40,7 @@ var NotebooksIndex = React.createClass({
       newNoteForm = (
         <div className="new-notebook-form modal">
           <div>
-            <form onSubmit={this.createNote}>
+            <form onSubmit={this.createNotebook}>
               <label htmlFor="notebookTitle">Notebook title:</label>
               <input type="text" name="notebookTitle" valueLink={this.linkState('newNotebookTitle')} />
               <label htmlFor="notebookTitle">Notebook description:</label>
