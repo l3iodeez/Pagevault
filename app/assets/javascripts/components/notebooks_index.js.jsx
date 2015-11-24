@@ -8,22 +8,16 @@ var NotebooksIndex = React.createClass({
     this.setState({notebooks: NotebookStore.all()});
   },
   newNotebook: function () {
-    this.setState({displayNewNoteForm: true});
+    ModalActions.raiseModal({type: "newNotebook", object: {}});
   },
-  createNotebook: function (e) {
-      debugger
-    e.preventDefault();
-    if (this.state.newNotebookTitle.length > 0) {
-      NotebooksAPIUtil.createNotebook({title: this.state.newNotebookTitle, description: this.state.newNotebookDescription});
-    }
-    this.setState({displayNewNoteForm: false});
-  },
+
   componentDidMount: function() {
     NotebookStore.addChangeListener(this.notebooksChanged);
   },
   componentWillUnmount: function() {
     NotebookStore.removeChangeListener(this.notebooksChanged);
   },
+
   render: function() {
     var indexClass = "notebook-index";
     if (!this.props.show) {
@@ -35,26 +29,9 @@ var NotebooksIndex = React.createClass({
     } else {
       notebookCount = this.state.notebooks.length + " notebooks";
     }
-      var newNoteForm;
-    if (this.state.displayNewNoteForm) {
-      newNoteForm = (
-        <div className="new-notebook-form modal">
-          <div>
-            <form onSubmit={this.createNotebook}>
-              <label htmlFor="notebookTitle">Notebook title:</label>
-              <input type="text" name="notebookTitle" valueLink={this.linkState('newNotebookTitle')} />
-              <label htmlFor="notebookTitle">Notebook description:</label>
-              <input type="text" name="notebookTitle" valueLink={this.linkState('newNotebookDescription')} />
 
-              <button>Create notebook</button>
-            </form>
-          </div>
-        </div>
-      );
-    }
     return (
       <ul className={indexClass}>
-        {newNoteForm}
         <li className="notebook-index-header">
           <p>NOTEBOOKS</p>
           <p>{notebookCount}</p>

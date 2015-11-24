@@ -36,7 +36,7 @@
         _notes.splice(idx, 1);
       }
       _notebooks.unshift(recvdNotebook);
-      NoteStore._notebooksChanged();
+      NotebookStore._notebooksChanged();
     },
 
     deleteNotebook: function (notebook) {

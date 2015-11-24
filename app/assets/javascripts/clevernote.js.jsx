@@ -43,6 +43,7 @@ $(document).on('ready', function () {
       }
       return(
         <div className="app-container group">
+          <Modals />
           <Sidebar
             showNoteIndex={this.state.showNoteIndex}
             toggleNoteIndex={this.toggleNoteIndex}

@@ -32,7 +32,9 @@ div.modal {
   right: 0;
   top: 0;
   bottom: 0;
-
+  z-index: 20;
+}
+.modal.new-notebook-form {
 }
 
 div.modal div {
@@ -43,7 +45,9 @@ div.modal div {
   border-radius: 15px;
   box-shadow: 3px 3px 10px #808080;
   background-color: white;
-  z-index: 5;
+  padding: 5px;
+  z-index: 21;
+
 }
 
 .modal button {
@@ -59,7 +63,11 @@ div.modal div {
   padding-right: 15px;
   margin: 8px;
 }
+.modal input{
+  display: block;
+  border: 1px solid #ccc;
+  margin: auto;
+}
 
 .modal {
-  z-index: 100;
 }
