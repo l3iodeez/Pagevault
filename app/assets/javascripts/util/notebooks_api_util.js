@@ -28,7 +28,6 @@
       });
     },
     createNotebook: function (notebook, callback) {
-      debugger
       $.ajax({
         url: '/api/notebooks',
         method: 'POST',

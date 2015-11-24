@@ -2,7 +2,7 @@ var Modals = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
 
   getInitialState: function() {
-    return {modal: null, editId: null, newNotebookTitle: "", newNotebookDescription: ""};
+    return {modal: null, editId: null, newNotebookTitle: "", newNotebookDescription: "", pending: false};
   },
   componentWillMount: function() {
     ModalStore.addChangeListener(this.raiseModal);
@@ -20,52 +20,77 @@ var Modals = React.createClass({
     }
     else if (modalInfo.type === "newNotebook") {
       this.setState({modal: this.newNotebookModal(), editId: null});
-
+    } else {
+      this.setState({modal: null, editId: null});
     }
+  },
+  spinner: function () {
+    return (
+      <div className="modal spinner">
+        <div className="modal-spinner-image" />
+      </div>
+    );
   },
   closeModal: function () {
     ModalActions.closeModal();
-    this.setState({modal: null, editId: null});
-
     SelectedStore.setNote(NoteStore.getFirst(SelectedStore.getNotebook().id));
   },
   deleteNoteModal: function () {
     return (
-      <div className="confirm-delete">
-        <p>Delete this note?</p>
-        <button onClick={this.deleteNote}>Yes</button>
-        <button onClick={this.closeModal}>No</button>
+      <div className="modal confirm-delete">
+        <div>
+          <p>Delete this note?</p>
+          <button onClick={this.deleteNote}>Yes</button>
+          <button onClick={this.closeModal}>No</button>
+        </div>
       </div>
     );
   },
-  deleteNote: function () {
+  deleteNote: function (e) {
+    e.preventDefault();
     NotesAPIUtil.destroyNote({id: this.state.editId}, this.closeModal);
   },
   deleteNotebookModal: function () {
     return (
-        <div className="confirm-delete">
+      <div className="modal confirm-delete">
+        <div>
           <p>Delete this notebook?</p>
           <button onClick={this.deleteNotebook}>Yes</button>
           <button onClick={this.closeModal}>No</button>
         </div>
+      </div>
     );
   },
-  deleteNotebook: function () {
+  deleteNotebook: function (e) {
+    e.preventDefault();
     NotebooksAPIUtil.destroyNotebook({id: this.state.editId}, this.closeModal);
   },
   newNotebookModal: function () {
     return(
-      <div className="new-notebook-form">
-        <form onSubmit={this.newNotebook}>
-          <label htmlFor="notebookTitle">Notebook title:</label>
-          <input type="text" name="notebookTitle" onChange={this.titleChanged} />
-          <label htmlFor="notebookDescription">Notebook description:</label>
-          <input type="text" name="notebookDescription"  onChange={this.descriptionChanged}/>
-          <button>Create notebook</button>
-          <button onClick={this.closeModal}>Cancel</button>
-        </form>
+      <div className="modal new-notebook-form">
+        <div>
+          <form onSubmit={this.newNotebook}>
+            <label htmlFor="notebookTitle">Notebook title:</label>
+            <input type="text" name="notebookTitle" onChange={this.titleChanged} />
+            <label htmlFor="notebookDescription">Notebook description:</label>
+            <input type="text" name="notebookDescription"  onChange={this.descriptionChanged}/>
+            <button>Create notebook</button>
+            <button onClick={this.closeModal}>Cancel</button>
+          </form>
+        </div>
       </div>
     );
+  },
+  newNotebook: function (e) {
+    e.preventDefault();
+    this.setState({pending: true, modal: this.spinner() });
+    var notebook = {
+      title: this.state.newNotebookTitle,
+      description: this.state.newNotebookDescription
+    };
+    NotebooksAPIUtil.createNotebook(notebook, this.closeModal, function () {
+      this.setState({modal: this.newNotebookModal(), editId: null });
+    });
   },
   titleChanged: function (e) {
     this.setState({newNotebookTitle: e.currentTarget.value});
@@ -73,16 +98,10 @@ var Modals = React.createClass({
   descriptionChanged: function (e) {
     this.setState({newNotebookDescription: e.currentTarget.value});
   },
-  newNotebook: function () {
-    NotebooksAPIUtil.createNotebook({
-      title: this.state.newNotebookTitle,
-      description: this.state.newNotebookDescription
-    });
-  },
   render: function() {
     var modalClass;
     if (this.state.modal) {
-      modalClass = "modal";
+      modalClass = "modal-bg";
     }
     return (
       <div className={modalClass}>

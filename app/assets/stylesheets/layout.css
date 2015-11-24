@@ -23,51 +23,7 @@ body {
   z-index: 5;
 }
 
-div.modal {
-  position: fixed;
-  background: rgba(0, 0, 0, 0.4);
-  cursor: default;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 20;
-}
-.modal.new-notebook-form {
-}
-
-div.modal div {
-  position: fixed;
-  width: 300px;
-  left: calc(50% - 150px);
-  top: 100px;
-  text-align: center;
-  border-radius: 15px;
-  box-shadow: 3px 3px 10px #808080;
-  background-color: white;
-  padding: 5px;
-  z-index: 21;
-
-}
-
-.modal button {
-  font-size: 13px;
-  font-weight: 500;
-  height: 28px;
-  color: white;
-  outline: none;
-  border-color: rgb(45, 190, 96);
-  border-radius: 4px;
-  background-color: rgb(45, 190, 96);
-  padding-left: 15px;
-  padding-right: 15px;
-  margin: 8px;
-}
-.modal input{
-  display: block;
-  border: 1px solid #ccc;
-  margin: auto;
-}
-
-.modal {
+.tag-input{
+  border: 1px solid #000;
+  
 }

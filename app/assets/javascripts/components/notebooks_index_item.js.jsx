@@ -20,6 +20,9 @@ var NotebooksIndexItem = React.createClass({
         <li>{modifiedDate}</li>
         <li>{this.props.notebook.description}</li>
         <button onClick={this.showConfirm} className="delete-notebook"></button>
+        <label>Tags
+          <input type="text" className="tag-input notebook-tags"></input>
+        </label>
         <img src="http://placehold.it/96x96" />
       </ul>
     );
