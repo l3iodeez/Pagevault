@@ -32,8 +32,8 @@
     storeNotebook: function (recvdNotebook) {
       var storedNotebook = NotebookStore.getByID(recvdNotebook.id);
       if (storedNotebook) {
-        var idx = _notebooks.indexOf(storedNotenook);
-        _notes.splice(idx, 1);
+        var idx = _notebooks.indexOf(storedNotebook);
+        _notebooks.splice(idx, 1);
       }
       _notebooks.unshift(recvdNotebook);
       NotebookStore._notebooksChanged();

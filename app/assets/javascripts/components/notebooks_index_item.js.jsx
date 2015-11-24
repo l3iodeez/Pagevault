@@ -1,6 +1,6 @@
 var NotebooksIndexItem = React.createClass({
   getInitialState: function () {
-    return {confirming: false};
+    return {confirming: false, tags: this.props.notebook.tags, dirty: false};
   },
   handleClick: function (e) {
     e.preventDefault();
@@ -12,17 +12,53 @@ var NotebooksIndexItem = React.createClass({
     e.stopPropagation();
     ModalActions.raiseModal({type: "deleteNotebook", object: this.props.notebook});
   },
+  enterTags: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+  },
+  changeTags: function (e) {
+    this.setState({tags:e.currentTarget.value });
+  },
+  updateTags: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.setState({dirty: true});
+    var tags = this.state.tags.split(',').map(function (tag) {
+        return tag.trim().toLowerCase().split(' ');
+    }).reduce(function(a, b) {
+      return a.concat(b);
+    });
+    var notebook = {
+      id: this.props.notebook.id,
+      title: this.props.notebook.title,
+      description: this.props.notebook.description,
+      tags: tags
+    };
+    NotebooksAPIUtil.editNotebook(notebook, function () {
+      this.setState({dirty: false});
+    }.bind(this));
+  },
   render: function() {
     var modifiedDate = Helpers.formatDate(new Date(this.props.notebook.updated_at));
     return (
       <ul className="notebook-index-item" onClick={!this.state.confirming ? this.handleClick : null}>
-        <li>{this.props.notebook.title}</li>
-        <li>{modifiedDate}</li>
-        <li>{this.props.notebook.description}</li>
         <button onClick={this.showConfirm} className="delete-notebook"></button>
-        <label>Tags
-          <input type="text" className="tag-input notebook-tags"></input>
-        </label>
+        <form onSubmit={this.updateTags} className="notebook-edit-form">
+          <li>{this.props.notebook.title}</li>
+          <li>{modifiedDate}</li>
+          <li>{this.props.notebook.description}</li>
+          <div className="tag-input-form notebook-tags">
+            <span>Tags:</span>
+            <input
+              onClick={this.enterTags}
+              type="text"
+              className="tag-input notebook-tags"
+              value={this.state.tags}
+              onBlur={this.updateTags}
+              onChange={this.changeTags}></input>
+            {this.state.dirty ? <div className="tiny-spinner notebook-tags" /> : null}
+          </div>
+        </form>
         <img src="http://placehold.it/96x96" />
       </ul>
     );

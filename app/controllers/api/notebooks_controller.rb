@@ -18,6 +18,7 @@ class Api::NotebooksController < ApplicationController
   def create
     @notebook = Notebook.new(notebook_params)
     @notebook.user_id = current_user.id
+    @notebook.tag_ids = resolve_tags(params[:notebook][:tags])
     if @notebook.save
       render :show
     else
@@ -26,6 +27,7 @@ class Api::NotebooksController < ApplicationController
   end
 
   def update
+    @notebook.tag_ids = resolve_tags(params[:notebook][:tags])
     if @notebook.update(notebook_params)
       render :show
     else

@@ -1,0 +1,91 @@
+html, body {
+  height: 100%;
+}
+body {
+  overflow: hidden;
+}
+
+.notes {
+  height: 100%;
+}
+
+.main-view, .status-bar {
+  margin-left: 60px;
+}
+.main-view.fullscreen, .status-bar.fullscreen {
+  margin-left: 0px;
+}
+
+.status-bar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 5;
+}
+
+.tag-input{
+  border: 1px solid #000;
+}
+
+.tag-input-form.note-tags{
+  position: relative;
+  width: 201px;
+  top: -30px;
+  left: 100px;
+}
+.tag-input-form.note-tags span {
+  position: absolute;
+  top: 5px;
+  left: -50px;
+  color: #000;
+}
+input.tag-input.note-tags {
+  vertical-align: middle;
+  color: #000;
+  font-size: 14px;
+  padding: 3px;
+  width: 100%;
+  border: 1px solid #ccc;
+}
+.notebook-edit-form{
+  position: relative;
+}
+
+.tag-input-form .notebook-tags{
+  position: absolute;
+  left: 50px;
+  bottom: -5px;
+}
+
+.notebook-tags span{
+  position: absolute;
+  left: 50px;
+  bottom: 20px;
+  color: #aaa;
+  font-size: 12px;
+}
+input.tag-input.notebook-tags {
+  vertical-align: middle;
+  color: #000;
+  font-size: 14px;
+  padding: 3px;
+  width: 125px;
+  border: 1px solid #aaa;
+}
+.tiny-spinner{
+  height: 13px;
+  width: 13px;
+  background-image: image_url("spinner.gif");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.tiny-spinner.notebook-tags{
+  position: absolute;
+  left: 190px;
+  bottom: 0px;
+}
+.tiny-spinner.note-tags{
+  position: absolute;
+  left: 210px;
+  bottom: 5px;
+}

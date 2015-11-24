@@ -2,9 +2,7 @@ fields = [:id, :title, :description, :user_id, :created_at, :updated_at]
 if !show_notes
   if notebook.notes.first
     json.firstNote do
-      json.extract!(
-      notebook.notes.first,
-      :id, :title, :body, :is_archived)
+      json.partial!('/api/notes/note', note: notebook.notes.first)
     end
   else
     json.firstNote do
@@ -17,13 +15,10 @@ json.extract!(notebook, *fields )
 if show_notes && notebook.notes.first
   json.notes do
     json.array!(notebook.notes) do |note|
-      json.extract!(
-      note,
-        :id, :title, :body, :is_archived
-      )
+      json.partial!('/api/notes/note', note: note)
     end
   end
 end
 json.tags do
-  json.array!(notebook.tags.map{|tag| tag.tag }) 
+  json.array!(notebook.tags.map{|tag| tag.tag })
 end

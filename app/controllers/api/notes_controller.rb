@@ -18,6 +18,7 @@ class Api::NotesController < ApplicationController
   def create
     @note = Note.new(note_params)
     @note.user_id = current_user.id
+    @note.tag_ids = resolve_tags(params[:note][:tags])
     if @note.save
       render :show
     else
@@ -26,6 +27,7 @@ class Api::NotesController < ApplicationController
   end
 
   def update
+    @note.tag_ids = resolve_tags(params[:note][:tags])
     if @note.update(note_params)
       render :show
     else

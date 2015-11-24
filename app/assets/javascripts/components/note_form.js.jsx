@@ -7,14 +7,15 @@ var NoteForm = React.createClass({
     var title = selectedNote ? selectedNote.title : "";
     var body = selectedNote ? selectedNote.body : "";
     var is_archived  = selectedNote ? selectedNote.is_archived : "";
-
+    var tags = selectedNote ? selectedNote.tags : "";
     return {
       id: id,
       title: title,
       body: body,
       is_archived: is_archived,
       notebook_id: "",
-      saving: "saved"
+      saving: "saved",
+      tagsDirty: false
     };
   },
   importID: function () {
@@ -41,7 +42,8 @@ var NoteForm = React.createClass({
         title: note.title,
         body: note.body,
         notebook_id: note.notebook_id,
-        is_archived: note.is_archived
+        is_archived: note.is_archived,
+        tags: note.tags
       });
     }
   },
@@ -99,8 +101,8 @@ var NoteForm = React.createClass({
       var note = {
           title: this.state.title,
           body: this.state.body,
-          notebook_id: SelectedStore.getNotebook().id
-
+          notebook_id: SelectedStore.getNotebook().id,
+          tags: this.state.tags
       };
       if (this.state.id) {
         note.id = this.state.id;
@@ -160,6 +162,33 @@ var NoteForm = React.createClass({
     e.preventDefault();
     this.props.toggleNoteIndex();
   },
+  showDeleteConfirm: function () {
+    if (this.state.id) {
+      ModalActions.raiseModal({type: "deleteNote", object: {id: this.state.id}});
+    }
+  },
+  changeTags: function (e) {
+    this.setState({tags:e.currentTarget.value });
+  },
+  updateTags: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.setState({tagsDirty: true});
+    if (this.state.id) {
+      var tags = this.state.tags.split(',').map(function (tag) {
+          return tag.trim().toLowerCase().split(' ');
+      }).reduce(function(a, b) {
+        return a.concat(b);
+      });
+      var note = {
+        id: this.state.id,
+        tags: tags
+      };
+      NotesAPIUtil.editNote(note, function () {
+        this.setState({tagsDirty: false});
+      }.bind(this));
+    }
+  },
   render: function() {
     var formClass = "note-form ";
     var cancelButtonClass = "cancel-button";
@@ -182,7 +211,22 @@ var NoteForm = React.createClass({
 
     return (
       <div className={formClass} >
-      <NoteFormHeader note={SelectedStore.getNote()} containerClass={formClass} />
+        <div className={formClass + " header"}>
+          <div className="header-delete icon" onClick={this.showDeleteConfirm}>
+          </div>
+            <form onSubmit={this.updateTags} className="tag-input-form note-tags">
+              <span htmlFor="tags">Tags</span>
+              <input
+                name="tags"
+                onClick={this.enterTags}
+                type="text"
+                className="tag-input note-tags"
+                value={this.state.tags}
+                onBlur={this.updateTags}
+                onChange={this.changeTags} />
+                {this.state.tagsDirty ? <div className="tiny-spinner note-tags" /> : null}
+            </form>
+        </div>
         <form onSubmit={this.handleSubmit}>
           <div className="button-container">
             <button className={saveButtonClass}>Done</button>

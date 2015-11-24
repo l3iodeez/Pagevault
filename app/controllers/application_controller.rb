@@ -8,13 +8,13 @@ class ApplicationController < ActionController::Base
   def current_user
     User.find_by_session_token(session[:session_token])
   end
-  def resolve_tags(tag_string)
-    tags = tag_string.split(' ')
+  def resolve_tags(tags)
+
     tag_ids = []
     tags.each do |tag|
-      tag_id = Tag.find_by_tag(tag)
-      if tag_id
-        tag_ids << tag_id
+      existing_tag = Tag.find_by_tag(tag)
+      if existing_tag
+        tag_ids << existing_tag.id
       else
         tag = Tag.create!(tag: tag)
         tag_ids << tag.id
