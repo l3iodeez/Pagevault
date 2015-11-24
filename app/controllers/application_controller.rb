@@ -8,6 +8,20 @@ class ApplicationController < ActionController::Base
   def current_user
     User.find_by_session_token(session[:session_token])
   end
+  def resolve_tags(tag_string)
+    tags = tag_string.split(' ')
+    tag_ids = []
+    tags.each do |tag|
+      tag_id = Tag.find_by_tag(tag)
+      if tag_id
+        tag_ids << tag_id
+      else
+        tag = Tag.create!(tag: tag)
+        tag_ids << tag.id
+      end
+    end
+    return tag_ids
+  end
 
   def logged_in?
     !!current_user
@@ -43,6 +57,7 @@ class ApplicationController < ActionController::Base
      flash[type] << message
    end
  end
+
 
  def errors_to_flash(object, now = false)
    object.errors.full_messages.each do |error|

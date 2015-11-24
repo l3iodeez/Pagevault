@@ -27,7 +27,6 @@ div.modal {
   position: fixed;
   background: rgba(0, 0, 0, 0.4);
   cursor: default;
-  text-align: center;
   left: 0;
   right: 0;
   top: 0;
@@ -42,6 +41,7 @@ div.modal div {
   width: 300px;
   left: calc(50% - 150px);
   top: 100px;
+  text-align: center;
   border-radius: 15px;
   box-shadow: 3px 3px 10px #808080;
   background-color: white;

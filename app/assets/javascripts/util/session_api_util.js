@@ -6,12 +6,10 @@ var SessionsApiUtil = {
       dataType: 'json',
       data: credentials,
       success: function (currentUser) {
-        console.log("logged in!");
         CurrentUserActions.receiveCurrentUser(currentUser);
         successCallback && successCallback();
       },
       error: function (errors) {
-        console.log("login failure!");
         failureCallback && failureCallback(errors)
       }
     });
@@ -23,7 +21,6 @@ var SessionsApiUtil = {
       type: 'DELETE',
       dataType: 'json',
       success: function () {
-        console.log("logged out!");
         CurrentUserActions.receiveCurrentUser({});
         SelectedActions.setSelected(null);
         ApiActions.receiveAllNotes([]);
