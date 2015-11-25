@@ -1,3 +1,4 @@
+
 var NoteForm = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
   getInitialState: function() {
@@ -51,6 +52,7 @@ var NoteForm = React.createClass({
   },
   componentWillReceiveProps: function () {
     this.handleSubmit();
+
   },
   newNoteReceived: function () {
     clearTimeout(this.timeoutID);
@@ -77,10 +79,11 @@ var NoteForm = React.createClass({
   componentWillUnmount: function () {
     SelectedStore.removeNoteChangeListener(this.newNoteReceived);
     SelectedStore.removeNotebookChangeListener(this.newNotebookSelected);
+    tinymce.remove();
 
     this.handleSubmit();
   },
-  handleSubmit: function (e, callback) {
+  handleSubmit: function (e, attrs, callback) {
     clearTimeout(this.timeoutID);
     this.timeoutID = null;
 
@@ -101,8 +104,8 @@ var NoteForm = React.createClass({
       }.bind(this);
 
       var note = {
-          title: this.state.title,
-          body: this.state.body,
+          title: attrs.title || this.state.title,
+          body: attrs.body || this.state.body,
           notebook_id: SelectedStore.getNotebook().id,
           tags: this.state.tags
       };
@@ -131,24 +134,25 @@ var NoteForm = React.createClass({
   },
 
 
-  saveTimeout: function () {
+  saveTimeout: function (attrs) {
     if (this.state.saving !== "saving") {
       clearTimeout(this.timeoutID);
       this.timeoutID = setTimeout(function () {
         this.setState({saving: "saving"});
-        this.handleSubmit(null, function () {
+        this.handleSubmit(null, attrs, function () {
           this.setState({saving: "saved"});
         }.bind(this));
       }.bind(this), 2000);
     }
   },
-  updateBody: function(e) {
-    this.setState({body: e.currentTarget.value, saving: "dirty"});
-    this.saveTimeout();
+  updateBody: function(content) {
+    console.log("body updated");
+    this.setState({body: content, saving: "dirty"});
+    this.saveTimeout({body: content});
   },
   updateTitle: function(e) {
     this.setState({title: e.currentTarget.value, saving: "dirty"});
-    this.saveTimeout();
+    this.saveTimeout({title: e.currentTarget.value });
   },
   newNote: function (e) {
     e.preventDefault();
@@ -195,13 +199,15 @@ var NoteForm = React.createClass({
     var formClass = "note-form ";
     var cancelButtonClass = "cancel-button";
     var saveButtonClass = "save-button";
-
+    var tinyMceBox = "tiny-mce-box ";
 
 
     if (this.props.fullWidth) {
       formClass += "new";
+      tinyMceBox += "new";
     } else {
       formClass += "edit";
+
       saveButtonClass += " hidden";
       cancelButtonClass += " hidden";
     }
@@ -210,7 +216,6 @@ var NoteForm = React.createClass({
     } else {
       cancelButtonClass += " hidden";
     }
-
     return (
       <div className={formClass} >
         <div className={formClass + " header"}>
@@ -248,13 +253,15 @@ var NoteForm = React.createClass({
           <br />
           <label htmlFor="noteBody">Note Body</label>
             <br />
-            <textarea
-              id="noteBody"
-              name="body"
-              placeholder={"Drag files here or just start typing..."}
-              value={this.state.body}
-              onChange={this.updateBody}
-            />
+            <div className={tinyMceBox}>
+              <TinyMCEInput
+                value={this.state.body}
+                onChange={this.updateBody}
+                config={{
+                  plugins: 'image lists print preview',
+                  toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
+                }} />
+            </div>
           <br />
 
         </form>
@@ -262,3 +269,11 @@ var NoteForm = React.createClass({
     );
   }
 });
+            // <textarea
+            //   id="noteBody"
+            //   className="tinymce"
+            //   name="body"
+            //   placeholder={"Drag files here or just start typing..."}
+            //   value={this.state.body}
+            //   onChange={this.updateBody}
+            // />

@@ -18,5 +18,8 @@
 //= require ReactRouter.min
 //= require eventemitter
 //= require flux
+//= require tinymce
+//= require uuid
+//= require TinyMCEInput
 //= require_tree ./components
 //= require_tree .

@@ -85,5 +85,5 @@ $(document).on('ready', function () {
       </Route>
     </Router>
   );
-  React.render(router, root);
+  ReactDOM.render(router, root);
 });

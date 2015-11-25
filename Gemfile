@@ -28,8 +28,14 @@ gem 'faker'
 gem 'bcrypt'
 # Use Puma as the web server
 gem 'puma'
-gem 'react-rails', '~> 1.3.0'
+gem 'react-rails', '~> 1.4.0'
 gem 'flux-rails-assets', '~> 2.1.0'
+
+#Use tinymce for rich text
+gem 'tinymce-rails'
+
+#use paperclip for storing images
+gem 'paperclip'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

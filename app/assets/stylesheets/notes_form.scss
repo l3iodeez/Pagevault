@@ -87,3 +87,13 @@
 .dirty.save-indicator {
     background-image: image_url("gray-check.png");
 }
+.note-form button {
+  padding: 0;
+
+}
+.tiny-mce-box {
+  width: 60%;
+}
+.tiny-mce-box.new {
+  margin: auto;
+}

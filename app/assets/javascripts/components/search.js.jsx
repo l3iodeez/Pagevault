@@ -27,7 +27,7 @@ var Search = React.createClass({
         <li className="search-header">
           <p>SEARCH NOTES</p>
           <input onChange={this.searchChanged} className="search-input" type="text" ></input>
-          {this.state.searching ? <div className="tiny-spinner search-spinner"></div> : null}
+          {this.state.status === "searching" ? <div className="tiny-spinner search-spinner"></div> : null}
         </li>
         <div className="search-results index-item-container">
           {this.state.results.map(function (note) {
