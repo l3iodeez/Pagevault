@@ -1,0 +1,24 @@
+.search {
+  z-index: 5;
+  background-color: #FFF;
+}
+
+.search-header {
+  height: 120px;
+  width: 335px;
+  border-bottom: 1px solid #D3D3D3;
+  color: #878787;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 21px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 10px;
+}
+.search-input {
+  border: 1px solid #AAA;
+}
+.search.hidden {
+  left: -400px;
+}

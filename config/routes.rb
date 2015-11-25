@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'search/index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -10,6 +12,7 @@ Rails.application.routes.draw do
      resources :notes
      resources :notebooks
      resource :session, only: [:create, :destroy, :show]
+     resource :search, only: [:index]
    end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

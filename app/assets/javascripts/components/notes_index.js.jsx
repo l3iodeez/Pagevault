@@ -36,7 +36,7 @@ var NotesIndex = React.createClass({
     NotebookStore.removeChangeListener(this.notebooksChanged);
   },
   render: function () {
-    var indexClass = "sliding-panes note-index";
+    var indexClass = "left-pane sliding-pane note-index";
     if (!this.props.show) {
       indexClass +=" hidden";
     }

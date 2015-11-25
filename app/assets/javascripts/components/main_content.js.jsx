@@ -1,33 +1,31 @@
 var MainContainer = React.createClass({
-  getInitialState: function () {
-    return {
-      selectedNote: NoteStore.getFirst(),
-      showNoteIndex: this.props.showNoteIndex,
-      showNotebookIndex: this.props.showNotebookIndex
-     };
-  },
-  selectedChange: function () {
-    if (SelectedStore.getNote() && SelectedStore.getNote().id) {
-      this.setState({ selectedNote: SelectedStore.getNote() });
-    } else {
-      this.setState({ selectedNote: NoteStore.getFirst() });
-    }
-
-  },
-  componentWillReceiveProps: function (newProps) {
-    if (!newProps.showNoteIndex) {
-      this.setState({ selectedNote: null });
-    }
-  },
-  componentDidMount: function () {
-    SelectedStore.addNoteChangeListener(this.selectedChange);
-    // NoteStore.addChangeListener(this.selectedChange);
-  },
-  componentWillUnmount: function () {
-    SelectedStore.removeNoteChangeListener(this.selectedChange);
-    // NoteStore.addChangeListener(this.selectedChange);
-
-  },
+  // getInitialState: function () {
+  //   return {
+  //     selectedNote: NoteStore.getFirst(),
+  //    };
+  // },
+  // selectedChange: function () {
+  //   if (SelectedStore.getNote() && SelectedStore.getNote().id) {
+  //     this.setState({ selectedNote: SelectedStore.getNote() });
+  //   } else {
+  //     this.setState({ selectedNote: NoteStore.getFirst() });
+  //   }
+  //
+  // },
+  // componentWillReceiveProps: function (newProps) {
+  //   if (!newProps.showNoteIndex) {
+  //     this.setState({ selectedNote: null });
+  //   }
+  // },
+  // componentDidMount: function () {
+  //   SelectedStore.addNoteChangeListener(this.selectedChange);
+  //   NoteStore.addChangeListener(this.selectedChange);
+  // },
+  // componentWillUnmount: function () {
+  //   SelectedStore.removeNoteChangeListener(this.selectedChange);
+  //   NoteStore.addChangeListener(this.selectedChange);
+  //
+  // },
   render: function() {
     return (
       <div className="notes">
@@ -39,7 +37,9 @@ var MainContainer = React.createClass({
           fullWidth={!this.props.showNoteIndex}
           toggleNoteIndex={this.props.toggleNoteIndex} />
         <Search
-          toggleSearch={this.props.toggleSearch} />
+          toggleSearch={this.props.toggleSearch}
+          show={this.props.showSearch}
+          />
       </div>
     );
   }

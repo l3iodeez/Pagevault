@@ -13,7 +13,7 @@ $(document).on('ready', function () {
         showNoteIndex: true,
         currentUser: null,
         showNotebookIndex: false,
-        showSearch: false, 
+        showSearch: false,
       };
     },
     toggleNoteIndex: function () {
@@ -58,13 +58,17 @@ $(document).on('ready', function () {
             showNoteIndex={this.state.showNoteIndex}
             toggleNoteIndex={this.toggleNoteIndex}
             showNotebookIndex={this.state.showNotebookIndex}
-            toggleNotebookIndex={this.toggleNotebookIndex} />
+            toggleNotebookIndex={this.toggleNotebookIndex}
+            showSearch={this.state.showSearch}
+            toggleSearch={this.toggleSearch} />
           <div className={mainViewClass}>
             <MainContainer
               showNoteIndex={this.state.showNoteIndex}
               toggleNoteIndex={this.toggleNoteIndex}
               showNotebookIndex={this.state.showNotebookIndex}
-              toggleNotebookIndex={this.toggleNotebookIndex} />
+              toggleNotebookIndex={this.toggleNotebookIndex}
+              showSearch={this.state.showSearch}
+              toggleSearch={this.toggleSearch} />
           </div>
         </div>
       );
