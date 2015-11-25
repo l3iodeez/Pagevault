@@ -32,6 +32,12 @@ gem 'react-rails', '~> 1.3.0'
 gem 'flux-rails-assets', '~> 2.1.0'
 # Use Unicorn as the app server
 # gem 'unicorn'
+
+# Use fuzzily for fuzzy search-input
+gem 'fuzzily'
+gem 'delayed_job_active_record'
+gem 'daemons'
+
 group :production do
   gem 'rails_12factor'
 
@@ -42,6 +48,7 @@ end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem "delayed_job_web"
   gem 'byebug'
   gem 'better_errors'
   gem 'binding_of_caller'

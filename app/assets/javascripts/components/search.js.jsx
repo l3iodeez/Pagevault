@@ -3,14 +3,11 @@ var Search = React.createClass({
     return {searchString: "", results: []};
   },
 
-  updateResults: function () {
-
-  },
   setTimeout: function () {
     clearTimeout(this.timeoutID);
     this.timeoutID = setTimeout(function () {
-      this.updateResults(null, function () {
-        this.setState({results: "saved"});
+      SearchAPIUtil.search(this.state.searchString, function (data) {
+        this.setState({results: data });
       }.bind(this));
     }.bind(this), 2000);
   },
@@ -26,7 +23,11 @@ var Search = React.createClass({
           <input className="search-input" type="text"></input>
         </li>
         <div onChange={this.setTimeout} className="search-results-container">
-
+          {this.state.results.map(function (note) {
+            return (
+              <NotesIndexItem key={note.id} note={note} />
+              );
+          })}
         </div>
       </ul>
     );

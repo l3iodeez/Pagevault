@@ -16,7 +16,24 @@ esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
 occaecat cupidatat non proident, sunt in culpa qui officia
 deserunt mollit anim id est laborum."
 TEXT
+
+tag_names = [
+  "work",
+  "play",
+  "travel",
+  "kids",
+  "vacation",
+  "pets",
+  "family",
+  "code"
+]
+tags = []
+tag_names.each do |tag|
+  tags << Tag.create!(tag: tag)
+end
+
 10.times do |i|
+  p "user #{i+1}"
   user_data = {
     email: Faker::Internet.email,
     name: Faker::Internet.user_name,
@@ -28,7 +45,8 @@ TEXT
     notebook_data = {
       title:  "#{user.name}'s Notebook Number #{k+1}'",
       description: "#{user.name}'s Notebook Number #{k+1}'",
-      user_id: user.id
+      user_id: user.id,
+      tags: [tags.sample]
     }
 
     nb = Notebook.create!(notebook_data)
@@ -38,7 +56,9 @@ TEXT
         title: "#{user.name}'s Note Number #{(j+1) * (k+1)}'",
         body: lorem,
         is_archived: false,
-        notebook_id: nb.id
+        notebook_id: nb.id,
+        tags: [tags.sample, tags.sample, tags.sample]
+
       }
       user.notes.create!(note_data)
     end
