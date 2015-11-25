@@ -48,11 +48,12 @@
         demoUsers = <span>
                       <h4>Demo accounts</h4>
                       {this.state.users.map(function (user) {
-                          return <p>{user.email}</p>;
+                          return <p key={user.id}>{user.email}</p>;
                         }.bind(this))}
                     </span>;
       }
       return (
+      <div className="modal-bg">
         <div className="modal loginform group">
           <div>
             <form onSubmit={ this.submit }>
@@ -80,6 +81,7 @@
             </form>
           </div>
         </div>
+      </div>
       );
     },
 

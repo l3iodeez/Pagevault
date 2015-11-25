@@ -22,7 +22,8 @@ var SessionsApiUtil = {
       dataType: 'json',
       success: function () {
         CurrentUserActions.receiveCurrentUser({});
-        SelectedActions.setSelected(null);
+        SelectedActions.setSelectedNote(null);
+        SelectedActions.setSelectedNotebook(null);
         ApiActions.receiveAllNotes([]);
       }
     });

@@ -12,10 +12,11 @@ div.loginform input, div.loginform button{
 
 div.loginform button{
   background-color: #2DBE60;
-  padding: 3px 10px;
+  padding: 0 15px;
 }
 div.loginform input{
-  width: 80%
+  width: 80%;
+  margin: auto;
 }
 
 .error-text {
