@@ -1,15 +1,21 @@
 var Search = React.createClass({
+
   getInitialState: function() {
-    return {searchString: "", results: []};
+    return {searchString: "", results: [], status: "idle"};
   },
 
   setTimeout: function () {
     clearTimeout(this.timeoutID);
     this.timeoutID = setTimeout(function () {
+      this.setState({status: "searching"});
       SearchAPIUtil.search(this.state.searchString, function (data) {
-        this.setState({results: data });
+        this.setState({results: data, status: "idle" });
       }.bind(this));
     }.bind(this), 2000);
+  },
+  searchChanged: function (e) {
+    this.setTimeout();
+    this.setState({searchString: e.currentTarget.value});
   },
   render: function() {
     var indexClass = "left-pane sliding-pane search ";
@@ -20,9 +26,10 @@ var Search = React.createClass({
       <ul className={indexClass}>
         <li className="search-header">
           <p>SEARCH NOTES</p>
-          <input className="search-input" type="text"></input>
+          <input onChange={this.searchChanged} className="search-input" type="text" ></input>
+          {this.state.searching ? <div className="tiny-spinner search-spinner"></div> : null}
         </li>
-        <div onChange={this.setTimeout} className="search-results-container">
+        <div className="search-results index-item-container">
           {this.state.results.map(function (note) {
             return (
               <NotesIndexItem key={note.id} note={note} />

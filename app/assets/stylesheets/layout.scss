@@ -63,10 +63,14 @@ input.tag-input.note-tags {
   border-right: 1px solid #D3D3D3;
   border-left: 1px solid #D3D3D3;
   border-top: 1px solid #D3D3D3;
-  overflow-x: hidden;
-  overflow-y: auto;
   height: 100%;
 }
+.index-item-container {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%
+}
+
 .sliding-pane {
   -webkit-transition: left 0.25s ease-in-out;
   -moz-transition: left 0.25s ease-in-out;

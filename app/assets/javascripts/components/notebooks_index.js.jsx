@@ -37,7 +37,7 @@ var NotebooksIndex = React.createClass({
           <p>{notebookCount}</p>
           <a className="new-notebook" onClick={this.newNotebook}>New Notebook</a>
         </li>
-        <div className="notebook-index-container">
+        <div className="notebook-index index-item-container">
           { typeof this.state.notebooks === "undefined" ? null :
             this.state.notebooks.map(function (notebook) {
               return (

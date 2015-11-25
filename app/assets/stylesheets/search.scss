@@ -14,7 +14,9 @@
   font-weight: 300;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  padding: 10px;
+  padding-left: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .search-input {
   border: 1px solid #AAA;
