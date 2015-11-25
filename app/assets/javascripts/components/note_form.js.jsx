@@ -216,6 +216,15 @@ var NoteForm = React.createClass({
     } else {
       cancelButtonClass += " hidden";
     }
+
+    var formHeight = window.innerHeight;
+    var configOpts = {
+      plugins: 'image lists print preview',
+      height: window.innerHeight - 250,
+      toolbar: 'undo redo pastetext| bold italic | styleselect | fontselect | fontsizeselect | alignleft aligncenter alignright',
+      fontsize_formats: "8pt 9pt 10pt 11pt 12pt 26pt 36pt",
+      theme: 'modern'
+    };
     return (
       <div className={formClass} >
         <div className={formClass + " header"}>
@@ -257,12 +266,7 @@ var NoteForm = React.createClass({
               <TinyMCEInput
                 value={this.state.body}
                 onChange={this.updateBody}
-                config={{
-                  plugins: 'image lists print preview autoresize',
-                  autoresize_bottom_margin: 50,
-                  toolbar: 'undo redo | bold italic font-size | alignleft aligncenter alignright',
-                  autoresize_overflow_padding: 50
-                }} />
+                tinymceConfig={configOpts} />
             </div>
           <br />
 
