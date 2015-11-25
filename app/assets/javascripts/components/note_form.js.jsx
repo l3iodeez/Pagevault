@@ -15,6 +15,7 @@ var NoteForm = React.createClass({
       is_archived: is_archived,
       notebook_id: "",
       saving: "saved",
+      tags: tags,
       tagsDirty: false
     };
   },
@@ -31,6 +32,7 @@ var NoteForm = React.createClass({
       body: "",
       is_archived: "",
       notebook_id: "",
+      tags: "",
       saving: "saved"
     });
   },

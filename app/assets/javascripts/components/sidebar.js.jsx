@@ -12,7 +12,7 @@ var Sidebar = React.createClass({
   },
 
   render: function() {
-    var sidebarClass = "sidebar";
+    var sidebarClass = "sliding-panes sidebar";
     if (!this.props.showNoteIndex) {
       sidebarClass += " hidden";
     }

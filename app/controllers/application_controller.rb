@@ -11,16 +11,22 @@ class ApplicationController < ActionController::Base
   def resolve_tags(tags)
 
     tag_ids = []
-    tags.each do |tag|
-      existing_tag = Tag.find_by_tag(tag)
-      if existing_tag
-        tag_ids << existing_tag.id
-      else
-        tag = Tag.create!(tag: tag)
-        tag_ids << tag.id
+    if tags
+      tags.each do |tag|
+        break if tag.length < 1
+        existing_tag = Tag.find_by_tag(tag)
+        if existing_tag
+          tag_ids << existing_tag.id
+        else
+          tag = Tag.create!(tag: tag)
+          tag_ids << tag.id
+        end
       end
-    end
     return tag_ids
+    else
+      return []
+    end
+
   end
 
   def logged_in?

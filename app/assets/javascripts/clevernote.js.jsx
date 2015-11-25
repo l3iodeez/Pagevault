@@ -8,7 +8,13 @@ $(document).on('ready', function () {
     mixins: [ReactRouter.History],
 
     getInitialState: function () {
-      return { selectedNote: null, showNoteIndex: true, currentUser: null, showNotebookIndex: false,  };
+      return {
+        selectedNote: null,
+        showNoteIndex: true,
+        currentUser: null,
+        showNotebookIndex: false,
+        showSearch: false, 
+      };
     },
     toggleNoteIndex: function () {
       this.setState({showNoteIndex: !this.state.showNoteIndex});
@@ -18,6 +24,10 @@ $(document).on('ready', function () {
     },
     toggleNotebookIndex: function () {
       this.setState({showNotebookIndex: !this.state.showNotebookIndex});
+    },
+    toggleSearch: function () {
+      this.setState({showSearch: !this.state.showSearch});
+
     },
     setSelected: function (note) {
       this.setState({selectedNote: note});

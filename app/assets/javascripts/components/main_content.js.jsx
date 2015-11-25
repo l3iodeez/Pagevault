@@ -38,6 +38,8 @@ var MainContainer = React.createClass({
         <NoteForm
           fullWidth={!this.props.showNoteIndex}
           toggleNoteIndex={this.props.toggleNoteIndex} />
+        <Search
+          toggleSearch={this.props.toggleSearch} />
       </div>
     );
   }

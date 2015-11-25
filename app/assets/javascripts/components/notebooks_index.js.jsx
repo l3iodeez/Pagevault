@@ -19,7 +19,7 @@ var NotebooksIndex = React.createClass({
   },
 
   render: function() {
-    var indexClass = "notebook-index";
+    var indexClass = "sliding-panes notebook-index ";
     if (!this.props.show) {
       indexClass +=" hidden";
     }

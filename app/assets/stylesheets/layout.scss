@@ -47,31 +47,7 @@ input.tag-input.note-tags {
   width: 100%;
   border: 1px solid #ccc;
 }
-.notebook-edit-form{
-  position: relative;
-}
 
-.tag-input-form .notebook-tags{
-  position: absolute;
-  left: 50px;
-  bottom: -5px;
-}
-
-.notebook-tags span{
-  position: absolute;
-  left: 50px;
-  bottom: 20px;
-  color: #aaa;
-  font-size: 12px;
-}
-input.tag-input.notebook-tags {
-  vertical-align: middle;
-  color: #000;
-  font-size: 14px;
-  padding: 3px;
-  width: 125px;
-  border: 1px solid #aaa;
-}
 .tiny-spinner{
   height: 13px;
   width: 13px;
@@ -79,10 +55,12 @@ input.tag-input.notebook-tags {
   background-repeat: no-repeat;
   background-size: contain;
 }
-.tiny-spinner.notebook-tags{
-  position: absolute;
-  left: 190px;
-  bottom: 0px;
+
+.sliding-panes {
+  -webkit-transition: left 0.25s ease-in-out;
+  -moz-transition: left 0.25s ease-in-out;
+  -o-transition: left 0.25s ease-in-out;
+  transition: left 0.25s ease-in-out;
 }
 .tiny-spinner.note-tags{
   position: absolute;
