@@ -228,6 +228,7 @@ var TinyMCEInput = React.createClass({
       <div className={this.props.className} style={this.props.style}>
         <input type="hidden" name={this.props.name} value={this.state.value} readOnly />
         <textarea
+          className="tiny-mce-actual"
           id={this.state.id}
           defaultValue={this.state.value}
           onChange={this.onTextareaChange}

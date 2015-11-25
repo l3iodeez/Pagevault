@@ -200,7 +200,7 @@ var NoteForm = React.createClass({
     var cancelButtonClass = "cancel-button";
     var saveButtonClass = "save-button";
     var tinyMceBox = "tiny-mce-box ";
-
+    var style = { height: 500, width: 500};
 
     if (this.props.fullWidth) {
       formClass += "new";
@@ -258,8 +258,10 @@ var NoteForm = React.createClass({
                 value={this.state.body}
                 onChange={this.updateBody}
                 config={{
-                  plugins: 'image lists print preview',
-                  toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
+                  plugins: 'image lists print preview autoresize',
+                  autoresize_bottom_margin: 50,
+                  toolbar: 'undo redo | bold italic font-size | alignleft aligncenter alignright',
+                  autoresize_overflow_padding: 50
                 }} />
             </div>
           <br />

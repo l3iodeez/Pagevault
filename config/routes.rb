@@ -13,7 +13,6 @@ Rails.application.routes.draw do
      resource :session, only: [:create, :destroy, :show]
      resources :search, only: :index
    end
-   match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
