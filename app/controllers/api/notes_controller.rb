@@ -29,14 +29,18 @@ class Api::NotesController < ApplicationController
   end
 
   def update
-    @note.tag_ids = resolve_tags(params[:note][:tags])
     comparator = Note.new(note_params.except(:tags))
     comparator.tag_ids = @note.tag_ids
-      if @note.search_hash != comparator.searchable.hash.to_s
-        params[:note][:tags] ||= []
-        @note.update_fuzzy_searchable!
-        @note.search_hash = comparator.searchable.hash.to_s
-      end
+    comparator.title ||= @note.title
+    comparator.body ||= @note.body
+    comparator.user_id ||= @note.user_id
+    comparator.notebook_id ||= @note.notebook_id
+    @note.tag_ids = resolve_tags(params[:note][:tags])
+    if @note.search_hash != comparator.searchable.hash.to_s
+      params[:note][:tags] ||= []
+      @note.update_fuzzy_searchable!
+      @note.search_hash = comparator.searchable.hash.to_s
+    end
     if @note.update(note_params.except(:tags))
       render :show
     else

@@ -195,6 +195,9 @@ var NoteForm = React.createClass({
       }.bind(this));
     }
   },
+  catch: function (e) {
+    e.preventDefault();
+  },
   render: function() {
     var formHeight = window.innerHeight;
     var formClass = "note-form ";
@@ -269,7 +272,7 @@ var NoteForm = React.createClass({
                 </div>) : null}
             </form>
         </div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.catch}>
           <div className="button-container">
             <button className={saveButtonClass}>Done</button>
             <button className={cancelButtonClass} onClick={this.cancel}>Cancel</button>
