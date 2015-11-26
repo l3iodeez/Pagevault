@@ -51,7 +51,6 @@ var NoteForm = React.createClass({
     }
   },
   componentWillReceiveProps: function () {
-    this.handleSubmit();
 
   },
   newNoteReceived: function () {
@@ -62,6 +61,7 @@ var NoteForm = React.createClass({
     } else if (!this.state.id || this.state.id === "") {
       this.importNote();
     } else if (SelectedStore.getNote() && (this.state.id !== SelectedStore.getNote().id)) {
+      this.handleSubmit();
       this.changeSelectedNote();
     } else if (!SelectedStore.getNote()) {
       this.resetForm();
@@ -204,11 +204,20 @@ var NoteForm = React.createClass({
     var style = { height: 500, width: 500};
 
     var configOpts = {
-      plugins: 'image lists print preview',
+      plugins: 'imagetools lists print preview paste',
       height: formHeight - 250,
-      toolbar: 'undo redo pastetext| bold italic | styleselect | fontselect | fontsizeselect | alignleft aligncenter alignright',
+      toolbar: 'undo redo pastetext| bold italic | fontselect | fontsizeselect | alignleft aligncenter alignright | image',
       fontsize_formats: "8pt 9pt 10pt 11pt 12pt 26pt 36pt",
-      theme: 'modern'
+      theme: 'modern',
+      paste_data_images: true,
+      theme_modern_fonts : "Andale Mono=andale mono,times;"+
+                "Arial=arial,helvetica,sans-serif;"+
+                "Book Antiqua=book antiqua,palatino;"+
+                "Courier New=courier new,courier;"+
+                "Impact=impact,chicago;"+
+                "Times New Roman=times new roman,times;"+
+                "Verdana=verdana,geneva;"+
+                "Webdings=webdings;"
     };
 
     if (this.props.fullWidth) {

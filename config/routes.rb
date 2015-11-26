@@ -13,6 +13,10 @@ Rails.application.routes.draw do
      resource :session, only: [:create, :destroy, :show]
      resources :search, only: :index
    end
+
+   if Rails.env.development?
+     match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
+   end
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

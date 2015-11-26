@@ -11,7 +11,7 @@ and React.js. PageVault allows users to:
 - [X] Organize notes within Notebooks
 - [X] Tag notes with multiple tags and search notes by tag
 - [X] Search through notes for blocks of text
-- [ ] Apply complex styling to notes while editing
+- [X] Apply complex styling to notes while editing, including inserting inline images
 - [ ] Share notes with other users giving them read or read/write access
 
 ## Design Docs

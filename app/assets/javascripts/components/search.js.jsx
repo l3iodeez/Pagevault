@@ -11,7 +11,7 @@ var Search = React.createClass({
       SearchAPIUtil.search(this.state.searchString, function (data) {
         this.setState({results: data, status: "idle" });
       }.bind(this));
-    }.bind(this), 2000);
+    }.bind(this), 300);
   },
   searchChanged: function (e) {
     this.setTimeout();
@@ -27,7 +27,7 @@ var Search = React.createClass({
         <li className="search-header">
           <p>SEARCH NOTES</p>
           <input onChange={this.searchChanged} className="search-input" type="text" ></input>
-          {this.state.status === "searching" ? <div className="tiny-spinner search-spinner"></div> : null}
+          {this.state.status === "searching" ? <div className="tiny-spinner fa fa-spinner fa-spin"></div> : null}
         </li>
         <div className="search-results index-item-container">
           {this.state.results.map(function (note) {

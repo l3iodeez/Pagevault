@@ -19,6 +19,8 @@ class Api::NotesController < ApplicationController
     @note = Note.new(note_params)
     @note.user_id = current_user.id
     @note.tag_ids = resolve_tags(params[:note][:tags])
+    byebug
+    @note.search_hash = @note.searchable.hash
     if @note.save
       render :show
     else
@@ -28,7 +30,14 @@ class Api::NotesController < ApplicationController
 
   def update
     @note.tag_ids = resolve_tags(params[:note][:tags])
-    if @note.update(note_params)
+    comparator = Note.new(note_params.except(:tags))
+    comparator.tag_ids = @note.tag_ids
+      if @note.search_hash != comparator.searchable.hash.to_s
+        params[:note][:tags] ||= []
+        @note.update_fuzzy_searchable!
+        @note.search_hash = comparator.searchable.hash.to_s
+      end
+    if @note.update(note_params.except(:tags))
       render :show
     else
       render json: 422, status: :unprocessable_entity
@@ -42,11 +51,10 @@ class Api::NotesController < ApplicationController
 
   private
   def simulate_latency
-    sleep(2)
   end
 
   def note_params
-    params.require(:note).permit(:title, :body, :user_id, :notebook_id, :is_archived)
+    params.require(:note).permit(:title, :body, :user_id, :notebook_id, :is_archived, :tags)
   end
 
   def set_note
