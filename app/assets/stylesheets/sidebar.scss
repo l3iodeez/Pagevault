@@ -11,17 +11,10 @@
   background-color: #FFF;
 }
 
-.sidebar button{
-  color: white;
-  clear: both;
-}
 .sidebar.hidden{
   left: -73px;
 }
-@font-face {
-      font-family: "Bitstream Vera Serif Bold";
-      src:url("VeraSeBd.ttf") format('truetype');
-}
+
 .sidebar-item {
   display: block;
   position: relative;
@@ -31,12 +24,13 @@
   width: 36px;
   height: 36px;
   text-align: center;
+  vertical-align: middle;
   font-weight: bold;
   color: #FFF;
-  font-size: 20px;
-  font-family: "Bitstream Vera Serif Bold";
+  font-size: 25px;
 
 }
+
 .sidebar-item:hover {
   color: #2DBE60;
   border: 2px solid #2DBE60;
@@ -54,30 +48,10 @@
   left: calc(50% - 18px);
 }
 .sidebar-item.new-note div {
-  font-size: 32px;
-  font-weight: bolder;
-  position: absolute;
-  top: -3px;
-  left: 10px
+  font-size: 28px;
+
 }
 .sidebar-item.new-note:hover div {
   top: -5px;
   left: 8px;
-}
-
-.sidebar-item.new-note div::before {
-  content: "+";
-}
-.sidebar-item.search div::before  {
-  content: "🔎";
-}
-.sidebar-item.view-notes div::before  {
-
-  content: "📄";
-}
-.sidebar-item.notebooks div::before  {
-  content: "📓";
-}
-.sidebar-item.logout div::before  {
-  content: #128682;
 }

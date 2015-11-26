@@ -3,14 +3,6 @@
   z-index: 1;
 }
 
-.note-index-container {
-  position: absolute;
-  bottom: 0;
-  top: 121px;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
 .note-index.hidden{
   left: -400px;
 }

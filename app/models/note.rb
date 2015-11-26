@@ -10,7 +10,7 @@ class Note < ActiveRecord::Base
   end
 
   def searchable_changed?
-    body_changed? || title_changed? || tags_changed? || notebook.title_changed? || notebool.description_changed?
+    body_changed? || title_changed? || tags.any? {|a| a.changed?}  || notebook.title_changed? || notebook.description_changed?
   end
 
   def tag_strings

@@ -30,7 +30,7 @@
     },
     getByNotebookID: function (notebookId) {
       if (_notes[notebookId]) {
-        return _notes[notebookId].slice(0);
+        return _notes[notebookId].slice(0).sort(Helpers.sortBy("updated_at", "DESC"));
       }
         return [];
     },

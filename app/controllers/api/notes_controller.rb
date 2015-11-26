@@ -1,9 +1,9 @@
 class Api::NotesController < ApplicationController
   before_action :set_note, only: [:show, :update, :destroy]
-  # before_action :simulate_latency, except: [:index, :destroy] 
+  # before_action :simulate_latency, except: [:index, :destroy]
 
   def index
-    @notes = current_user.notes.order("updated_at DESC")
+    @notes = current_user.notes.order("updated_at DESC").includes(:tags)
     render :index
   end
 

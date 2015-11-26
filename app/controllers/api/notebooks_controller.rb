@@ -3,7 +3,7 @@ class Api::NotebooksController < ApplicationController
   before_action :simulate_latency, except: [:index, :destroy]
 
   def index
-    @notebooks = current_user.notebooks.order("updated_at DESC")
+    @notebooks = current_user.notebooks.order("updated_at DESC").includes(:tags).includes(:notes)
     render :index
   end
 

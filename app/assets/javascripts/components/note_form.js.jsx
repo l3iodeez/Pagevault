@@ -84,6 +84,7 @@ var NoteForm = React.createClass({
     this.handleSubmit();
   },
   handleSubmit: function (e, attrs, callback) {
+    attrs = attrs || {};
     clearTimeout(this.timeoutID);
     this.timeoutID = null;
 

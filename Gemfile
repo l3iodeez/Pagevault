@@ -28,9 +28,13 @@ gem 'faker'
 gem 'bcrypt'
 # Use Puma as the web server
 gem 'puma'
+
+# Use React!
 gem 'react-rails', '~> 1.4.0'
 gem 'flux-rails-assets', '~> 2.1.0'
 
+# Use Font Awesome for icons
+gem 'font-awesome-sass'
 #Use tinymce for rich text
 gem 'tinymce-rails'
 

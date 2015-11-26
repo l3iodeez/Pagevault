@@ -58,7 +58,6 @@ input.tag-input.note-tags {
 .left-pane {
   position: absolute;
   left: 73px;
-  float: left;
   width: 335px;
   border-right: 1px solid #D3D3D3;
   border-left: 1px solid #D3D3D3;
@@ -66,9 +65,11 @@ input.tag-input.note-tags {
   height: 100%;
 }
 .index-item-container {
+  position: absolute;
+  top: 120px;
+  bottom: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 100%
 }
 
 .sliding-pane {
