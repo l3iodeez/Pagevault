@@ -76,16 +76,14 @@
   left: 78%
 }
 
-.saving.save-indicator  {
-  background-image: image_url("spinner.gif");
-
+.save-indicator  {
+  font-size: 24px;
 }
-.saved.save-indicator {
-  background-image: image_url("green-check.png");
-  opacity: 0.7;
+.spinner  {
+  color: #2DBE60;
 }
-.dirty.save-indicator {
-    background-image: image_url("gray-check.png");
+.spinner .dirty {
+  color: #C3C3C3;
 }
 .note-form button {
   padding: 0;

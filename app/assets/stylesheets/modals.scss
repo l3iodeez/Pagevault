@@ -34,12 +34,15 @@ div.modal div {
   position: absolute;
   top: calc(50% - 40px);
   left: calc(50% - 40px);
-  background-image: image_url("spinner.gif");
+
   height: 80px;
   width: 80px;
-  background-size: contain;
-  background-repeat: no-repeat;
+
   padding: 0;
+}
+div.modal.spinner{
+  font-size: 80px;
+  color: #2DBE60;
 }
 .modal button {
   font-size: 13px;

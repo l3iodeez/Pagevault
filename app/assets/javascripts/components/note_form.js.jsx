@@ -17,7 +17,7 @@ var NoteForm = React.createClass({
       notebook_id: "",
       saving: "saved",
       tags: tags,
-      tagsDirty: false
+      tagsDirty: false,
     };
   },
   importID: function () {
@@ -74,7 +74,6 @@ var NoteForm = React.createClass({
   componentDidMount: function () {
     SelectedStore.addNoteChangeListener(this.newNoteReceived);
     SelectedStore.addNotebookChangeListener(this.newNotebookSelected);
-
   },
   componentWillUnmount: function () {
     SelectedStore.removeNoteChangeListener(this.newNoteReceived);
@@ -129,7 +128,7 @@ var NoteForm = React.createClass({
       }
     }
     if (e) {
-      this.props.toggleNoteIndex();
+      this.props.toggleNoteIndex(1);
     }
 
   },
@@ -167,7 +166,7 @@ var NoteForm = React.createClass({
   },
   cancel: function (e) {
     e.preventDefault();
-    this.props.toggleNoteIndex();
+    this.props.toggleNoteIndex(1);
   },
   showDeleteConfirm: function () {
     if (this.state.id) {
@@ -197,39 +196,53 @@ var NoteForm = React.createClass({
     }
   },
   render: function() {
+    var formHeight = window.innerHeight;
     var formClass = "note-form ";
     var cancelButtonClass = "cancel-button";
     var saveButtonClass = "save-button";
     var tinyMceBox = "tiny-mce-box ";
     var style = { height: 500, width: 500};
 
+    var configOpts = {
+      plugins: 'image lists print preview',
+      height: formHeight - 250,
+      toolbar: 'undo redo pastetext| bold italic | styleselect | fontselect | fontsizeselect | alignleft aligncenter alignright',
+      fontsize_formats: "8pt 9pt 10pt 11pt 12pt 26pt 36pt",
+      theme: 'modern'
+    };
+
     if (this.props.fullWidth) {
       formClass += "new";
       tinyMceBox += "new";
     } else {
       formClass += "edit";
-
       saveButtonClass += " hidden";
       cancelButtonClass += " hidden";
     }
+
     if (this.state.title.length === 0 && this.state.body.length === 0) {
       saveButtonClass += " hidden";
     } else {
       cancelButtonClass += " hidden";
     }
+    var indicatorClass;
+      switch (this.state.saving) {
+        case "saved":
+          indicatorClass = " fa-check";
+          break;
+        case "dirty":
+          indicatorClass = " fa-check dirty";
+          break;
+        case "saving":
+          indicatorClass = " fa-spinner fa-spin";
+          break;
+      }
 
-    var formHeight = window.innerHeight;
-    var configOpts = {
-      plugins: 'image lists print preview',
-      height: window.innerHeight - 250,
-      toolbar: 'undo redo pastetext| bold italic | styleselect | fontselect | fontsizeselect | alignleft aligncenter alignright',
-      fontsize_formats: "8pt 9pt 10pt 11pt 12pt 26pt 36pt",
-      theme: 'modern'
-    };
     return (
       <div className={formClass} >
         <div className={formClass + " header"}>
-          <div className="header-delete icon" onClick={this.showDeleteConfirm}>
+          <div className="header-icon delete" onClick={this.showDeleteConfirm}>
+            <i className="fa fa-trash"></i>
           </div>
             <form onSubmit={this.updateTags} className="tag-input-form note-tags">
               <span htmlFor="tags">Tags</span>
@@ -259,7 +272,7 @@ var NoteForm = React.createClass({
               value={this.state.title}
               onChange={this.updateTitle}
             />
-            <div className={"save-indicator " + this.state.saving} />
+          <div className="save-indicator spinner"><i className={"fa" + indicatorClass}></i></div>
           <br />
           <label htmlFor="noteBody">Note Body</label>
             <br />
@@ -276,11 +289,3 @@ var NoteForm = React.createClass({
     );
   }
 });
-            // <textarea
-            //   id="noteBody"
-            //   className="tinymce"
-            //   name="body"
-            //   placeholder={"Drag files here or just start typing..."}
-            //   value={this.state.body}
-            //   onChange={this.updateBody}
-            // />

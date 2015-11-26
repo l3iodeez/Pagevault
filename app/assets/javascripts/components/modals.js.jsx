@@ -27,7 +27,7 @@ var Modals = React.createClass({
   spinner: function () {
     return (
       <div className="modal spinner">
-        <div className="modal-spinner-image" />
+        <i className="modal-spinner-image fa fa-spinner fa-spin " />
       </div>
     );
   },

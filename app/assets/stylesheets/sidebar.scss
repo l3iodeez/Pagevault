@@ -49,9 +49,12 @@
 }
 .sidebar-item.new-note div {
   font-size: 28px;
+  position: absolute;
+  left: 8px;
+  top: 4px;
 
 }
 .sidebar-item.new-note:hover div {
-  top: -5px;
-  left: 8px;
+  left: 6px;
+  top: 2px;
 }

@@ -13,17 +13,13 @@
   width: 60%;
   text-align: center;
 }
-.note-form.header div.icon{
-  height: 30px;
-  width: 30px;
-  color: "#7c7c7c";
+.header-icon {
+  font-size: 20px;
+  color: #7c7c7c;
 }
 .header-delete.icon {
-  background-image: image_url("wastebasket.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.header-delete.icon:hover {
-  background-image: image_url("wastebasket-hover.svg");
 
+}
+.header-icon:hover {
+  color: #000;
 }

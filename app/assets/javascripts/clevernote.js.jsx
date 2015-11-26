@@ -16,9 +16,16 @@ $(document).on('ready', function () {
         showSearch: false,
       };
     },
-    toggleNoteIndex: function () {
-      this.setState({showNoteIndex: !this.state.showNoteIndex});
-      if (!this.state.showNoteIndex) {
+    toggleNoteIndex: function (select) {
+      if (this.state.showNoteIndex) {
+
+      }
+      this.setState({
+        showNoteIndex: !this.state.showNoteIndex,
+        showNotebookIndex: false,
+        showSearch: false
+      });
+      if (!this.state.showNoteIndex && select) {
         SelectedActions.setSelectedNote(SelectedStore.getNotebook().firstNote);
       }
     },

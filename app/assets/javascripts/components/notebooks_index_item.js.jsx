@@ -42,7 +42,7 @@ var NotebooksIndexItem = React.createClass({
     var modifiedDate = Helpers.formatDate(new Date(this.props.notebook.updated_at));
     return (
       <ul className="notebook-index-item" onClick={!this.state.confirming ? this.handleClick : null}>
-        <button onClick={this.showConfirm} className="delete-notebook"></button>
+        <button onClick={this.showConfirm} className="delete-notebook"><i className="fa fa-trash" /></button>
         <form onSubmit={this.updateTags} className="notebook-edit-form">
           <li>{this.props.notebook.title}</li>
           <li>{modifiedDate}</li>
