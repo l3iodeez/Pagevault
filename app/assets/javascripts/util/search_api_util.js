@@ -1,7 +1,8 @@
 (function(root) {
   'use strict';
   var SearchAPIUtil = root.SearchAPIUtil = {
-    search: function (query, callback) {
+    search: function (query, callback, model) {
+      model = model || "Note";
       $.ajax({
         url: '/api/search',
         method: 'GET',

@@ -3,10 +3,19 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   validates :password, length: { minimum: 8, allow_nil: true }
   after_initialize :ensure_session_token
+  fuzzily_searchable :contact, async: true
+
 
   has_many :notes, dependent: :destroy
   has_many :notebooks, dependent: :destroy
-
+  has_many :sharings, through: :notes, source: :shares
+  has_many(
+    :access_grants,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: "Share"
+  )
+  has_many :accessible_notes, through: :access_grants
 
 
   def self.find_by_credentials(email, password)
@@ -19,6 +28,13 @@ class User < ActiveRecord::Base
 
   def password
     @password
+  end
+  def contact
+    name + " " + email
+  end
+
+  def contact_changed?
+    name_changed? || email_changed?
   end
 
   def password=(input_password)

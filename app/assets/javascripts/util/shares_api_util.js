@@ -8,7 +8,7 @@
         dataType: 'json',
         contentType: 'application/json',
         success: function (data) {
-          ApiActions.receiveShares(data);
+          ShareActions.receiveShares(data);
           callback && callback(data);
         }
       });
@@ -21,7 +21,7 @@
         contentType: 'application/json',
         data: {share: share},
         success: function (data) {
-          ApiActions.addShare(data);
+          ShareActions.addShare(data);
           callback && callback(data);
         }
       });
@@ -34,7 +34,7 @@
         contentType: 'application/json',
         data: {share: share},
         success: function (data) {
-          ApiActions.deleteShare(data);
+          ShareActions.deleteShare(data);
           callback && callback(data);
         }
       });

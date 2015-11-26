@@ -9,9 +9,8 @@ class ApplicationController < ActionController::Base
     User.find_by_session_token(session[:session_token])
   end
   def resolve_tags(tags)
-
     tag_ids = []
-    if tags
+    if tags.class == Array
       tags.each do |tag|
         break if tag.length < 1
         existing_tag = Tag.find_by_tag(tag)

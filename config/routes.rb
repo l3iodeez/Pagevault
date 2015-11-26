@@ -12,6 +12,7 @@ Rails.application.routes.draw do
      resources :notebooks
      resource :session, only: [:create, :destroy, :show]
      resources :search, only: :index
+     resources :shares, only: [:index, :create, :destroy]
    end
 
    if Rails.env.development?

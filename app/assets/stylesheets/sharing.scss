@@ -1,0 +1,17 @@
+
+.share-note-form {
+  height: 300px;
+  width: 300px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 3px solid black;
+  background-color: #33a;
+}
+.share-note-form li {
+  border: 1px solid green;
+  z-index: 1000;
+}
+.share-note-form input {
+  font-size: 12px;
+}

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126163424) do
+ActiveRecord::Schema.define(version: 20151126194700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,17 @@ ActiveRecord::Schema.define(version: 20151126163424) do
   end
 
   add_index "notes", ["user_id"], name: "index_notes_on_user_id", using: :btree
+
+  create_table "shares", force: :cascade do |t|
+    t.integer  "note_id"
+    t.integer  "user_id"
+    t.boolean  "is_writable", default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "shares", ["note_id"], name: "index_shares_on_note_id", using: :btree
+  add_index "shares", ["user_id"], name: "index_shares_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -98,5 +109,7 @@ ActiveRecord::Schema.define(version: 20151126163424) do
 
   add_foreign_key "notebooks", "users"
   add_foreign_key "notes", "users"
+  add_foreign_key "shares", "notes"
+  add_foreign_key "shares", "users"
   add_foreign_key "taggings", "tags"
 end

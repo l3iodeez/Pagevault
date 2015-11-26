@@ -1,9 +1,9 @@
 var ShareActions = {
 
-  receiveAllShares: function (share) {
+  receiveShares: function (shares) {
     AppDispatcher.dispatch({
       actionType: ShareConstants.SHARES_RECEIVED,
-      share: share
+      shares: shares
     });
   },
   addShare: function (share) {

@@ -75,7 +75,10 @@ end
         tags: [tags.sample, tags.sample, tags.sample]
 
       }
-      user.notes.create!(note_data)
+      note = user.notes.create!(note_data)
+      if user.id > 1
+        note.shares.create(user_id: (note.user_id - 1), is_writable: false)
+      end
     end
   end
 end

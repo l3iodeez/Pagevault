@@ -146,7 +146,6 @@ var NoteForm = React.createClass({
     }
   },
   updateBody: function(content) {
-    console.log("body updated");
     this.setState({body: content, saving: "dirty"});
     this.saveTimeout({body: content});
   },
@@ -195,9 +194,7 @@ var NoteForm = React.createClass({
       }.bind(this));
     }
   },
-  catch: function (e) {
-    e.preventDefault();
-  },
+
   render: function() {
     var formHeight = window.innerHeight;
     var formClass = "note-form ";
@@ -250,6 +247,8 @@ var NoteForm = React.createClass({
           break;
       }
 
+      var sharingForm = <NoteSharing note={SelectedStore.getNote()} />;
+
     return (
       <div className={formClass} >
         <div className={formClass + " header"}>
@@ -272,9 +271,9 @@ var NoteForm = React.createClass({
                 </div>) : null}
             </form>
         </div>
-        <form onSubmit={this.catch}>
+        <div >
           <div className="button-container">
-            <button className={saveButtonClass}>Done</button>
+            <button className={saveButtonClass} onClick={this.handleSubmit}>Done</button>
             <button className={cancelButtonClass} onClick={this.cancel}>Cancel</button>
           </div>
           <label htmlFor="noteTitle">Note Title</label>
@@ -299,7 +298,7 @@ var NoteForm = React.createClass({
             </div>
           <br />
 
-        </form>
+        </div>
       </div>
     );
   }

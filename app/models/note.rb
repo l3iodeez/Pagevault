@@ -3,7 +3,7 @@ class Note < ActiveRecord::Base
   belongs_to :notebook
   has_many :taggings, as: :taggable
   has_many :tags, through: :taggings
-  has_many :images, dependent: :destroy
+  has_many :shares
   fuzzily_searchable :searchable, async: true
 
   def searchable

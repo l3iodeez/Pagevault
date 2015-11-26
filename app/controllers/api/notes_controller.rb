@@ -19,7 +19,6 @@ class Api::NotesController < ApplicationController
     @note = Note.new(note_params)
     @note.user_id = current_user.id
     @note.tag_ids = resolve_tags(params[:note][:tags])
-    byebug
     @note.search_hash = @note.searchable.hash
     if @note.save
       render :show

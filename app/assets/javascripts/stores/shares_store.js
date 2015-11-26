@@ -18,9 +18,9 @@
       return _shares.slice(0);
     },
 
-    getByID: function (shareId) {
-      var foundNote = _shares.find(function (share) {
-        return share.id === shareId;
+    getByNoteID: function (noteId) {
+      var foundNote = _shares.filter(function (share) {
+        return share.note_id === noteId;
       });
       return foundNote;
     },
@@ -56,11 +56,11 @@
     },
 
     dispatcherId: AppDispatcher.register(function (payload) {
-      if (payload.actionType === ShareConstants.NOTEBOOKS_RECEIVED) {
+      if (payload.actionType === ShareConstants.SHARES_RECEIVED) {
         ShareStore.resetShares(payload.shares);
-      } else if (payload.actionType === ShareConstants.NOTEBOOK_RECEIVED) {
+      } else if (payload.actionType === ShareConstants.ADD_SHARE) {
         ShareStore.storeShare(payload.share);
-      } else if (payload.actionType === ShareConstants.NOTEBOOK_DELETED) {
+      } else if (payload.actionType === ShareConstants.DELETE_SHARE) {
         ShareStore.deleteShare(payload.share);
       }
     }),
