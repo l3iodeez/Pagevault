@@ -254,7 +254,10 @@ var NoteForm = React.createClass({
                 value={this.state.tags}
                 onBlur={this.updateTags}
                 onChange={this.changeTags} />
-                {this.state.tagsDirty ? <div className="tiny-spinner note-tags" /> : null}
+              {this.state.tagsDirty ? (
+                <div className="tiny-spinner note-tags">
+                  <i className="fa fa-spinner fa-spin" />
+                </div>) : null}
             </form>
         </div>
         <form onSubmit={this.handleSubmit}>

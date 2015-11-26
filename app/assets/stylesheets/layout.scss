@@ -51,9 +51,8 @@ input.tag-input.note-tags {
 .tiny-spinner{
   height: 13px;
   width: 13px;
-  background-image: image_url("spinner.gif");
-  background-repeat: no-repeat;
-  background-size: contain;
+  font-size: 13px;
+  color: #2DBE60;
 }
 .left-pane {
   position: absolute;

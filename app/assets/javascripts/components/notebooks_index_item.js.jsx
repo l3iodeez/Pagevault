@@ -56,7 +56,10 @@ var NotebooksIndexItem = React.createClass({
               value={this.state.tags}
               onBlur={this.updateTags}
               onChange={this.changeTags}></input>
-            {this.state.dirty ? <div className="tiny-spinner notebook-tags" /> : null}
+            {this.state.dirty ? (
+              <div className="tiny-spinner notebook-tags">
+                <i className="fa fa-spinner fa-spin" />
+              </div>) : null}
           </div>
         </form>
         <img src="http://placehold.it/96x96" />
