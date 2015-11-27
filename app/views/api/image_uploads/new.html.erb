@@ -1,0 +1,5 @@
+
+<%= form_for @image_upload, url: api_image_uploads_path, html: { multipart: true } do |form| %>
+  <%= form.file_field :image, as: :file %>
+  <button>Submit</button>
+<% end %>

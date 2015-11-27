@@ -40,6 +40,9 @@ gem 'tinymce-rails'
 
 #use paperclip for storing images
 gem 'paperclip'
+# Use AWS for file upload storage
+gem 'aws-sdk', '< 2.0'
+gem 'figaro'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

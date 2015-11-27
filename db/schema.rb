@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126194700) do
+ActiveRecord::Schema.define(version: 20151127182159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,18 @@ ActiveRecord::Schema.define(version: 20151126194700) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "image_uploads", force: :cascade do |t|
+    t.integer  "note_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "image_uploads", ["note_id"], name: "index_image_uploads_on_note_id", using: :btree
 
   create_table "notebooks", force: :cascade do |t|
     t.integer  "user_id",     null: false
@@ -107,6 +119,7 @@ ActiveRecord::Schema.define(version: 20151126194700) do
   add_index "users", ["name"], name: "index_users_on_name", using: :btree
   add_index "users", ["session_token"], name: "index_users_on_session_token", using: :btree
 
+  add_foreign_key "image_uploads", "notes"
   add_foreign_key "notebooks", "users"
   add_foreign_key "notes", "users"
   add_foreign_key "shares", "notes"

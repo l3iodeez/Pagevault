@@ -14,6 +14,10 @@ Rails.application.routes.draw do
      resources :search, only: :index
      resources :shares, only: [:index, :create, :destroy]
    end
+   namespace :api do
+     resources :image_uploads, only: [:new, :show, :create]
+
+   end
 
    if Rails.env.development?
      match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
