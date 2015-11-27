@@ -35,7 +35,7 @@ textarea:focus {
 button:focus {
   outline: 0;
 }
-button {
+button, a {
   outline: 0;
   cursor: pointer;
 }

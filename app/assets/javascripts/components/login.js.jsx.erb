@@ -1,17 +1,9 @@
 (function(root) {
-  root.RegistrationForm = React.createClass({
+  root.SessionForm = React.createClass({
     mixins: [ReactRouter.History, React.addons.LinkedStateMixin],
-
     getInitialState: function () {
-      return({
-        email: "",
-        name: "",
-        password: "",
-        confirmPassword: "",
-        errorMessages: ""
-      });
+      return {errorMessages: "", email: "", password: "" };
     },
-
     componentWillMount: function () {
       if (CurrentUserStore.isLoggedIn()) {
         this.history.pushState(null, "/");
@@ -29,26 +21,13 @@
       }.bind(this);
 
       var credentials = $(e.currentTarget).serializeJSON();
-      UsersApiUtil.createUser(credentials, redirectToMain, showErrors);
-    },
 
-    passwordConfirmMistmatch: function () {
-       return ((this.state.password.length > 0 && this.state.confirmPassword.length > 0 )&&
-         this.state.password !== this.state.confirmPassword);
-    },
-
-
-    passwordConfirmMessage: function () {
-      if (this.passwordConfirmMistmatch()) {
-        return (
-            <p>Password does not match confirmation.</p>
-        );
-        }
+      SessionsApiUtil.login(credentials, redirectToMain, showErrors);
     },
     validationErrors: function () {
       if (this.state.errorMessages.length > 0) {
         return(
-          <span>
+          <span className="error-text">
           {
             this.state.errorMessages.map(function (message) {
               return(<p>{message}</p>);
@@ -58,54 +37,50 @@
         );
       }
     },
-    displayErrors: function () {
-        return(<span className="error-text">
-                {this.passwordConfirmMessage()}
-                {this.validationErrors()}
-              </span>);
+    demoUser: function () {
+      this.setState({email: "DemoUser@pagevault.io", password: "password"});
     },
 
-
-
-
     render: function() {
-
+      var demoUsers;
+      if (this.state.users) {
+        demoUsers = <span>
+                      <h4>Demo accounts</h4>
+                      {this.state.users.map(function (user) {
+                          return <p key={user.id}>{user.email}</p>;
+                        }.bind(this))}
+                    </span>;
+      }
       return (
+      <div className="modal-bg">
         <div className="modal loginform group">
           <div>
             <form onSubmit={ this.submit }>
-
-              <h1>Register</h1>
+              <img src="<%= image_url('logo.svg') %>" />
+              <h2>Welcome to Pagevault</h2>
 
               <label>
                 Email
                 <br></br>
                 <input type="text" name="user[email]" valueLink={this.linkState('email')}/>
               </label>
-              <br></br>
 
-              <label>
-                Name
-                <br></br>
-                <input type="text" name="user[name]" valueLink={this.linkState('name')}/>
-              </label>
               <label>
                 Password
                 <br></br>
                 <input type="password" name="user[password]" valueLink={this.linkState('password')} />
               </label>
-              <label>
-                Confirm Password
-                <br></br>
-                <input type="password" valueLink={this.linkState('confirmPassword')}/>
-              </label>
-              {this.displayErrors()}
-              <button>Register</button>
-                <br></br>
-              <a href="#/login">Log In</a>
+              <br></br>
+              {this.validationErrors()}
+              <button>Log In</button>
+              <a onClick={this.demoUser} className="demo-user">Demo User</a>
+              <p>or</p>
+              <a href="#/register">Register</a>
+
             </form>
           </div>
         </div>
+      </div>
       );
     },
 

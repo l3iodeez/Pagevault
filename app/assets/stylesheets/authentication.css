@@ -2,15 +2,16 @@ div.loginform {
   text-align: center;
 }
 
-div.loginform input, div.loginform button{
+div.loginform input, div.loginform button, a.demo-user {
    background-color: lightblue;
    border-radius: 5px;
-   font-size: 24px;
+   font-size: 16px;
    margin: 5px;
+   padding: 3px;
 
 }
 
-div.loginform button{
+div.loginform button, a.demo-user {
   background-color: #2DBE60;
   padding: 0 15px;
 }
@@ -21,4 +22,20 @@ div.loginform input{
 
 .error-text {
   color: tomato;
+}
+div.loginform p {
+  margin: 0;
+}
+a.demo-user {
+  padding: 5px 15px;
+}
+div.loginform img {
+  margin: auto;
+  height: 150px;
+  width: 150px;
+}
+
+div.loginform h1 {
+  margin: auto;
+
 }
