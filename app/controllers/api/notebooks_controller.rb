@@ -36,8 +36,12 @@ class Api::NotebooksController < ApplicationController
   end
 
   def destroy
-    @notebook.destroy
-    render :show
+    if @notebook.user.notebooks.count < 2
+      render json: "You cannot delete your only notebook.", status: :unprocessable_entity
+    else
+      @notebook.destroy
+      render :show
+    end
   end
 
   private

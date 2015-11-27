@@ -22,7 +22,7 @@ class Note < ActiveRecord::Base
     tag_strings
   end
   def notebook_strings
-    notebook.title + " " + notebook.description
+    notebook.title.to_s + " " + notebook.description.to_s
 
   end
 end

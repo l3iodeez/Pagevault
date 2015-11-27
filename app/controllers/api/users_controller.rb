@@ -13,6 +13,7 @@ class Api::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      @user.notebooks.create!(title: "#{@user.name}'s Notebook'")
       login!(@user)
       render json: @user
     else

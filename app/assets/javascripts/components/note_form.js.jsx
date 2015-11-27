@@ -204,7 +204,7 @@ var NoteForm = React.createClass({
     var style = { height: 500, width: 500};
 
     var configOpts = {
-      plugins: 'imagetools lists print preview paste',
+      plugins: 'imagetools lists print preview paste advlist',
       height: formHeight - 250,
       toolbar: 'undo redo pastetext| bold italic | fontselect | fontsizeselect | alignleft aligncenter alignright | image',
       fontsize_formats: "8pt 9pt 10pt 11pt 12pt 26pt 36pt",
