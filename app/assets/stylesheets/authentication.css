@@ -8,13 +8,18 @@ div.loginform input, div.loginform button, a.demo-user {
    font-size: 16px;
    margin: 5px;
    padding: 3px;
+}
 
+a.demo-user {
+  display: block;
 }
 
 div.loginform button, a.demo-user {
-  background-color: #2DBE60;
+  font-size: 10px;
+  background-color: #232261;
   padding: 0 15px;
 }
+
 div.loginform input{
   width: 80%;
   margin: auto;
@@ -23,19 +28,25 @@ div.loginform input{
 .error-text {
   color: tomato;
 }
+
 div.loginform p {
   margin: 0;
 }
-a.demo-user {
-  padding: 5px 15px;
+
+div.loginform span {
+  font-size: 10px;
 }
+
 div.loginform img {
   margin: auto;
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 100px;
 }
 
 div.loginform h1 {
   margin: auto;
+}
 
+div.loginform h2 {
+  font-size: 12px;
 }

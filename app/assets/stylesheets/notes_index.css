@@ -18,6 +18,7 @@
   font-weight: 300;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  position: relative;
 }
 .note-index-header p{
   padding-left: 15px;

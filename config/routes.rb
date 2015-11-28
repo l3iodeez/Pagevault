@@ -13,9 +13,10 @@ Rails.application.routes.draw do
      resource :session, only: [:create, :destroy, :show]
      resources :search, only: :index
      resources :shares, only: [:index, :create, :destroy]
+     resources :image_uploads, only: [:show, :create]
    end
    namespace :api do
-     resources :image_uploads, only: [:new, :show, :create]
+     resources :image_uploads, only: [:new]
 
    end
 

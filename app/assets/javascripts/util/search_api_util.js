@@ -7,7 +7,7 @@
         url: '/api/search',
         method: 'GET',
         dataType: 'json',
-        data: {query: query},
+        data: {query: query, model: model},
         success: function (data) {
           callback && callback(data);
         }

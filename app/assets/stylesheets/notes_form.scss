@@ -20,9 +20,8 @@
   height: 28px;
   color: white;
   outline: none;
-  border-color: rgb(45, 190, 96);
   border-radius: 4px;
-  background-color: rgb(45, 190, 96);
+  background-color: #232261;
   padding-left: 15px;
   padding-right: 15px;
   margin-right: 16px;
@@ -48,7 +47,7 @@
 
 .note-form input{
   font-size: 36px;
-  color: rgb(45, 190, 96);
+  color: #232261;
   font-weight: 100;
   border: none;
   border-top: 1px solid #D3D3D3;
@@ -80,7 +79,10 @@
   font-size: 24px;
 }
 .spinner  {
-  color: #2DBE60;
+  color: #232261;
+}
+.spinner .saving {
+  color: #9E1E62;
 }
 .spinner .dirty {
   color: #C3C3C3;

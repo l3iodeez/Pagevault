@@ -82,7 +82,15 @@ var NoteForm = React.createClass({
 
     this.handleSubmit();
   },
+  uploadImages: function (e, attrs, callback) {
+    // debugger
+    // tinymce.activeEditor.uploadImages(function (path) {
+    //   debugger
+    //   this.handleSubmit(e, attrs, callback);
+    // }.bind(this));
+  },
   handleSubmit: function (e, attrs, callback) {
+
     attrs = attrs || {};
     clearTimeout(this.timeoutID);
     this.timeoutID = null;
@@ -217,7 +225,36 @@ var NoteForm = React.createClass({
                 "Impact=impact,chicago;"+
                 "Times New Roman=times new roman,times;"+
                 "Verdana=verdana,geneva;"+
-                "Webdings=webdings;"
+                "Webdings=webdings;",
+          images_upload_handler: function (blobInfo, success, failure) {
+             var xhr, formData;
+             xhr = new XMLHttpRequest();
+             xhr.withCredentials = false;
+             xhr.open('POST', "/api/image_uploads");
+
+             xhr.onload = function() {
+               var json;
+
+               if (xhr.status != 200) {
+                 failure("HTTP Error: " + xhr.status);
+                 return;
+               }
+
+               json = JSON.parse(xhr.responseText);
+
+               if (!json || typeof json.location != "string") {
+                 failure("Invalid JSON: " + xhr.responseText);
+                 return;
+               }
+
+               success(json.location);
+             };
+
+             formData = new FormData();
+             formData.append('file', blobInfo.blob(), fileName(blobInfo));
+
+             xhr.send(formData);
+           }
     };
 
     if (this.props.fullWidth) {
@@ -243,7 +280,7 @@ var NoteForm = React.createClass({
           indicatorClass = " fa-check dirty";
           break;
         case "saving":
-          indicatorClass = " fa-spinner fa-spin";
+          indicatorClass = " fa-spinner fa-pulse saving";
           break;
       }
 
@@ -252,9 +289,7 @@ var NoteForm = React.createClass({
     return (
       <div className={formClass} >
         <div className={formClass + " header"}>
-          <div className="header-icon delete" onClick={this.showDeleteConfirm}>
-            <i className="fa fa-trash"></i>
-          </div>
+            <i className="fa fa-trash header-icon delete" onClick={this.showDeleteConfirm}></i>
             <form onSubmit={this.updateTags} className="tag-input-form note-tags">
               <span htmlFor="tags">Tags</span>
               <input

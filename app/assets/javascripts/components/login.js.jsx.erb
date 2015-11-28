@@ -37,7 +37,8 @@
         );
       }
     },
-    demoUser: function () {
+    demoUser: function (e) {
+      e.preventDefault();
       this.setState({email: "DemoUser@pagevault.io", password: "password"});
     },
 
@@ -73,7 +74,7 @@
               <br></br>
               {this.validationErrors()}
               <button>Log In</button>
-              <a onClick={this.demoUser} className="demo-user">Demo User</a>
+              <button onClick={this.demoUser} className="demo-user">Demo User</button>
               <p>or</p>
               <a href="#/register">Register</a>
 
