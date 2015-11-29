@@ -1,8 +1,8 @@
-# 
+#
 # json.extract!(
 # @image_upload,
 # :id,
 # )
 json.location(
-  @image_upload.image.url
+  api_image_upload_url(@image_upload)
 )

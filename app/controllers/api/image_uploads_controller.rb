@@ -7,11 +7,10 @@ class Api::ImageUploadsController < ApplicationController
 
   def show
     @image_upload = ImageUpload.find(params[:id])
-    render :show
+    redirect_to @image_upload.image.url
   end
 
   def create
-    byebug
     @image_upload = ImageUpload.new(image: params[:file], note_id: params[:note_id])
     if @image_upload.save
       render :show

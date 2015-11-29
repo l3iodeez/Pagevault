@@ -232,8 +232,8 @@ var NoteForm = React.createClass({
         "Times New Roman=times new roman,times;"+
         "Verdana=verdana,geneva;"+
         "Webdings=webdings;",
-        images_upload_url: '/api/notes/1/image_uploads',
-         images_upload_credentials: true,
+        images_upload_url: '/api/image_uploads',
+        images_upload_credentials: true,
       // images_upload_handler: function (blobInfo, success, failure) {
       //   debugger
       //   var formData = new FormData();
