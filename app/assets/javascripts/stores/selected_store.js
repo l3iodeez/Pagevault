@@ -57,17 +57,22 @@
         }
       } else if ( payload.actionType === NoteConstants.NOTES_RECEIVED) {
         if (!_note) {
-          SelectedStore.setNote(NoteStore.getFirst());
+          SelectedStore.setNote(NoteStore.getFirst(0));
         }
       } else if ( payload.actionType === NotebookConstants.NOTEBOOKS_RECEIVED) {
         if (!_notebook) {
-          SelectedStore.setNotebook(NoteStore.getFirst());
+          SelectedStore.setNotebook(NotebookStore.getFirst());
         }
       } else if ( payload.actionType === NotebookConstants.NOTEBOOK_SELECTED) {
         SelectedStore.setNotebook(payload.notebook);
         if (!_note && payload.notebook) {
           SelectedStore.setNote(payload.notebook.firstNote);
-
+        }
+      } else if ( payload.actionType === NotebookConstants.NOTEBOOK_DELETED) {
+        if (SelectedStore.getNotebook().id === payload.notebook.id) {
+        debugger
+          SelectedStore.setNotebook(NotebookStore.getFirst());
+          SelectedStore.setNote(NoteStore.getFirst(NotebookStore.getFirst().id));
         }
       }
     }),

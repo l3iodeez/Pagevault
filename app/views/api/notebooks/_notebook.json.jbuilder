@@ -2,7 +2,7 @@ fields = [:id, :title, :description, :user_id, :created_at, :updated_at]
 if !show_notes
   if notebook.notes.first
     json.firstNote do
-      json.partial!('/api/notes/note', note: notebook.notes.first)
+      json.partial!('/api/notes/note', note: notebook.notes.order(updated_at: :desc).first)
     end
   else
     json.firstNote do

@@ -54,6 +54,7 @@ class Api::NotesController < ApplicationController
 
   private
   def simulate_latency
+    # sleep(2)
   end
 
   def note_params

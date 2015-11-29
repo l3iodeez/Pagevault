@@ -28,7 +28,7 @@ var NotesIndex = React.createClass({
     NotebookStore.addChangeListener(this.notebooksChanged);
 
     SelectedStore.addNotebookChangeListener(this.selectedNotebookChanged);
-    NotesAPIUtil.fetchAllNotes(NotebooksAPIUtil.fetchAllNotebooks);
+    NotebooksAPIUtil.fetchAllNotebooks(NotesAPIUtil.fetchAllNotes);
   },
   componentWillUnmount: function () {
     NoteStore.removeChangeListener(this.notesChanged);

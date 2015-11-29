@@ -37,9 +37,13 @@
 
     getFirst: function (notebookId) {
       if (!notebookId) {
-        return;
+        if (notebookId === 0) {
+          return Helpers.first(_notes)[_notes.length -1];
+        } else {
+          return;
+        }
       }
-      return _notes[notebookId][0];
+      return _notes[notebookId][_notes.length - 1];
     },
 
     storeNote: function (recvdNote) {

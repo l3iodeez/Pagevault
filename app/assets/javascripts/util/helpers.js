@@ -19,6 +19,8 @@
 
       };
     },
-
+    first: function (obj) {
+      for (var a in obj) return obj[a];
+    }
   };
 }(this));

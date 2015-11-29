@@ -50,8 +50,7 @@ var NoteForm = React.createClass({
       });
     }
   },
-  componentWillReceiveProps: function () {
-
+  componentWillReceiveProps: function (newProps) {
   },
   newNoteReceived: function () {
     clearTimeout(this.timeoutID);
@@ -59,11 +58,17 @@ var NoteForm = React.createClass({
     if (!this.state.id && this.state.creating) {
       this.importID();
     } else if (!this.state.id || this.state.id === "") {
+      if (this.props.fullWidth) {
+        return;
+      }
       this.importNote();
     } else if (SelectedStore.getNote() && (this.state.id !== SelectedStore.getNote().id)) {
       this.handleSubmit();
       this.changeSelectedNote();
     } else if (!SelectedStore.getNote()) {
+      if (this.state.saving === 'dirty') {
+        this.handleSubmit();
+      }
       this.resetForm();
     }
   },

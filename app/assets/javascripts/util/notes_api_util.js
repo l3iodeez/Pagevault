@@ -9,7 +9,9 @@
         contentType: 'application/json',
         success: function (data) {
           ApiActions.receiveAllNotes(data);
-          callback && callback(data);
+          if (typeof callback === "function") {
+           callback(data);
+          }
         }
       });
     },
