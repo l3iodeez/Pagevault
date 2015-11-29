@@ -1,4 +1,5 @@
 class Api::ImageUploadsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
   def new
     @image_upload = ImageUpload.new
     render :new
@@ -10,11 +11,12 @@ class Api::ImageUploadsController < ApplicationController
   end
 
   def create
-    @image = ImageUpload.new(image_upload_params)
-    if @image.save
-      render show: @image
+    byebug
+    @image_upload = ImageUpload.new(image: params[:file], note_id: params[:note_id])
+    if @image_upload.save
+      render :show
     else
-      render html: @image.errors.fullmessages
+      render json: @image_upload.errors.fullmessages
     end
   end
   def image_upload_params

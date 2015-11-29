@@ -6,18 +6,18 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
    root 'static_pages#root'
+   namespace :api do
+     resources :image_uploads, only: [:new]
+   end
    namespace :api, defaults: {format: :json} do
      resources :users, only: [:index, :new, :create, :destroy]
-     resources :notes
+     resources :notes do
+       resources :image_uploads, only: [:show, :create]
+     end
      resources :notebooks
      resource :session, only: [:create, :destroy, :show]
      resources :search, only: :index
      resources :shares, only: [:index, :create, :destroy]
-     resources :image_uploads, only: [:show, :create]
-   end
-   namespace :api do
-     resources :image_uploads, only: [:new]
-
    end
 
    if Rails.env.development?

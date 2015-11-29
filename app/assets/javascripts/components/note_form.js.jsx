@@ -219,47 +219,40 @@ var NoteForm = React.createClass({
     var configOpts = {
       plugins: 'imagetools lists print preview paste advlist',
       height: formHeight - 250,
-      toolbar: 'undo redo pastetext| bold italic | fontselect | fontsizeselect | alignleft aligncenter alignright | image',
+      toolbar: 'undo redo pastetext| bold italic | fontselect | fontsizeselect | alignleft aligncenter alignright | list',
       fontsize_formats: "8pt 9pt 10pt 11pt 12pt 26pt 36pt",
       theme: 'modern',
       paste_data_images: true,
-      theme_modern_fonts : "Andale Mono=andale mono,times;"+
-                "Arial=arial,helvetica,sans-serif;"+
-                "Book Antiqua=book antiqua,palatino;"+
-                "Courier New=courier new,courier;"+
-                "Impact=impact,chicago;"+
-                "Times New Roman=times new roman,times;"+
-                "Verdana=verdana,geneva;"+
-                "Webdings=webdings;",
-          images_upload_handler: function (blobInfo, success, failure) {
-             var xhr, formData;
-             xhr = new XMLHttpRequest();
-             xhr.withCredentials = false;
-             xhr.open('POST', "/api/image_uploads");
-
-             xhr.onload = function() {
-               var json;
-
-               if (xhr.status != 200) {
-                 failure("HTTP Error: " + xhr.status);
-                 return;
-               }
-
-               json = JSON.parse(xhr.responseText);
-
-               if (!json || typeof json.location != "string") {
-                 failure("Invalid JSON: " + xhr.responseText);
-                 return;
-               }
-
-               success(json.location);
-             };
-
-             formData = new FormData();
-             formData.append('file', blobInfo.blob(), fileName(blobInfo));
-
-             xhr.send(formData);
-           }
+      theme_modern_fonts:
+        "Andale Mono=andale mono,times;"+
+        "Arial=arial,helvetica,sans-serif;"+
+        "Book Antiqua=book antiqua,palatino;"+
+        "Courier New=courier new,courier;"+
+        "Impact=impact,chicago;"+
+        "Times New Roman=times new roman,times;"+
+        "Verdana=verdana,geneva;"+
+        "Webdings=webdings;",
+        images_upload_url: '/api/notes/1/image_uploads',
+         images_upload_credentials: true,
+      // images_upload_handler: function (blobInfo, success, failure) {
+      //   debugger
+      //   var formData = new FormData();
+      //   formData.append('file', blobInfo.blob(), fileName(blobInfo));
+      //
+      //   if (!this.state.id) {
+      //     this.handleSubmit(null, null, function (note) {
+      //       ImageAPIUtil.createImage(blobInfo.blob(), note.id, function (image) {
+      //         debugger
+      //         success(image.location);
+      //       }.bind(this));
+      //     }.bind(this));
+      //   } else {
+      //     ImageAPIUtil.createImage(blobInfo.blob(), this.state.id, function (image) {
+      //       debugger
+      //       success(image.location);
+      //     }.bind(this));
+      //   }
+      // }.bind(this)
     };
 
     if (this.props.fullWidth) {
