@@ -7,15 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 inspection_body = <<-HTML
-<p><span style="font-family: 'andale mono', monospace; font-size: 12pt;">Samples taken:</span><br clear="none" /><span style="font-family: 'andale mono', monospace; font-size: 12pt;">Basement - stairway</span><br clear="none" /><span style="font-family: 'andale mono', monospace; font-size: 12pt;">Basement - main room</span><br clear="none" /><span style="font-family: 'andale mono', monospace; font-size: 12pt;">ground floor - main room</span><br clear="none" /><span style="font-family: 'andale mono', monospace; font-size: 12pt;">2x outdoors</span></p>
-<div><span style="font-size: 12pt;">&nbsp;</span></div>
-<p><span style="font-family: 'andale mono', monospace; font-size: 12pt;">Basement stairs&nbsp;</span></p>
-<p><img class="en-media" src="https://www.evernote.com/shard/s341/res/6ca557d4-7131-44f4-8eb2-c70d6fee5477/IMG_20150527_140952.610.jpg" alt="" width="319" height="425" name="6ca557d4-7131-44f4-8eb2-c70d6fee5477" /></p>
-<div><span style="font-size: 12pt; font-family: 'andale mono', monospace;">Boiler room&nbsp;</span></div>
-<div><img class="en-media" src="https://www.evernote.com/shard/s341/res/741cbdad-0f59-4797-bf81-33b46de6f340/IMG_20150527_141001.179.jpg" alt="" width="316" height="422" name="741cbdad-0f59-4797-bf81-33b46de6f340" />g</div>
-<div>&nbsp;</div>
-<div><span style="font-size: 12pt; font-family: 'andale mono', monospace;">Boiler room ceiling near sample #1&nbsp;</span></div>
-<p><img class="en-media" src="https://www.evernote.com/shard/s341/res/e09a8f0a-c92b-45df-b3d6-29220b35cb19/IMG_20150527_141056.007.jpg" alt="" width="257" height="343" name="e09a8f0a-c92b-45df-b3d6-29220b35cb19" /></p>"
 HTML
 
 basement_inspection = { body: inspection_body, title: "42-01 main street Inspection notes" }
