@@ -15,7 +15,6 @@ div.modal-bg {
 div.modal {
   position: fixed;
   width: 300px;
-  min-height: 200px;
   left: calc(50% - 150px);
   top: 100px;
   text-align: center;
@@ -28,7 +27,6 @@ div.modal {
 
 div.modal div {
   margin: auto;
-  padding-top: 15%;
 }
 .modal-spinner-image {
   position: absolute;
