@@ -48,9 +48,10 @@ $(document).on('ready', function () {
 
     _ensureLoggedIn: function () {
       if (!CurrentUserStore.isLoggedIn()) {
-        this.history.pushState(null, "/login");
+        this.history.pushState(null, "/");
+      } else {
+        this.setState({currentUser: CurrentUserStore.currentUser()});
       }
-      this.setState({currentUser: CurrentUserStore.currentUser()});
 
     },
     render: function () {
@@ -84,11 +85,11 @@ $(document).on('ready', function () {
   });
   var router = (
     <Router>
-      <Route path="/login" component={SessionForm}>
+      <Route path="/" component={SessionForm}>
       </Route>
       <Route path="/register" component={RegistrationForm}>
       </Route>
-      <Route path="/" component={App}>
+      <Route path="/p" component={App}>
       </Route>
     </Router>
   );

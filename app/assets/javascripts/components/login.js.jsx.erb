@@ -13,7 +13,7 @@
     submit: function (e) {
       e.preventDefault();
       var redirectToMain = function () {
-        this.history.pushState(null, "/");
+        this.history.pushState(null, "/p");
       }.bind(this);
 
       var showErrors = function (data) {

@@ -51,6 +51,7 @@ var NoteForm = React.createClass({
     }
   },
   componentWillReceiveProps: function (newProps) {
+    
   },
   newNoteReceived: function () {
     clearTimeout(this.timeoutID);
@@ -92,13 +93,7 @@ var NoteForm = React.createClass({
 
     this.handleSubmit();
   },
-  uploadImages: function (e, attrs, callback) {
-    // debugger
-    // tinymce.activeEditor.uploadImages(function (path) {
-    //   debugger
-    //   this.handleSubmit(e, attrs, callback);
-    // }.bind(this));
-  },
+
   handleSubmit: function (e, attrs, callback) {
 
     attrs = attrs || {};
@@ -212,66 +207,64 @@ var NoteForm = React.createClass({
       }.bind(this));
     }
   },
+  TINYMCE_CONFIG: {
+    plugins: 'imagetools lists print preview paste advlist',
+    height: window.innerHeight - 250,
+    toolbar: 'undo redo pastetext| bold italic | fontselect | fontsizeselect | alignleft aligncenter alignright | list',
+    fontsize_formats: "8pt 9pt 10pt 11pt 12pt 26pt 36pt",
+    theme: 'modern',
+    paste_data_images: true,
+    theme_modern_fonts:
+      "Andale Mono=andale mono,times;"+
+      "Arial=arial,helvetica,sans-serif;"+
+      "Book Antiqua=book antiqua,palatino;"+
+      "Courier New=courier new,courier;"+
+      "Impact=impact,chicago;"+
+      "Times New Roman=times new roman,times;"+
+      "Verdana=verdana,geneva;"+
+      "Webdings=webdings;",
+      // images_upload_url: '/api/image_uploads',
+      // images_upload_credentials: true,
+    images_upload_handler:  function (blobInfo, success, failure) {
+      if (!this.state.id) {
+        return;
+      }
+      var xhr, formData;
+      xhr = new XMLHttpRequest();
+      xhr.withCredentials = false;
+      xhr.open('POST', "/api/image_uploads");
+
+      xhr.onload = function() {
+        var json;
+
+        if (xhr.status != 200) {
+          failure("HTTP Error: " + xhr.status);
+          return;
+        }
+
+        json = JSON.parse(xhr.responseText);
+
+        if (!json || typeof json.location != "string") {
+          failure("Invalid JSON: " + xhr.responseText);
+          return;
+        }
+
+        success(json.location);
+      };
+
+      formData = new FormData();
+      formData.append('file', blobInfo.blob(), blobInfo.filename());
+      formData.append('note_id', this.state.id);
+      xhr.send(formData);
+    }.bind(this)
+  },
 
   render: function() {
-    var formHeight = window.innerHeight;
     var formClass = "note-form ";
     var cancelButtonClass = "cancel-button";
     var saveButtonClass = "save-button";
     var tinyMceBox = "tiny-mce-box ";
     var style = { height: 500, width: 500};
-
-    var configOpts = {
-      plugins: 'imagetools lists print preview paste advlist',
-      height: formHeight - 250,
-      toolbar: 'undo redo pastetext| bold italic | fontselect | fontsizeselect | alignleft aligncenter alignright | list',
-      fontsize_formats: "8pt 9pt 10pt 11pt 12pt 26pt 36pt",
-      theme: 'modern',
-      paste_data_images: true,
-      theme_modern_fonts:
-        "Andale Mono=andale mono,times;"+
-        "Arial=arial,helvetica,sans-serif;"+
-        "Book Antiqua=book antiqua,palatino;"+
-        "Courier New=courier new,courier;"+
-        "Impact=impact,chicago;"+
-        "Times New Roman=times new roman,times;"+
-        "Verdana=verdana,geneva;"+
-        "Webdings=webdings;",
-        // images_upload_url: '/api/image_uploads',
-        // images_upload_credentials: true,
-      images_upload_handler:  function (blobInfo, success, failure) {
-        if (!this.state.id) {
-          return;
-        }
-        var xhr, formData;
-        xhr = new XMLHttpRequest();
-        xhr.withCredentials = false;
-        xhr.open('POST', "/api/image_uploads");
-
-        xhr.onload = function() {
-          var json;
-
-          if (xhr.status != 200) {
-            failure("HTTP Error: " + xhr.status);
-            return;
-          }
-
-          json = JSON.parse(xhr.responseText);
-
-          if (!json || typeof json.location != "string") {
-            failure("Invalid JSON: " + xhr.responseText);
-            return;
-          }
-
-          success(json.location);
-        };
-
-        formData = new FormData();
-        formData.append('file', blobInfo.blob(), blobInfo.filename());
-        formData.append('note_id', this.state.id);
-        xhr.send(formData);
-      }.bind(this)
-    };
 
     if (this.props.fullWidth) {
       formClass += "new";
@@ -345,7 +338,7 @@ var NoteForm = React.createClass({
               <TinyMCEInput
                 value={this.state.body}
                 onChange={this.updateBody}
-                tinymceConfig={configOpts} />
+                tinymceConfig={this.TINYMCE_CONFIG} />
             </div>
           <br />
 
