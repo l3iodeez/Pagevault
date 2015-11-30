@@ -33,7 +33,6 @@ var Modals = React.createClass({
   },
   closeModal: function () {
     ModalActions.closeModal();
-    SelectedStore.setNote(NoteStore.getFirst(SelectedStore.getNotebook().id));
   },
   deleteNoteModal: function () {
     return (

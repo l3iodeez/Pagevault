@@ -54,7 +54,12 @@ var NoteForm = React.createClass({
   },
   newNoteReceived: function () {
     clearTimeout(this.timeoutID);
-
+    if (!tinyMCE.activeEditor) {
+      setTimeout(function () {
+        this.newNoteReceived();
+      }.bind(this), 100);
+      return;
+    }
     if (!this.state.id && this.state.creating) {
       this.importID();
     } else if (!this.state.id || this.state.id === "") {
@@ -232,27 +237,40 @@ var NoteForm = React.createClass({
         "Times New Roman=times new roman,times;"+
         "Verdana=verdana,geneva;"+
         "Webdings=webdings;",
-        images_upload_url: '/api/image_uploads',
-        images_upload_credentials: true,
-      // images_upload_handler: function (blobInfo, success, failure) {
-      //   debugger
-      //   var formData = new FormData();
-      //   formData.append('file', blobInfo.blob(), fileName(blobInfo));
-      //
-      //   if (!this.state.id) {
-      //     this.handleSubmit(null, null, function (note) {
-      //       ImageAPIUtil.createImage(blobInfo.blob(), note.id, function (image) {
-      //         debugger
-      //         success(image.location);
-      //       }.bind(this));
-      //     }.bind(this));
-      //   } else {
-      //     ImageAPIUtil.createImage(blobInfo.blob(), this.state.id, function (image) {
-      //       debugger
-      //       success(image.location);
-      //     }.bind(this));
-      //   }
-      // }.bind(this)
+        // images_upload_url: '/api/image_uploads',
+        // images_upload_credentials: true,
+      images_upload_handler:  function (blobInfo, success, failure) {
+        if (!this.state.id) {
+          return;
+        }
+        var xhr, formData;
+        xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+        xhr.open('POST', "/api/image_uploads");
+
+        xhr.onload = function() {
+          var json;
+
+          if (xhr.status != 200) {
+            failure("HTTP Error: " + xhr.status);
+            return;
+          }
+
+          json = JSON.parse(xhr.responseText);
+
+          if (!json || typeof json.location != "string") {
+            failure("Invalid JSON: " + xhr.responseText);
+            return;
+          }
+
+          success(json.location);
+        };
+
+        formData = new FormData();
+        formData.append('file', blobInfo.blob(), blobInfo.filename());
+        formData.append('note_id', this.state.id);
+        xhr.send(formData);
+      }.bind(this)
     };
 
     if (this.props.fullWidth) {

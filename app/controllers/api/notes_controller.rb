@@ -28,18 +28,8 @@ class Api::NotesController < ApplicationController
   end
 
   def update
-    comparator = Note.new(note_params.except(:tags))
-    comparator.tag_ids = @note.tag_ids
-    comparator.title ||= @note.title
-    comparator.body ||= @note.body
-    comparator.user_id ||= @note.user_id
-    comparator.notebook_id ||= @note.notebook_id
-    @note.tag_ids = resolve_tags(params[:note][:tags])
-    if @note.search_hash != comparator.searchable.hash.to_s
-      params[:note][:tags] ||= []
-      @note.update_fuzzy_searchable!
-      @note.search_hash = comparator.searchable.hash.to_s
-    end
+    reindex_if_changed
+    check_for_removed_images
     if @note.update(note_params.except(:tags))
       render :show
     else
@@ -63,5 +53,30 @@ class Api::NotesController < ApplicationController
 
   def set_note
     @note = Note.find(params[:id])
+  end
+  def reindex_if_changed
+    comparator = Note.new(note_params.except(:tags))
+    if params[:note][:tags]
+      comparator.tag_ids = resolve_tags(params[:note][:tags])
+    end
+    comparator.title ||= @note.title
+    comparator.body ||= @note.body
+    comparator.user_id ||= @note.user_id
+    comparator.notebook_id ||= @note.notebook_id
+    comparator.tag_ids ||= @note.tag_ids
+    if !(@note.body =~ /data:[\s\S]+;base64/) && @note.search_hash != comparator.searchable.hash.to_s
+      params[:note][:tags] ||= []
+      @note.update_fuzzy_searchable!
+      @note.search_hash = comparator.searchable.hash.to_s
+    end
+  end
+  def check_for_removed_images
+    stored_image_ids = @note.image_uploads.map { |upload| upload.id  }
+    matcher = Regexp.new(/api\/image_uploads\/(\d+)/, "g")
+    new_image_ids = note_params[:body].scan(matcher).flatten.map {|id| id.to_i }
+    removed_image_ids = stored_image_ids - new_image_ids
+    removed_image_ids.each do |id|
+      ImageUpload.find(id).destroy
+    end
   end
 end

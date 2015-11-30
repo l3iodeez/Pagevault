@@ -1,13 +1,14 @@
 class Note < ActiveRecord::Base
   belongs_to :user
   belongs_to :notebook
+  has_many :image_uploads
   has_many :taggings, as: :taggable
   has_many :tags, through: :taggings
   has_many :shares
   fuzzily_searchable :searchable, async: true
 
   def searchable
-    body + " " + title + " " + tag_strings + " " + notebook_strings
+    body + " " + title + " " + tag_ids.to_s + " " + notebook_strings
   end
 
   def searchable_changed?

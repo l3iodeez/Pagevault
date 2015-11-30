@@ -70,9 +70,11 @@
         }
       } else if ( payload.actionType === NotebookConstants.NOTEBOOK_DELETED) {
         if (SelectedStore.getNotebook().id === payload.notebook.id) {
-        debugger
-          SelectedStore.setNotebook(NotebookStore.getFirst());
-          SelectedStore.setNote(NoteStore.getFirst(NotebookStore.getFirst().id));
+          AppDispatcher.waitFor([NotebookStore.dispatcherId]);
+          AppDispatcher.waitFor([NoteStore.dispatcherId]);
+        var notebook = NotebookStore.getFirst();
+          SelectedStore.setNotebook(notebook);
+          SelectedStore.setNote(NoteStore.getByNotebookID(notebook.id)[0]);
         }
       }
     }),
