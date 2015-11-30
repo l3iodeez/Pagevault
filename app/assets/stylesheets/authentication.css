@@ -39,8 +39,10 @@ div.loginform span {
 
 div.loginform img {
   margin: auto;
-  height: 100px;
-  width: 100px;
+  height: auto;
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 
 div.loginform h1 {
