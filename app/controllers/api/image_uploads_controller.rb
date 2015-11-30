@@ -11,7 +11,8 @@ class Api::ImageUploadsController < ApplicationController
   end
 
   def create
-    @image_upload = ImageUpload.new(image: params[:file], note_id: params[:note_id].to_i)
+    image = params[:file] || image_upload_params[:image]
+    @image_upload = ImageUpload.new(image: image, note_id: params[:note_id].to_i)
     if @image_upload.save
       render :show
     else

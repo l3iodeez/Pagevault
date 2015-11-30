@@ -76,7 +76,9 @@ class Api::NotesController < ApplicationController
     new_image_ids = note_params[:body].scan(matcher).flatten.map {|id| id.to_i }
     removed_image_ids = stored_image_ids - new_image_ids
     removed_image_ids.each do |id|
-      ImageUpload.find(id).destroy
+      # image = ImageUpload.where("updated_at < :minute AND id = :id", {:minute => 1.hour.ago, :id => id}).first
+      image = ImageUpload.find(id)
+      image.destroy if image
     end
   end
 end
