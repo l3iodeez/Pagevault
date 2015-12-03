@@ -29,8 +29,9 @@ class Api::NotesController < ApplicationController
 
   def update
     reindex_if_changed
-    check_for_removed_images
+    check_for_removed_images if note_params[:body]
     if @note.update(note_params.except(:tags))
+      @note.tag_ids = resolve_tags(params[:note][:tags]) if params[:note][:tags]
       render :show
     else
       render json: 422, status: :unprocessable_entity
@@ -48,7 +49,7 @@ class Api::NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :body, :user_id, :notebook_id, :is_archived, :tags)
+    params.require(:note).permit(:title, :body, :user_id, :notebook_id, :is_archived, tags: [])
   end
 
   def set_note

@@ -50,14 +50,8 @@
   bottom: 10px;
   left: calc(50% - 12.5px);
 }
-.sidebar-item.new-note div {
+.sidebar-item.new-note  {
   font-size: 15px;
-  position: absolute;
-  left: 6.5px;
-  top: 3.25px;
 
-}
-.sidebar-item.new-note:hover div {
-  left: 6.5px;
-  top: 3.25px;
+
 }

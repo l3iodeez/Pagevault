@@ -21,6 +21,7 @@
 //= require tinymce
 //= require uuid
 //= require TinyMCEInput
+//= require sjcl
 //= require plugins/autoresize/plugin.min
 //= require_tree ./components
 //= require_tree .
