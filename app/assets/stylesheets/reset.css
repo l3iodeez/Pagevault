@@ -1,5 +1,5 @@
 html, body, ul, li, div, button,
-input, textarea {
+input, textarea, a {
   margin: 0;
   padding: 0;
   border: 0;
@@ -15,7 +15,7 @@ input, textarea {
 }
 body {
   font-family: "Century Gothic",helvetica,arial,sans-serif;
-
+  font-size: 12px;
 }
 li, ul {
   list-style: none;
@@ -38,4 +38,12 @@ button:focus {
 button, a {
   outline: 0;
   cursor: pointer;
+}
+a {
+  color: #232261;
+  text-decoration: underline
+
+}
+a:hover, a:active a:visited {
+  color: #9E1E62
 }
