@@ -8,23 +8,34 @@ var NoteForm = React.createClass({
     var title = selectedNote ? selectedNote.title : "";
     var body = selectedNote ? selectedNote.body : "";
     var is_archived  = selectedNote ? selectedNote.is_archived : "";
+    var is_encrypted  = selectedNote ? selectedNote.is_encrypted : "";
     var tags = selectedNote ? selectedNote.tags : "";
     return {
       id: id,
       title: title,
       body: body,
       is_archived: is_archived,
+      is_encrypted: is_encrypted,
       notebook_id: "",
       saving: "saved",
+      password: '',
       tags: tags,
       tagsDirty: false,
+      errorText: ''
     };
   },
   importID: function () {
     this.setState({ id: SelectedStore.getNote().id });
   },
   changeSelectedNote: function () {
-    this.setState($.extend({saving: "saved"}, SelectedStore.getNote() ));
+    var note = $.extend({saving: "saved"}, SelectedStore.getNote() );
+    if (note.is_encrypted) {
+      this.decryptNote(note);
+      this.setState(note);
+    }
+    else {
+      this.setState($.extend(note, {password: '', locked: false}));
+    }
   },
   resetForm: function () {
     this.setState({
@@ -32,27 +43,48 @@ var NoteForm = React.createClass({
       title: "",
       body: "",
       is_archived: "",
+      is_encrypted: "",
       notebook_id: "",
       tags: "",
-      saving: "saved"
+      saving: "saved",
+      password: "",
+      locked: false,
+      errorText: ''
     });
   },
   importNote: function () {
     var note = SelectedStore.getNote();
     if (note) {
+      var locked;
+      if (note.is_encrypted) {
+        this.decryptNote(note);
+      } else {
+        this.setState({locked: false, password: ''});
+      }
       this.setState({
         id: note.id,
         title: note.title,
         body: note.body,
         notebook_id: note.notebook_id,
         is_archived: note.is_archived,
-        tags: note.tags
+        is_encrypted: note.is_encrypted,
+        tags: note.tags,
+        errorText: '',
       });
     }
   },
-  componentWillReceiveProps: function (newProps) {
-  },
   newNoteReceived: function () {
+    if (this.state.is_encrypted && this.state.saving === 'dirty') {
+      ModalActions.raiseModal({
+        type: "confirmDropChanges",
+        object: this.state,
+        callback: function () {
+          this.state.saving = "saved";
+          this.newNoteReceived();
+        }.bind(this)
+      }.bind(this));
+      return;
+    }
     clearTimeout(this.timeoutID);
     if (!tinyMCE.activeEditor) {
       setTimeout(function () {
@@ -64,11 +96,14 @@ var NoteForm = React.createClass({
       this.importID();
     } else if (!this.state.id || this.state.id === "") {
       if (this.props.fullWidth) {
+        this.setState(SelectedStore.getNote());
         return;
       }
       this.importNote();
     } else if (SelectedStore.getNote() && (this.state.id !== SelectedStore.getNote().id)) {
-      this.handleSubmit();
+      if (this.state.saving === 'dirty') {
+        this.handleSubmit();
+      }
       this.changeSelectedNote();
     } else if (!SelectedStore.getNote()) {
       if (this.state.saving === 'dirty') {
@@ -84,6 +119,7 @@ var NoteForm = React.createClass({
   componentDidMount: function () {
     SelectedStore.addNoteChangeListener(this.newNoteReceived);
     SelectedStore.addNotebookChangeListener(this.newNotebookSelected);
+
   },
   componentWillUnmount: function () {
     SelectedStore.removeNoteChangeListener(this.newNoteReceived);
@@ -92,13 +128,6 @@ var NoteForm = React.createClass({
 
     this.handleSubmit();
   },
-  uploadImages: function (e, attrs, callback) {
-    // debugger
-    // tinymce.activeEditor.uploadImages(function (path) {
-    //   debugger
-    //   this.handleSubmit(e, attrs, callback);
-    // }.bind(this));
-  },
   handleSubmit: function (e, attrs, callback) {
     if (this.state.body.match(/data:[\s\S]+;base64/)) {
       setTimeout(function () {
@@ -106,7 +135,6 @@ var NoteForm = React.createClass({
       }.bind(this), 300);
       return;
     }
-
     attrs = attrs || {};
     clearTimeout(this.timeoutID);
     this.timeoutID = null;
@@ -131,13 +159,18 @@ var NoteForm = React.createClass({
           title: attrs.title || this.state.title,
           body: attrs.body || this.state.body,
           notebook_id: SelectedStore.getNotebook().id,
+          is_encrypted: this.state.is_encrypted,
           tags: this.state.tags
       };
+      if (note.is_encrypted) {
+        note.body = sjcl.encrypt(this.state.password, note.body);
+      }
       if (this.state.id) {
         note.id = this.state.id;
         note.is_archived = this.state.is_archived;
         NotesAPIUtil.editNote(note, apiCallback);
       } else {
+
         if (this.state.title.length === 0 && this.state.body.length === 0 ) {
           this.setState({saving: "saved"});
           return;
@@ -147,6 +180,9 @@ var NoteForm = React.createClass({
           body: this.state.body,
           notebook_id: SelectedStore.getNotebook().id
         };
+        if (note.is_encrypted) {
+          note.body = sjcl.encrypt(this.state.password, note.body);
+        }
         this.setState({creating: true});
         NotesAPIUtil.createNote(note, apiCallback);
       }
@@ -156,10 +192,11 @@ var NoteForm = React.createClass({
     }
 
   },
-
-
   saveTimeout: function (attrs) {
-    if (this.state.saving !== "saving") {
+    if (
+      this.state.saving !== "saving" &&
+      (!this.state.is_encrypted || this.state.password.length > 5)
+       ) {
       clearTimeout(this.timeoutID);
       this.timeoutID = setTimeout(function () {
         this.setState({saving: "saving"});
@@ -170,26 +207,61 @@ var NoteForm = React.createClass({
     }
   },
   updateBody: function(content) {
-    this.setState({body: content, saving: "dirty"});
-    this.saveTimeout({body: content});
+    if (!this.state.locked) {
+      this.setState({body: content, saving: "dirty"});
+      this.saveTimeout({body: content});
+    }
+    else {
+      this.setState({body: this.state.body});
+    }
   },
   updateTitle: function(e) {
     this.setState({title: e.currentTarget.value, saving: "dirty"});
     this.saveTimeout({title: e.currentTarget.value });
   },
+  enableCrypt: function (password) {
+    this.setState({is_encrypted: true, password: password, saving: "dirty"}, this.handleSubmit);
+    ModalActions.closeModal();
+  },
+  disableCrypt: function () {
+    this.setState({is_encrypted: false, saving: "dirty"}, this.handleSubmit);
+    ModalActions.closeModal();
+
+  },
+  decryptNote: function (password) {
+    debugger
+
+      var note = $.extend({}, SelectedStore.getNote());
+      var newText;
+      try {
+        newText = sjcl.decrypt(password, note.body);
+        this.setState({locked: false});
+      } catch (e) {
+        // newText = "<h1>Wrong decryption password.</h1>";
+        this.setState({locked: true});
+      } finally {
+        note.body = newText || note.body;
+      }
+      this.setState({body: note.body});
+  },
+
+
   newNote: function (e) {
     e.preventDefault();
     this.setState({
       id: "",
       title: "",
       body: "",
-      is_archived: ""
+      is_archived: "",
+      is_encrypted: false,
+      password: ""
     });
     this.props.setSelected(null);
   },
   cancel: function (e) {
     e.preventDefault();
     this.props.toggleNoteIndex(1);
+
   },
   showDeleteConfirm: function () {
     if (this.state.id) {
@@ -199,16 +271,22 @@ var NoteForm = React.createClass({
   changeTags: function (e) {
     this.setState({tags:e.currentTarget.value });
   },
+  splitTags: function (tags) {
+    if (typeof tags !== "string") {
+      return tags;
+    }
+    return tags.split(',').map(function (tag) {
+        return tag.trim().toLowerCase().split(' ');
+    }).reduce(function(a, b) {
+      return a.concat(b);
+    });
+  },
   updateTags: function (e) {
     e.stopPropagation();
     e.preventDefault();
-    this.setState({tagsDirty: true});
     if (this.state.id) {
-      var tags = this.state.tags.split(',').map(function (tag) {
-          return tag.trim().toLowerCase().split(' ');
-      }).reduce(function(a, b) {
-        return a.concat(b);
-      });
+      this.setState({tagsDirty: true});
+      var tags = this.splitTags(this.state.tags);
       var note = {
         id: this.state.id,
         tags: tags
@@ -218,7 +296,6 @@ var NoteForm = React.createClass({
       }.bind(this));
     }
   },
-
   render: function() {
     var formHeight = window.innerHeight;
     var formClass = "note-form ";
@@ -243,10 +320,8 @@ var NoteForm = React.createClass({
         "Times New Roman=times new roman,times;"+
         "Verdana=verdana,geneva;"+
         "Webdings=webdings;",
-        // images_upload_url: '/api/image_uploads',
-        // images_upload_credentials: true,
       images_upload_handler:  function (blobInfo, success, failure) {
-        if (!this.state.id) {
+        if (!this.state.id || this.state.is_encrypted) {
           return;
         }
         var xhr, formData;
@@ -289,10 +364,10 @@ var NoteForm = React.createClass({
       cancelButtonClass += " hidden";
     }
 
-    if (this.state.title.length === 0 && this.state.body.length === 0) {
-      saveButtonClass += " hidden";
-    } else {
+    if (this.state.id) {
       cancelButtonClass += " hidden";
+    } else {
+      saveButtonClass += " hidden";
     }
     var indicatorClass;
       switch (this.state.saving) {
@@ -306,9 +381,11 @@ var NoteForm = React.createClass({
           indicatorClass = " fa-spinner fa-pulse saving";
           break;
       }
-
+      var tags;
+      if (this.state.tags) {
+        tags = this.state.tags;
+      }
       var sharingForm = <NoteSharing note={SelectedStore.getNote()} />;
-
     return (
       <div className={formClass} >
         <div className={formClass + " header"}>
@@ -316,19 +393,27 @@ var NoteForm = React.createClass({
             <form onSubmit={this.updateTags} className="tag-input-form note-tags">
               <span htmlFor="tags">Tags</span>
               <input
+                id="note-tag-input"
                 name="tags"
-                onClick={this.enterTags}
                 type="text"
                 className="tag-input note-tags"
                 value={this.state.tags}
                 onBlur={this.updateTags}
-                onChange={this.changeTags} />
-              {this.state.tagsDirty ? (
-                <div className="tiny-spinner note-tags">
-                  <i className="fa fa-spinner fa-spin" />
-                </div>) : null}
+                onChange={this.changeTags}
+               />
+                {this.state.tagsDirty ? (
+                  <div className="tiny-spinner note-tags">
+                    <i className="fa fa-spinner fa-spin" />
+                  </div>) : null}
             </form>
         </div>
+        <EncryptionControl
+          enabled={this.state.is_encrypted}
+          locked={this.state.locked}
+          enableCrypt={this.enableCrypt}
+          disableCrypt={this.disableCrypt}
+          decryptNote={this.decryptNote}
+        />
         <div >
           <div className="button-container">
             <button className={saveButtonClass} onClick={this.handleSubmit}>Done</button>
@@ -338,6 +423,7 @@ var NoteForm = React.createClass({
             <br />
             <input
               id="noteTitle"
+              className="title"
               type="text"
               placeholder={"Title your note"}
               name="title"
@@ -348,12 +434,25 @@ var NoteForm = React.createClass({
           <br />
           <label htmlFor="noteBody">Note Body</label>
             <br />
-            <div className={tinyMceBox}>
-              <TinyMCEInput
-                value={this.state.body}
-                onChange={this.updateBody}
-                tinymceConfig={configOpts} />
-            </div>
+
+              <div className={tinyMceBox}>
+                { this.state.locked ?
+                  <div className="lock-overlay-container">
+                    <div className="lock-overlay-bg">
+                    </div>
+                    <div className="lock-overlay">
+                      <i className="fa fa-lock"></i>
+                      <p>Enter encryption password.</p>
+                    </div>
+                  </div>
+                  :
+                  null
+                }
+                <TinyMCEInput
+                  value={this.state.body}
+                  onChange={this.updateBody}
+                  tinymceConfig={configOpts} />
+              </div>
           <br />
 
         </div>

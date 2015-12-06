@@ -28,8 +28,8 @@ class Api::NotesController < ApplicationController
   end
 
   def update
-    reindex_if_changed
-    check_for_removed_images if note_params[:body]
+    reindex_if_changed unless @note.is_encrypted
+    check_for_removed_images if note_params[:body] && !@note.is_encrypted
     if @note.update(note_params.except(:tags))
       @note.tag_ids = resolve_tags(params[:note][:tags]) if params[:note][:tags]
       render :show
@@ -49,7 +49,7 @@ class Api::NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :body, :user_id, :notebook_id, :is_archived, tags: [])
+    params.require(:note).permit(:title, :body, :user_id, :notebook_id, :is_archived, :is_encrypted, tags: [])
   end
 
   def set_note

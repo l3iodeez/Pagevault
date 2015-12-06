@@ -24,30 +24,7 @@ body {
   z-index: 5;
 }
 
-.tag-input{
-  border: 1px solid #000;
-}
 
-.tag-input-form.note-tags{
-  position: relative;
-  width: 201px;
-  top: -30px;
-  left: 100px;
-}
-.tag-input-form.note-tags span {
-  position: absolute;
-  top: 5px;
-  left: -50px;
-  color: #000;
-}
-input.tag-input.note-tags {
-  vertical-align: middle;
-  color: #000;
-  font-size: 14px;
-  padding: 3px;
-  width: 100%;
-  border: 1px solid #ccc;
-}
 
 .tiny-spinner{
   height: 13px;

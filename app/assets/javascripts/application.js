@@ -22,6 +22,7 @@
 //= require uuid
 //= require TinyMCEInput
 //= require sjcl
+//= require jquery.tagsinput.min
 //= require plugins/autoresize/plugin.min
 //= require_tree ./components
 //= require_tree .

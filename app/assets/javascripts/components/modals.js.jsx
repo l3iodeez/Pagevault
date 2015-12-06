@@ -2,7 +2,14 @@ var Modals = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
 
   getInitialState: function() {
-    return {modal: null, editId: null, newNotebookTitle: "", newNotebookDescription: "", pending: false};
+    return {
+      modal: null,
+      editId: null,
+      newNotebookTitle: "",
+      newNotebookDescription: "",
+      encryptPass: '',
+      pending: false,
+    };
   },
   componentWillMount: function() {
     ModalStore.addChangeListener(this.raiseModal);
@@ -20,10 +27,21 @@ var Modals = React.createClass({
     }
     else if (modalInfo.type === "newNotebook") {
       this.setState({modal: this.newNotebookModal(), editId: null});
-    } else {
+    }
+    else if (modalInfo.type === "confirmDropChanges") {
+      this.setState({modal: this.confirmDropChangesModal(modalInfo.callback)});
+    }
+    else if (modalInfo.type === "encryptNote") {
+      this.setState({modal: this.encryptNoteModal(modalInfo.callback)});
+    }
+    else if (modalInfo.type === "decryptNote") {
+      this.setState({modal: this.decryptNoteModal(modalInfo.callback)});
+    }
+    else {
       this.setState({modal: null, editId: null});
     }
   },
+
   spinner: function () {
     return (
       <div className="modal spinner">
@@ -90,6 +108,47 @@ var Modals = React.createClass({
     NotebooksAPIUtil.createNotebook(notebook, this.closeModal, function () {
       this.setState({modal: this.newNotebookModal(), editId: null });
     });
+  },
+  encryptNoteModal: function (callback) {
+    var setPass = function (password) {
+      callback(this.state.encryptPass);
+    }.bind(this);
+    return (
+      <div className="modal confirm-encrypt">
+        <div>
+          <p>Enter a password to encrypt this note.</p>
+          <input onChange={this.encryptPassChanged}></input>
+          <button onClick={setPass}>Encrypt</button>
+          <button onClick={this.closeModal}>Cancel</button>
+        </div>
+      </div>
+    );
+  },
+  decryptNoteModal: function (callback) {
+    return (
+      <div className="modal confirm-decrypt">
+        <div>
+          <p>Remove encryption from this note?</p>
+          <button onClick={callback}>Remove</button>
+          <button onClick={this.closeModal}>Cancel</button>
+        </div>
+      </div>
+    );
+  },
+  confirmDropChangesModal: function (callback) {
+    return (
+      <div className="modal confirm-delete">
+        <div>
+          <p>Discard changes to this encrypted note?</p>
+          <button onClick={callback}>Yes</button>
+          <button onClick={this.closeModal}>No</button>
+        </div>
+      </div>
+    );
+  },
+
+  encryptPassChanged: function (e) {
+    this.setState({encryptPass: e.currentTarget.value});
   },
   titleChanged: function (e) {
     this.setState({newNotebookTitle: e.currentTarget.value});

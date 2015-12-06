@@ -10,7 +10,7 @@ var NotesIndexItem = React.createClass({
       <ul className="note-index-item" onClick={this.handleClick}>
         <li>{this.props.note.title}</li>
         <li>{modifiedDate}</li>
-        <li>{$("<div>" + this.props.note.body + "</div>").text()}</li>
+        <li>{this.props.note.is_encrypted ? "NOTE BODY ENCRYPTED" : $("<div>" + this.props.note.body + "</div>").text()}</li>
         {indexThumbnail}
 
       </ul>
