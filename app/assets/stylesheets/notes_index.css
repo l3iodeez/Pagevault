@@ -38,6 +38,9 @@
 .note-index-item ul {
   padding: 3px;
 }
+.note-index-item.selected{
+  background-color: #eee;
+}
 .note-index-item img {
   display: block;
   position: absolute;

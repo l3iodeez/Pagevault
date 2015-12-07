@@ -419,6 +419,8 @@ var NoteForm = React.createClass({
             </div>
             <div className="lock-overlay">
               <i className="fa fa-lock"></i>
+                <i className="fa fa-trash header-icon delete" onClick={this.showDeleteConfirm}></i>
+
               <p>Enter encryption password.</p>
               <input type="text" onChange={this.attemptDecrypt} />
             </div>
