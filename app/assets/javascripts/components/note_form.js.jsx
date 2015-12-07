@@ -74,17 +74,19 @@ var NoteForm = React.createClass({
     }
   },
   newNoteReceived: function () {
-    if (this.state.is_encrypted && this.state.saving === 'dirty') {
-      ModalActions.raiseModal({
-        type: "confirmDropChanges",
-        object: this.state,
-        callback: function () {
-          this.state.saving = "saved";
-          this.newNoteReceived();
-        }.bind(this)
-      }.bind(this));
-      return;
-    }
+    // if (this.state.is_encrypted && this.state.saving === 'dirty') {
+    //   debugger
+    //   ModalActions.raiseModal({
+    //     type: "confirmDropChanges",
+    //     object: this.state,
+    //     callback: function () {
+    //       debugger
+    //       this.state.saving = "saved";
+    //       this.newNoteReceived();
+    //     }.bind(this)
+    //   });
+    //   return;
+    // }
     clearTimeout(this.timeoutID);
     if (!tinyMCE.activeEditor) {
       setTimeout(function () {
@@ -142,14 +144,14 @@ var NoteForm = React.createClass({
     if (e) {
       e.preventDefault();
     }
-    if (this.state.creating) {
+    if (this.state.creating || this.state.locked) {
       return;
     }
     if (this.state.saving === "saving" || this.state.saving === "dirty") {
 
       var apiCallback = function (data) {
         var note = NoteStore.getByID(data.id);
-        this.setState({creating: false});
+        this.setState({creating: false, saving: "saved"});
         if (typeof callback === "function") {
           callback();
         }
@@ -193,10 +195,7 @@ var NoteForm = React.createClass({
 
   },
   saveTimeout: function (attrs) {
-    if (
-      this.state.saving !== "saving" &&
-      (!this.state.is_encrypted || this.state.password.length > 5)
-       ) {
+    if (this.state.saving !== "saving") {
       clearTimeout(this.timeoutID);
       this.timeoutID = setTimeout(function () {
         this.setState({saving: "saving"});
@@ -229,7 +228,6 @@ var NoteForm = React.createClass({
 
   },
   decryptNote: function (password) {
-    debugger
 
       var note = $.extend({}, SelectedStore.getNote());
       var newText;
@@ -242,10 +240,11 @@ var NoteForm = React.createClass({
       } finally {
         note.body = newText || note.body;
       }
-      this.setState({body: note.body});
+      this.setState({body: note.body, password: password});
   },
-
-
+  attemptDecrypt: function (e) {
+    this.decryptNote(e.currentTarget.value);
+  },
   newNote: function (e) {
     e.preventDefault();
     this.setState({
@@ -414,6 +413,19 @@ var NoteForm = React.createClass({
           disableCrypt={this.disableCrypt}
           decryptNote={this.decryptNote}
         />
+        { this.state.locked ?
+          <div className="lock-overlay-container">
+            <div className="lock-overlay-bg">
+            </div>
+            <div className="lock-overlay">
+              <i className="fa fa-lock"></i>
+              <p>Enter encryption password.</p>
+              <input type="text" onChange={this.attemptDecrypt} />
+            </div>
+          </div>
+          :
+          null
+        }
         <div >
           <div className="button-container">
             <button className={saveButtonClass} onClick={this.handleSubmit}>Done</button>
@@ -436,18 +448,7 @@ var NoteForm = React.createClass({
             <br />
 
               <div className={tinyMceBox}>
-                { this.state.locked ?
-                  <div className="lock-overlay-container">
-                    <div className="lock-overlay-bg">
-                    </div>
-                    <div className="lock-overlay">
-                      <i className="fa fa-lock"></i>
-                      <p>Enter encryption password.</p>
-                    </div>
-                  </div>
-                  :
-                  null
-                }
+
                 <TinyMCEInput
                   value={this.state.body}
                   onChange={this.updateBody}

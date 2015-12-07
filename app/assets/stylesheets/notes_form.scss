@@ -127,14 +127,12 @@
 
 .lock-overlay-bg {
   background-color: #AAA;
-  opacity: 0.95;
   height: 100%;
   width: 100%;
 }
 .lock-overlay-container {
   position: absolute;
-  border: 1px solid blue;
-  top: 0;
+  top: -100px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -155,5 +153,5 @@
 
 }
 .lock-overlay i {
-  font-size: 48px;
+  font-size: 72px;
 }
