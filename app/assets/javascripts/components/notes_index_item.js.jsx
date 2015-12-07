@@ -5,7 +5,7 @@ var NotesIndexItem = React.createClass({
   },
   render: function() {
     var selected = "";
-    if (this.props.note.id === SelectedStore.getNote().id) {
+    if (SelectedStore.getNote() && this.props.note.id === SelectedStore.getNote().id) {
       selected = " selected";
     }
     var modifiedDate = Helpers.formatDate(new Date(this.props.note.updated_at));
