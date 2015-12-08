@@ -1,7 +1,7 @@
 var Search = React.createClass({
 
   getInitialState: function() {
-    return {searchString: "", results: [], status: "searching"};
+    return {searchString: "", results: [], status: "idle"};
   },
 
   setTimeout: function () {
