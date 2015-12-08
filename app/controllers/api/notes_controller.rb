@@ -28,7 +28,7 @@ class Api::NotesController < ApplicationController
   end
 
   def update
-    reindex_if_changed unless @note.is_encrypted
+    reindex_if_changed
     check_for_removed_images if note_params[:body] && !@note.is_encrypted
     if @note.update(note_params.except(:tags))
       @note.tag_ids = resolve_tags(params[:note][:tags]) if params[:note][:tags]

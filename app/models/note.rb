@@ -8,7 +8,11 @@ class Note < ActiveRecord::Base
   fuzzily_searchable :searchable, async: true
 
   def searchable
-    body + " " + title + " " + tag_ids.to_s + " " + notebook_strings
+    if is_encrypted
+      title + " " + tag_ids.to_s + " " + notebook_strings
+    else
+      body + " " + title + " " + tag_ids.to_s + " " + notebook_strings
+    end
   end
 
   def searchable_changed?
