@@ -160,7 +160,7 @@ var NoteForm = React.createClass({
       var note = {
           title: attrs.title || this.state.title,
           body: attrs.body || this.state.body,
-          notebook_id: SelectedStore.getNotebook().id,
+          notebook_id: this.state.notebook_id || SelectedStore.getNotebook().id,
           is_encrypted: this.state.is_encrypted,
           tags: this.state.tags
       };
