@@ -37,5 +37,20 @@ var UsersApiUtil = {
         failureCallback && failureCallback(errors)
       }
     });
+  },
+  updateUser: function (user, successCallback, failureCallback) {
+    $.ajax({
+      url: '/api/users',
+      type: 'PATCH',
+      dataType: 'json',
+      data: {user: user},
+      success: function (user) {
+        CurrentUserActions.receiveCurrentUser(user);
+        successCallback && successCallback();
+      },
+      error: function (errors) {
+        failureCallback && failureCallback(errors)
+      }
+    });
   }
 };

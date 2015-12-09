@@ -1,32 +1,38 @@
-# TODO list
-  [ ] Better styling on encryption controls.
-    - Encrypt/Decrypt button.
-    - Delete button.
-  [ ] Provide warning message modal when encrypting notes.
-    - Should be able to be hidden on a per user basis.
-  [ ] About page
+# To do list
+  - [x] Better styling on encryption controls.
+      - Encrypt/Decrypt button.
+      - Delete button.
+  - [X] Provide warning message modal when encrypting notes.
+      - Should be able to be hidden on a per user basis.
+  - [ ] About page
     - Intro to app
     - Explanation of encryption methods.
     - Warning about losing access to encrypted notes.
-  [ ] Complete note sharing features
+  - [ ] Complete note sharing features
     - Shared notes should be marked as such.
     - Backend ensures users cannot update notes to which they don't have access.
-    - Backend ensures users cannot change the encryption status of notes even if
-      they are shared. This can be hacked with element inspector though.
-  [ ] Notebook index items should be miniforms for editing notebook params.
-  [ ] Change "New notebook" link to an icon.
-  [ ] Lock note immediately upon encryption.
-  [ ] Require password confirmation when encrypting.
+    - No option for user to change password of a shared note.
+      - This can be bypassed if the user changes the password in the component
+      state before saving the note. I can't think of a way to prevent this without
+      compromising password security. Needs research.
+  - [ ] Notebook index items should be miniforms for editing notebook params.
+  - [ ] Change "New notebook" link to an icon.
+  - [ ] Lock note immediately upon encryption.
+  - [ ] Require password confirmation when encrypting.
     - Provide error messages, create reusable method for errors on modals.
-  [ ] Create better seed file.
+  - [ ] Create better seed file.
     - Resets all users.
     - Creates encrypted and unencrypted notes.
     - Uploads local images to AWS, embeds links properly.
     - Creates a note with the password to the encrypted notes.
     - Creates notes with good search targets in body, title and tags
-  [ ] Hover text on all icon controls.
-  [ ] Add more tinyMCE plugins for list formatting and whatever else. 
-
+  - [ ] Hover text on all icon controls.
+  - [ ] Add more tinyMCE plugins for list formatting and whatever else.
+  - [ ] User account options page.
+    - Change name
+    - Change password
+    - Change warning message prefs
+  - [ ] Email confirmation with ActionMailer
 
 About:
   Pagevault is an online note taking app with rich text and embedded image capability.

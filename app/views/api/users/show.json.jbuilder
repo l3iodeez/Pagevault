@@ -1,4 +1,4 @@
 json.extract!(
 @user,
-:id, :email
+:id, :email, :hide_encrypt_warning
 )

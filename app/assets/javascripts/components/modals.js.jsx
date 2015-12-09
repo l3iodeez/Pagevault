@@ -1,6 +1,6 @@
 var Modals = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
-
+// Setup functions
   getInitialState: function() {
     return {
       modal: null,
@@ -8,7 +8,10 @@ var Modals = React.createClass({
       newNotebookTitle: "",
       newNotebookDescription: "",
       encryptPass: '',
+      encryptPassConfirm: '',
+      encryptPassStrength: {},
       pending: false,
+      hideEncryptWarning: false,
     };
   },
   componentWillMount: function() {
@@ -19,29 +22,36 @@ var Modals = React.createClass({
   },
   raiseModal: function () {
     var modalInfo = ModalStore.currentModal();
-    if (modalInfo.type === "deleteNote") {
+    switch (modalInfo.type) {
+    case "deleteNote":
       this.setState({modal: this.deleteNoteModal(), editId: modalInfo.object.id});
-    }
-    else if (modalInfo.type === "deleteNotebook") {
+      break;
+    case "deleteNotebook":
       this.setState({modal: this.deleteNotebookModal(), editId: modalInfo.object.id});
-    }
-    else if (modalInfo.type === "newNotebook") {
+      break;
+    case "newNotebook":
       this.setState({modal: this.newNotebookModal(), editId: null});
-    }
-    else if (modalInfo.type === "confirmDropChanges") {
+      break;
+    case "confirmDropChanges":
       this.setState({modal: this.confirmDropChangesModal(modalInfo.callback)});
-    }
-    else if (modalInfo.type === "encryptNote") {
+      break;
+    case "encryptWarning":
+      this.setState({modal: this.encryptWarningModal(modalInfo.callback)});
+      break;
+    case "encryptNote":
       this.setState({modal: this.encryptNoteModal(modalInfo.callback)});
-    }
-    else if (modalInfo.type === "decryptNote") {
+      break;
+    case "decryptNote":
       this.setState({modal: this.decryptNoteModal(modalInfo.callback)});
-    }
-    else {
+      break;
+    case "about":
+      this.setState({modal: this.aboutModal()});
+      break;
+    default:
       this.setState({modal: null, editId: null});
     }
   },
-
+// Modal functions
   spinner: function () {
     return (
       <div className="modal spinner">
@@ -109,6 +119,30 @@ var Modals = React.createClass({
       this.setState({modal: this.newNotebookModal(), editId: null });
     });
   },
+
+  encryptWarningModal: function (callback) {
+    var accept = function () {
+      if (this.state.hideEncryptWarning) {
+        UsersApiUtil.updateUser({hide_encrypt_warning: true});
+      }
+      this.setState({modal: this.encryptNoteModal(callback)});
+    }.bind(this);
+
+
+    return (
+      <div className="modal confirm-encrypt">
+        <div className="warning-text">
+          <p>By clicking below you acknowledge your understanding that Pagevault does not retain
+          encryption passwords.</p>
+
+        <p><strong>If you lose or forget the password there will be no way to recover it.</strong></p>
+          <input id="hide-warning" type="checkbox" onChange={this.hideEncryptWarningChange}></input>
+          <label htmlFor="hide-warning">Don't show this warning again.</label>
+          <button onClick={accept}>I understand</button>
+        </div>
+      </div>
+    );
+  },
   encryptNoteModal: function (callback) {
     var setPass = function (password) {
       callback(this.state.encryptPass);
@@ -116,8 +150,8 @@ var Modals = React.createClass({
     return (
       <div className="modal confirm-encrypt">
         <div>
-          <p>Enter a password to encrypt this note.</p>
-          <input onChange={this.encryptPassChanged}></input>
+          <p>Encrypt this note.</p>
+          <PasswordStrengthMeter onChange={this.encryptPassChanged}/>
           <button onClick={setPass}>Encrypt</button>
           <button onClick={this.closeModal}>Cancel</button>
         </div>
@@ -146,7 +180,31 @@ var Modals = React.createClass({
       </div>
     );
   },
-
+// State update functions
+  passwordErrors: function (password, confirm) {
+    var errors = [];
+    if (this.state.encryptPassStrength < 3) {
+      errors.push("Too weak.");
+    }
+    if (password !== confirm) {
+      errors.push("Confirmation doesn't match.");
+    }
+    return (
+      <ul>
+        {errors.map(function (error) {
+          return (
+            <li>{error}</li>
+          );
+        })}
+      </ul>
+    );
+  },
+  encryptPassConfirmChanged: function (e) {
+    this.setState({encryptPassConfirmed: e.currentTarget.value});
+  },
+  hideEncryptWarningChange: function (e) {
+    this.setState({hideEncryptWarning: e.currentTarget.checked});
+  },
   encryptPassChanged: function (e) {
     this.setState({encryptPass: e.currentTarget.value});
   },
@@ -156,6 +214,9 @@ var Modals = React.createClass({
   descriptionChanged: function (e) {
     this.setState({newNotebookDescription: e.currentTarget.value});
   },
+
+
+
   render: function() {
     var modalClass;
     if (this.state.modal) {

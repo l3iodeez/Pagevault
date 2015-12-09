@@ -1,14 +1,17 @@
 class Api::UsersController < ApplicationController
 
   before_action :set_user, only: [:update, :destroy]
-  # before_action :verify_logged_in, except: [:index, :new, :create]
-  # before_action :verify_logged_out, only: [:new, :create]
+
   def index
-    @users = []
-    5.times do
-      @users << User.all.sample
+    if logged_in?
+      @users = []
+      5.times do
+        @users << User.all.sample
+      end
+      render :index
+    else
+      render json: "FORBIDDEN", status: :forbidden
     end
-    render :index
   end
   def create
     @user = User.new(user_params)
@@ -27,7 +30,9 @@ class Api::UsersController < ApplicationController
 
 
   def update
-    if @user.update(user_params)
+    if !logged_in?
+      render json: "FORBIDDEN", status: :forbidden
+    elsif @user.update(user_params)
       render json: @user
     else
       render json: {errors: @user.errors.full_messages} , status: :unprocessable_entity
@@ -35,14 +40,14 @@ class Api::UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    render json: @user
+    # @user.destroy
+    # render json: @user
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :name)
+    params.require(:user).permit(:email, :password, :name, :hide_encrypt_warning)
   end
 
   def set_user

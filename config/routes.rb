@@ -10,7 +10,8 @@ Rails.application.routes.draw do
      resources :image_uploads, only: [:new]
    end
    namespace :api, defaults: {format: :json} do
-     resources :users, only: [:index, :new, :create, :destroy]
+     resources :users, only: [:index, :new, :create]
+     patch '/users' => 'users#update'
      resources :notes
      resources :image_uploads, only: [:show, :create]
      resources :notebooks

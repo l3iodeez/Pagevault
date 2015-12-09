@@ -6,7 +6,11 @@ var EncryptionControl = React.createClass({
     };
   },
   enable: function () {
-    ModalActions.raiseModal({type: "encryptNote", callback: this.props.enableCrypt });
+    if (CurrentUserStore.currentUser().hide_encrypt_warning) {
+      ModalActions.raiseModal({type: "encryptNote", callback: this.props.enableCrypt });
+    } else {
+      ModalActions.raiseModal({type: "encryptWarning", callback: this.props.enableCrypt });
+    }
   },
   disable: function () {
     ModalActions.raiseModal({type: "decryptNote", callback: this.props.disableCrypt });

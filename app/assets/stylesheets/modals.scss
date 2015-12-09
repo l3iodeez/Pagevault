@@ -29,14 +29,7 @@ div.modal div {
   margin: auto;
 }
 .modal-spinner-image {
-  position: absolute;
-  top: calc(50% - 40px);
-  left: calc(50% - 40px);
 
-  height: 80px;
-  width: 80px;
-
-  padding: 0;
 }
 div.modal.spinner{
   font-size: 80px;
@@ -57,6 +50,12 @@ div.modal.spinner{
 }
 .modal input{
   display: block;
-  border: 1px solid #ccc;
+  border: 1px solid #232261;
   margin: auto;
+}
+.modal #hide-warning {
+  display: inline;
+}
+.confirm-encrypt label {
+
 }

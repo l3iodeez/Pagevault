@@ -22,6 +22,8 @@
 //= require uuid
 //= require TinyMCEInput
 //= require sjcl
+//= require zxcvbn
+//= require PasswordStrengthMeter
 //= require jquery.tagsinput.min
 //= require plugins/autoresize/plugin.min
 //= require_tree ./components
