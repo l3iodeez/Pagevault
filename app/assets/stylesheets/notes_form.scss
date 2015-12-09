@@ -133,7 +133,7 @@
   position: absolute;
   top: calc(50% - 125px);
   left: calc(50% - 150px);
-  background-color: #D3D3D3;
+  background-color: #fff;
   text-align: center;
   padding: 50px;
   border-radius: 20px;
@@ -143,7 +143,6 @@
   font-size: 72px;
 }
 .lock-overlay input {
-  border: 1px solid #232261;
   background-color: #ADD8E6;
   border-radius: 5px;
   font-size: 16px;
