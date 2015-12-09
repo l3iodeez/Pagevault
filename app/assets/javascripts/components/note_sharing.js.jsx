@@ -47,7 +47,7 @@ var NoteSharing = React.createClass({
     SharesAPIUtil.deleteShare();
   },
   createShare: function () {
-
+    debugger
   },
   render: function() {
 

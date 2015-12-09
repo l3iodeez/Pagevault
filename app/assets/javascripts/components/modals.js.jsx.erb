@@ -138,7 +138,8 @@ var Modals = React.createClass({
         <p><strong>If you lose or forget the password there will be no way to recover it.</strong></p>
           <input id="hide-warning" type="checkbox" onChange={this.hideEncryptWarningChange}></input>
           <label htmlFor="hide-warning">Don't show this warning again.</label>
-          <button onClick={accept}>I understand</button>
+          <br />
+          <button className="close-warning" onClick={accept}>I understand</button>
         </div>
       </div>
     );

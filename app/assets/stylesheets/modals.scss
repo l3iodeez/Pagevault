@@ -25,6 +25,11 @@ div.modal {
   z-index: 19;
 }
 
+div.modal.about-modal {
+  width: 500px;
+  left: calc(50% - 250px);
+  padding: 10px;
+}
 div.modal div {
   margin: auto;
 }
@@ -41,7 +46,6 @@ div.modal.spinner{
   height: 28px;
   color: white;
   outline: none;
-
   border-radius: 4px;
   background-color: #232261;
   padding-left: 15px;
@@ -52,6 +56,10 @@ div.modal.spinner{
   display: block;
   border: 1px solid #232261;
   margin: auto;
+}
+button.close-warning {
+  display: block;
+  margin: 10px auto;
 }
 .modal #hide-warning {
   display: inline;

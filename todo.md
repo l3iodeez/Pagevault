@@ -4,7 +4,7 @@
       - Delete button.
   - [X] Provide warning message modal when encrypting notes.
       - Should be able to be hidden on a per user basis.
-  - [ ] About page
+  - [X] About page
     - Intro to app
     - Explanation of encryption methods.
     - Warning about losing access to encrypted notes.
