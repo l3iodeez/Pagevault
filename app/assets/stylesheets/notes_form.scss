@@ -131,8 +131,8 @@
 .lock-overlay {
 
   position: absolute;
-  top: calc(50% - 75px);
-  left: calc(50% - 100px);
+  top: calc(50% - 125px);
+  left: calc(50% - 150px);
   background-color: #D3D3D3;
   text-align: center;
   padding: 50px;
@@ -144,6 +144,11 @@
 }
 .lock-overlay input {
   border: 1px solid #232261;
+  background-color: #ADD8E6;
+  border-radius: 5px;
+  font-size: 16px;
+  margin: 5px;
+  padding: 3px;
 }
 .delete.lock-icon {
   position: absolute;
