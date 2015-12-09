@@ -14,7 +14,7 @@
   top: 0;
   padding: 12px;
 }
-.note-form .cancel-button, .note-form .save-button {
+.note-form .cancel-button, .note-form .save-button, .encryption-options button {
   font-size: 13px;
   font-weight: 500;
   height: 28px;
@@ -87,10 +87,7 @@
 .spinner .dirty {
   color: #C3C3C3;
 }
-.note-form button {
-  padding: 0;
 
-}
 .tiny-mce-box {
   width: 60%;
 }
@@ -111,18 +108,8 @@
   right: 20%;
 
 }
-.encryption-options input.password {
-  border: 1px solid #D3D3D3;
-  width: 150px;
-}
-.encryption-options input.is-encrypted {
-  width: 15px;
-  margin: 3px 5px;
-  position: relative;
-  top: 2px;
-}
-.encryption-options label {
-  display: inline;
+.encryption-options button {
+
 }
 
 .lock-overlay-bg {
@@ -150,8 +137,16 @@
   text-align: center;
   padding: 50px;
   border-radius: 20px;
-
+  color: #232261;
 }
 .lock-overlay i {
   font-size: 72px;
+}
+.lock-overlay input {
+  border: 1px solid #232261;
+}
+.delete.lock-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }

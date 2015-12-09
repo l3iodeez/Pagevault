@@ -34,22 +34,3 @@ var EncryptionControl = React.createClass({
     );
   }
 });
-
-        // <label htmlFor="is_encrypted">Encrypted?</label>
-        // <input
-        //   id="is_encrypted"
-        //   className="is-encrypted"
-        //   type="checkbox"
-        //   name="is_encrypted"
-        //   checked={this.state.is_encrypted}
-        //   onChange={this.updateEncrypted}
-        //   />
-        // <label className="" htmlFor="password">Password:</label>
-        // <input
-        //   id="password"
-        //   className="password"
-        //   type="text"
-        //   name="encryption_pass"
-        //   value={this.state.password}
-        //   onChange={this.updatePassword}
-        //   />

@@ -377,7 +377,7 @@ var NoteForm = React.createClass({
           indicatorClass = " fa-check dirty";
           break;
         case "saving":
-          indicatorClass = " fa-spinner fa-pulse saving";
+          indicatorClass = " fa-spinner fa-spin saving";
           break;
       }
       var tags;
@@ -419,7 +419,7 @@ var NoteForm = React.createClass({
             </div>
             <div className="lock-overlay">
               <i className="fa fa-lock"></i>
-                <i className="fa fa-trash header-icon delete" onClick={this.showDeleteConfirm}></i>
+                <i className="fa fa-trash header-icon delete lock-icon" onClick={this.showDeleteConfirm}></i>
 
               <p>Enter encryption password.</p>
               <input type="text" onChange={this.attemptDecrypt} />
