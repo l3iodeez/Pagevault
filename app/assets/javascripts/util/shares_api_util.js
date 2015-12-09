@@ -19,10 +19,9 @@
         method: 'POST',
         dataType: 'json',
         contentType: 'application/json',
-        data: {share: share},
+        data: JSON.stringify({share: share}),
         success: function (data) {
           ShareActions.addShare(data);
-          callback && callback(data);
         }
       });
     },
@@ -32,10 +31,8 @@
         method: 'DELETE',
         dataType: 'json',
         contentType: 'application/json',
-        data: {share: share},
         success: function (data) {
           ShareActions.deleteShare(data);
-          callback && callback(data);
         }
       });
     }

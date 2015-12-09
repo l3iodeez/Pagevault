@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     foreign_key: :user_id,
     class_name: "Share"
   )
-  has_many :accessible_notes, through: :access_grants
+  has_many :accessible_notes, through: :access_grants, source: :note
 
 
   def self.find_by_credentials(email, password)

@@ -44,10 +44,13 @@ var NoteSharing = React.createClass({
     this.setState({searchString: e.currentTarget.value});
   },
   deleteShare: function (e) {
-    SharesAPIUtil.deleteShare();
+    var share_id = Number(e.currentTarget.dataset.id);
+    SharesAPIUtil.deleteShare(share_id);
   },
-  createShare: function () {
-    debugger
+  createShare: function (e) {
+    var user_id = Number(e.currentTarget.dataset.id);
+    var note_id = SelectedStore.getNote().id;
+    SharesAPIUtil.createShare({user_id: user_id, note_id: note_id, is_writable: false});
   },
   render: function() {
 
@@ -55,20 +58,21 @@ var NoteSharing = React.createClass({
       <div className="share-note-form" >
         <input type="text" placeholder= "search by name or email..." onChange={this.searchStringChanged} />
         <ul>
-          <li>SearchResult</li>
-            {this.state.searchResults.map(function (user) {
-              return (<li key={user.id} onClick={this.createShare}>
+            {this.state.searchResults.map(function (user, i) {
+              return (
+                      <li key={user.id} data-id={user.id} onClick={this.createShare} >
                         {user.name} - {user.email}
                         <i className="fa fa-plus" />
-                      </li>);
-            })}
+                      </li>
+                      );
+            }.bind(this))}
           <li>Existing permissions</li>
             {this.state.shares.map(function (share) {
-              return (<li key={share.id} onClick={this.deleteShare} >
+              return (<li key={share.id} data-id={share.id}  onClick={this.deleteShare} >
                         {share.name} - {share.email}
                         <i className="fa fa-times" />
                       </li>);
-            })}
+            }.bind(this))}
         </ul>
       </div>
     );

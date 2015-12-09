@@ -387,6 +387,7 @@ var NoteForm = React.createClass({
       var sharingForm = <NoteSharing note={SelectedStore.getNote()} />;
     return (
       <div className={formClass} >
+        {sharingForm}
         <div className={formClass + " header"}>
             <i className="fa fa-trash header-icon delete" onClick={this.showDeleteConfirm}></i>
             <form onSubmit={this.updateTags} className="tag-input-form note-tags">

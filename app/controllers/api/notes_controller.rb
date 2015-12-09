@@ -4,6 +4,7 @@ class Api::NotesController < ApplicationController
 
   def index
     @notes = current_user.notes.order("updated_at DESC").includes(:tags)
+    @notes = @notes.concat(current_user.accessible_notes.order("updated_at DESC").includes(:tags))
     render :index
   end
 

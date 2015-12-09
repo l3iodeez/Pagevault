@@ -25,6 +25,13 @@
       return foundNote;
     },
 
+    getByID: function (shareId) {
+      var foundShare = _shares.filter(function (share) {
+        return share.id === shareId;
+      });
+      return foundShare;
+    },
+
     getFirst: function () {
       return _shares[0];
     },
