@@ -59,7 +59,7 @@ var PasswordStrengthMeter = React.createClass({
     return(
       <section>
         <label forHtml="password">{passwordHeader}</label>
-        <input onInput={this.handleInput} type="password" name="password" id="password" ref="password" />
+        <input onInput={this.handleInput} type="text" name="password" id="password" ref="password" />
 
         <meter max="4" id="password-strength-meter" ref="passwordStrengthMeter"></meter>
         <p id="password-strength-text" ref="passwordStrengthText">

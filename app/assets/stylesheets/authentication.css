@@ -33,6 +33,20 @@ div.loginform p {
   margin: 0;
 }
 
+div.loginform .about {
+  position: absolute;
+  background-color: transparent;
+  color: #232261;
+  right: 0px;
+  top: 10px;
+  font-size: 23px;
+}
+div.loginform .about:hover {
+  background-color: transparent;
+  color: #E11567;
+
+}
+
 div.loginform span {
   font-size: 10px;
 }

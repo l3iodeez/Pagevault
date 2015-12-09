@@ -41,6 +41,10 @@
       e.preventDefault();
       this.setState({email: "DemoUser@pagevault.io", password: "password"});
     },
+    showAbout: function (e) {
+      e.preventDefault();
+      ModalActions.raiseModal({type: "about"});
+    },
 
     render: function() {
       var demoUsers;
@@ -54,8 +58,11 @@
       }
       return (
       <div className="modal-bg">
+        <Modals />
+
         <div className="modal loginform group">
           <div>
+            <button className="about" onClick={this.showAbout}><i className="fa fa-question" /></button>
             <form onSubmit={ this.submit }>
               <img src="<%= image_url('logo-big.svg') %>" />
               <br/>

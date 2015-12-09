@@ -22,6 +22,10 @@ var NotebooksIndexItem = React.createClass({
   updateTags: function (e) {
     e.stopPropagation();
     e.preventDefault();
+    
+    if (this.state.tags.length === 0) {
+      return;
+    }
     this.setState({dirty: true});
     var tags = this.state.tags.split(',').map(function (tag) {
         return tag.trim().toLowerCase().split(' ');
