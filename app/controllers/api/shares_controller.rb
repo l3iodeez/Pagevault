@@ -6,7 +6,9 @@ class Api::SharesController < ApplicationController
   end
   def create
     @share = Share.new(share_params)
-    if @share.save
+    if !logged_in? || @share.note.user.id != current_user.id
+      render json: "FORBIDDEN", status: :forbidden
+    elsif @share.save
       render :show
     else
       render json: 422, status: :unprocessable_entity

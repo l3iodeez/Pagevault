@@ -69,6 +69,13 @@ var NoteSharing = React.createClass({
     this.removeFromResults(user_id);
     SharesAPIUtil.createShare({user_id: user_id, note_id: note_id, is_writable: false});
   },
+  updateShare: function (e) {
+    var user_id = Number(e.currentTarget.dataset.userid);
+    var note_id = SelectedStore.getNote().id;
+    var is_writable = e.currentTarget.checked;
+    var share_id = Number(e.currentTarget.dataset.id);
+    SharesAPIUtil.updateShare({id: share_id, user_id: user_id, note_id: note_id, is_writable: is_writable});
+  },
   render: function() {
 
     return (
@@ -77,17 +84,18 @@ var NoteSharing = React.createClass({
         <ul>
             {this.state.searchResults.map(function (user, i) {
               return (
-                      <li key={user.id} data-id={user.id} onClick={this.createShare} >
+                      <li key={user.id}  >
                         {user.name} - {user.email}
-                        <i className="fa fa-plus" />
+                        <i onClick={this.createShare} data-id={user.id}  className="fa fa-plus" />
                       </li>
                       );
             }.bind(this))}
           <li>Existing permissions</li>
             {this.state.shares.map(function (share) {
-              return (<li key={share.id} data-id={share.id}  onClick={this.deleteShare} >
+              return (<li key={share.id}  >
                         {share.name} - {share.email}
-                        <i className="fa fa-times" />
+                        <input type="checkbox"  data-id={share.id} data-userid={share.user_id} checked={share.is_writable} onChange={this.updateShare}></input>
+                        <i onClick={this.deleteShare} data-writable={share.is_writable} className="fa fa-times" />
                       </li>);
             }.bind(this))}
         </ul>

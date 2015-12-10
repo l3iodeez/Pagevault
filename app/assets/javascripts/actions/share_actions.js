@@ -12,6 +12,12 @@ var ShareActions = {
       share: share
     });
   },
+  updateShare: function (share) {
+    AppDispatcher.dispatch({
+      actionType: ShareConstants.UPDATE_SHARE,
+      share: share
+    });
+  },
   deleteShare: function (share) {
     AppDispatcher.dispatch({
       actionType: ShareConstants.DELETE_SHARE,

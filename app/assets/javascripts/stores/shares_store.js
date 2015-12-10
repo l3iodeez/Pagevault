@@ -69,6 +69,8 @@
         ShareStore.storeShare(payload.share);
       } else if (payload.actionType === ShareConstants.DELETE_SHARE) {
         ShareStore.deleteShare(payload.share);
+      } else if (payload.actionType === ShareConstants.UPDATE_SHARE) {
+        ShareStore.storeShare(payload.share);
       }
     }),
 

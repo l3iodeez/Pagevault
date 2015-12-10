@@ -25,6 +25,19 @@
         }
       });
     },
+    updateShare: function (share) {
+      debugger
+      $.ajax({
+        url: '/api/shares/' + share.id,
+        method: 'PATCH',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({share: share}),
+        success: function (data) {
+          ShareActions.updateShare(data);
+        }
+      });
+    },
     deleteShare: function (shareId) {
       $.ajax({
         url: '/api/shares/' + shareId,
