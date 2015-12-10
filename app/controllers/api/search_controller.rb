@@ -6,6 +6,7 @@ class Api::SearchController < ApplicationController
       render :index
     else
       @users = User.find_by_fuzzy_contact(params[:query], limit: 100)
+      @users = @users.reject {|user| user.id == current_user.id}
       render '/api/users/index'
     end
   end

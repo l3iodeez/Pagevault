@@ -52,6 +52,11 @@
         var idx = _notes[storedNote.notebook_id].indexOf(storedNote);
         _notes[storedNote.notebook_id].splice(idx, 1);
       }
+      if (recvdNote.owner !== CurrentUserStore.currentUser().id ) {
+        _notes[0] = _notes[0] || [];
+        _notes[0].unshift(recvdNote);
+
+      }
       _notes[recvdNote.notebook_id]= _notes[recvdNote.notebook_id] || [];
       _notes[recvdNote.notebook_id].unshift(recvdNote);
       NoteStore._notesChanged();

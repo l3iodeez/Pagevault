@@ -16,6 +16,7 @@ class Api::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      @user.update_fuzzy_contact!
       @user.notebooks.create!(title: "#{@user.name}'s Notebook'")
       login!(@user)
       render json: @user
@@ -33,6 +34,7 @@ class Api::UsersController < ApplicationController
     if !logged_in?
       render json: "FORBIDDEN", status: :forbidden
     elsif @user.update(user_params)
+      @user.update_fuzzy_contact!
       render json: @user
     else
       render json: {errors: @user.errors.full_messages} , status: :unprocessable_entity

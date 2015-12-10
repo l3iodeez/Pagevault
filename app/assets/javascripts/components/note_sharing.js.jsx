@@ -30,11 +30,27 @@ var NoteSharing = React.createClass({
     SelectedStore.removeNoteChangeListener(this.sharesChanged);
 
   },
+  shareUserIds: function () {
+    var ids = [];
+    this.state.shares.forEach(function (share) {
+      ids.push(share.user_id);
+    }.bind(this));
+    return ids;
+  },
+  removeFromResults: function (id) {
+    results = this.state.searchResults.filter(function (el) {
+      return el.id != id;
+    });
+    this.setState({searchResults: results});
+  },
   setTimeout: function () {
     clearTimeout(this.timeoutID);
     this.timeoutID = setTimeout(function () {
       this.setState({status: "searching"});
       SearchAPIUtil.search(this.state.searchString, function (data) {
+        data = data.filter(function (user) {
+          return this.shareUserIds().indexOf(user.id) == -1;
+        }.bind(this));
         this.setState({searchResults: data});
       }.bind(this),"User");
     }.bind(this), 300);
@@ -50,6 +66,7 @@ var NoteSharing = React.createClass({
   createShare: function (e) {
     var user_id = Number(e.currentTarget.dataset.id);
     var note_id = SelectedStore.getNote().id;
+    this.removeFromResults(user_id);
     SharesAPIUtil.createShare({user_id: user_id, note_id: note_id, is_writable: false});
   },
   render: function() {
