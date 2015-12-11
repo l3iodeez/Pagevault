@@ -50,7 +50,7 @@ gem 'figaro'
 gem 'fuzzily'
 gem 'delayed_job_active_record'
 gem 'daemons'
-
+gem 'lograge'
 group :production do
   gem 'rails_12factor'
 
