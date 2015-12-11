@@ -21,7 +21,8 @@ var NoteForm = React.createClass({
       password: '',
       tags: tags,
       tagsDirty: false,
-      errorText: ''
+      errorText: '',
+      locked: false
     };
   },
   importID: function () {
@@ -74,6 +75,7 @@ var NoteForm = React.createClass({
     }
   },
   newNoteReceived: function () {
+
     // if (this.state.is_encrypted && this.state.saving === 'dirty') {
     //   debugger
     //   ModalActions.raiseModal({
@@ -98,7 +100,9 @@ var NoteForm = React.createClass({
       this.importID();
     } else if (!this.state.id || this.state.id === "") {
       if (this.props.fullWidth) {
-        this.setState(SelectedStore.getNote());
+        var note = SelectedStore.getNote();
+        var noteState = $.extend({locked: note.is_encrypted}, note);
+        this.setState(noteState);
         return;
       }
       this.importNote();

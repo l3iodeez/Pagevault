@@ -18,8 +18,7 @@
   - [ ] Notebook index items should be miniforms for editing notebook params.
   - [ ] Change "New notebook" link to an icon.
   - [ ] Lock note immediately upon encryption.
-  - [ ] Require password confirmation when encrypting.
-    - Provide error messages, create reusable method for errors on modals.
+  - [X] Show password strength when encrypting.
   - [ ] Create better seed file.
     - Resets all users.
     - Creates encrypted and unencrypted notes.
@@ -33,6 +32,8 @@
     - Change password
     - Change warning message prefs
   - [ ] Email confirmation with ActionMailer
+  - [ ] Password change form, password reset by email.
+
 
 About:
   Pagevault is an online note taking app with rich text and embedded image capability.
