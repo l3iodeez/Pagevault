@@ -45,9 +45,19 @@ var NotebooksIndexItem = React.createClass({
 
   render: function() {
     var indexThumbnail;
-
     if (this.props.notebook.firstNote) {
-     indexThumbnail = this.props.notebook.firstNote.thumbnail ? (<img src={this.props.notebook.firstNote.thumbnail} />) : null;
+      var thumbnailClass = "";
+      var thumbnailLink = this.props.notebook.firstNote.thumbnail;
+      if ( thumbnailLink ) {
+        if (this.props.notebook.firstNote.portrait) {
+          thumbnailClass += " portrait";
+        }
+        indexThumbnail = (
+          <div className="thumbnail" >
+            <img className={thumbnailClass } src={thumbnailLink} />
+          </div>
+        );
+      }
     }
     var modifiedDate = Helpers.formatDate(new Date(this.props.notebook.updated_at));
     return (

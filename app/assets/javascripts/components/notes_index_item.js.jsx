@@ -9,7 +9,21 @@ var NotesIndexItem = React.createClass({
       selected = " selected";
     }
     var modifiedDate = Helpers.formatDate(new Date(this.props.note.updated_at));
-    var indexThumbnail = this.props.note.thumbnail ? (<img src={this.props.note.thumbnail} />) : null;
+    var indexThumbnail;
+    if (this.props.note) {
+      var thumbnailClass = "";
+      var thumbnailLink = this.props.note.thumbnail;
+      if ( thumbnailLink ) {
+        if (this.props.note.portrait) {
+          thumbnailClass += "portrait";
+        }
+        indexThumbnail = (
+          <div className="thumbnail" >
+            <img className={thumbnailClass} src={thumbnailLink} />
+          </div>
+        );
+      }
+    }
     return (
       <ul className={"note-index-item" + selected} onClick={this.handleClick}>
         <li>{this.props.note.title}</li>
