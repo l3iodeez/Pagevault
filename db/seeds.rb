@@ -9,7 +9,6 @@
 inspection_body = <<-HTML
 HTML
 
-basement_inspection = { body: inspection_body, title: "42-01 main street Inspection notes" }
 
 vacation = JSON.parse(open('./db/CostaRica.json').read)
 capstone = JSON.parse(open('./db/Capstone.json').read)
@@ -37,9 +36,9 @@ tag_names = [
 ]
   demo_user = User.create!({email: 'DemoUser@pagevault.io', name: 'DemoUser', password:'password'})
   demo_notebook = demo_user.notebooks.create!(title: "#{demo_user.name}'s Notebook'")
-  basement_inspection[:notebook_id] = demo_notebook.id
+
   vacation[:notebook_id] = demo_notebook.id
-  demo_user.notes.create!(basement_inspection)
+  
   demo_user.notes.create!(vacation)
   demo_user.notebooks.create!(capstoneNotebook)
   demo_user.notes.create!(capstone)
