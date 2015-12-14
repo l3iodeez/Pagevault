@@ -1,10 +1,10 @@
 class Note < ActiveRecord::Base
   belongs_to :user
   belongs_to :notebook
-  has_many :image_uploads
-  has_many :taggings, as: :taggable
-  has_many :tags, through: :taggings
-  has_many :shares
+  has_many :image_uploads, dependent: :destroy
+  has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :tags, through: :taggings, dependent: :destroy
+  has_many :shares, dependent: :destroy
   fuzzily_searchable :searchable, async: true
 
   def searchable
