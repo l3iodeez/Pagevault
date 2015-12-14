@@ -37,11 +37,11 @@ var Sidebar = React.createClass({
     return (
       <div className={sidebarClass} >
         <div className="sidebar-item logo" />
-        <button className="sidebar-item new-note" onClick={this.newNote}><i className="fa fa-plus" /></button>
-        <button className="sidebar-item search" onClick={this.search}><i className="fa fa-search" /></button>
-        <button className="sidebar-item view-notes" onClick={this.viewNotes} ><i className="fa fa-sticky-note" /></button>
-        <button className="sidebar-item notebooks" onClick={this.viewNotebooks} ><i className="fa fa-book" /></button>
-        <button className="sidebar-item logout" onClick={this.logout}><i className="fa fa-power-off" /></button>
+        <button title="New note" className="sidebar-item new-note" onClick={this.newNote}><i className="fa fa-plus" /></button>
+        <button title="Search" className="sidebar-item search" onClick={this.search}><i className="fa fa-search" /></button>
+        <button title="Notes" className="sidebar-item view-notes" onClick={this.viewNotes} ><i className="fa fa-sticky-note" /></button>
+        <button title="Notebooks" className="sidebar-item notebooks" onClick={this.viewNotebooks} ><i className="fa fa-book" /></button>
+        <button title="Log out" className="sidebar-item logout" onClick={this.logout}><i className="fa fa-power-off" /></button>
       </div>
     );
   }

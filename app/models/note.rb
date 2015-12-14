@@ -9,9 +9,9 @@ class Note < ActiveRecord::Base
 
   def searchable
     if is_encrypted
-      title + " " + tag_ids.to_s + " " + notebook_strings
+      title + " " + tag_strings + " " + notebook_strings
     else
-      body + " " + title + " " + tag_ids.to_s + " " + notebook_strings
+      body + " " + title + " " + tag_strings + " " + notebook_strings
     end
   end
 
