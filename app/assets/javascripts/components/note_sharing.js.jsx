@@ -82,8 +82,8 @@ var NoteSharing = React.createClass({
 
     return (
       <div className="share-note-form" >
-        <input type="text" placeholder= "search by name or email..." onChange={this.searchStringChanged} />
         <div className="results-list">
+        <input type="text" placeholder= "search by name or email..." onChange={this.searchStringChanged} />
           <ul className="share-item-container">
               {this.state.searchResults.map(function (user, i) {
                 return (
@@ -91,7 +91,7 @@ var NoteSharing = React.createClass({
                           <p className="name">{user.name}</p>
                           <p className="email">{user.email}</p>
                           <div className="add-share">
-                            <i onClick={this.createShare} data-id={user.id}  className="fa fa-plus" />
+                            <i onClick={this.createShare} data-id={user.id} title="Share with this user" className="fa fa-plus" />
                           </div>
                         </li>
                         );
@@ -99,8 +99,8 @@ var NoteSharing = React.createClass({
           </ul>
         </div>
         <div className="existing-list">
-          <ul>
-            <li>Existing permissions</li>
+          <h3>Existing permissions</h3>
+          <ul className="share-item-container">
               {this.state.shares.map(function (share, i) {
                 return (<li key={i}  >
                         <p className="name">{share.name}</p>
@@ -111,7 +111,7 @@ var NoteSharing = React.createClass({
                             <input id={"share"+i} type="checkbox" data-id={share.id} data-userid={share.user_id} checked={share.is_writable} onChange={this.updateShare}></input>
                             <label htmlFor={"share"+i} />
                           </div>
-                          <i onClick={this.deleteShare} data-id={share.id} data-writable={share.is_writable} className="fa fa-times" />
+                          <i onClick={this.deleteShare} data-id={share.id}  title="Remove sharing" data-writable={share.is_writable} className="fa fa-times" />
                         </div>
                       </li>);
               }.bind(this))}

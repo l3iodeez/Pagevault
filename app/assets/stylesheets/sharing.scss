@@ -22,7 +22,7 @@
   font-size: 12px;
   padding: 2px 4px;
   border-radius: 5px;
-  width: 150px;
+  width: 100%;
   margin: 10px 5px;
 }
 .add-share {
@@ -42,10 +42,17 @@
 .share-note-form p {
   font-size: 10px;
 }
+.share-note-form i {
+  color: #232261;
+}
+.share-note-form i:hover {
+  color: #E11567;
+}
 .share-note-form p.name {
+  font-size: 14px;
 }
 .share-note-form p.email {
-  font-size: 8px;
+  font-size: 12px;
 }
 .share-note-form label {
   display: inline;
@@ -56,7 +63,12 @@
   border-radius: 5px;
   padding: 5px;
 
+}
+.share-item-container {
   background-color: #eee;
+  padding: 5px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .results-list{
   width: 240px;
@@ -64,6 +76,9 @@
 }
 div.modal div.existing-list {
   width: 335px;
+  margin-left: 5px;
+}
+div.existing-list > h3{
   margin-left: 5px;
 }
 .search-result-item {

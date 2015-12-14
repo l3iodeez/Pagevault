@@ -36,7 +36,11 @@ var NoteForm = React.createClass({
     }
   },
   isWritable: function () {
-    return !isShared() || ShareStore.getByNoteID(selectedNote.id).is_writable;
+    if (SelectedStore.getNote()) {
+      return SelectedStore.getNote().is_writable;
+    } else {
+      return true;
+    }
   },
   importID: function () {
     this.setState({ id: SelectedStore.getNote().id });
@@ -210,17 +214,23 @@ var NoteForm = React.createClass({
     }
   },
   updateBody: function(content) {
-    if (!this.state.locked) {
+    if (this.state.locked || !this.isWritable()) {
+      this.setState({body: this.state.body});
+    }
+    else {
       this.setState({body: content, saving: "dirty"});
       this.saveTimeout({body: content});
     }
-    else {
-      this.setState({body: this.state.body});
-    }
   },
   updateTitle: function(e) {
-    this.setState({title: e.currentTarget.value, saving: "dirty"});
-    this.saveTimeout({title: e.currentTarget.value });
+    if (this.state.locked || !this.isWritable()) {
+      this.setState({title: this.state.title});
+    }
+    else {
+      this.setState({title: e.currentTarget.value, saving: "dirty"});
+      this.saveTimeout({title: e.currentTarget.value });
+    }
+
   },
   enableCrypt: function (password) {
     this.setState({is_encrypted: true, password: password, saving: "dirty"}, this.handleSubmit);
@@ -381,7 +391,18 @@ var NoteForm = React.createClass({
     } else {
       saveButtonClass += " hidden";
     }
-    var indicatorClass;
+    var indicator;
+    if (!this.isWritable()) {
+      indicator = (
+        <div className="save-indicator spinner readonly">
+          <span className="fa-stack fa-lg">
+            <i className="fa fa-pencil fa-stack-1x"></i>
+            <i title="This note is read-only" className="fa fa-ban fa-stack-2x text-danger fa-flip-vertical"></i>
+          </span>
+        </div>
+      );
+    } else {
+      var indicatorClass;
       switch (this.state.saving) {
         case "saved":
           indicatorClass = " fa-check";
@@ -393,18 +414,23 @@ var NoteForm = React.createClass({
           indicatorClass = " fa-spinner fa-spin saving";
           break;
       }
-      var tags;
-      if (this.state.tags) {
-        tags = this.state.tags;
-      }
-      var sharingButton;
-      if (!this.isShared()) {
-        sharingButton = (
-          <div className="sharing-options">
-            <button className="sharing-button" onClick={this.showSharing}>Sharing</button>
-          </div>
-        );
-      }
+      indicator = (
+        <div title="Status" className="save-indicator spinner"><i className={"fa" + indicatorClass}></i></div>
+      );
+    }
+
+    var tags;
+    if (this.state.tags) {
+      tags = this.state.tags;
+    }
+    var sharingButton;
+    if (!this.isShared()) {
+      sharingButton = (
+        <div className="sharing-options">
+          <button className="sharing-button" onClick={this.showSharing}>Sharing</button>
+        </div>
+      );
+    }
     return (
       <div className={formClass} >
         <div className={formClass + " header"}>
@@ -466,7 +492,7 @@ var NoteForm = React.createClass({
               value={this.state.title}
               onChange={this.updateTitle}
             />
-          <div className="save-indicator spinner"><i className={"fa" + indicatorClass}></i></div>
+          {indicator}
           <br />
           <label htmlFor="noteBody">Note Body</label>
             <br />

@@ -3,8 +3,9 @@ class Api::NotebooksController < ApplicationController
   before_action :simulate_latency, except: [:index, :destroy]
 
   def index
-    @notebooks = current_user.notebooks.order("updated_at DESC").includes(:tags).includes(:notes)
-    .concat(current_user.accessible_notebooks.order("updated_at DESC").includes(:tags).includes(:notes))
+    notebook_ids = current_user.accessible_notebook_ids + current_user.notebook_ids
+    @notebooks = Notebook.where("id IN (?)", notebook_ids)
+    .order("updated_at DESC").includes(:tags).includes(:notes)
     render :index
   end
 
