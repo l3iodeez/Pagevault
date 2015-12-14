@@ -34,14 +34,6 @@ tag_names = [
   "family",
   "code"
 ]
-  demo_user = User.create!({email: 'DemoUser@pagevault.io', name: 'DemoUser', password:'password'})
-  demo_notebook = demo_user.notebooks.create!(title: "#{demo_user.name}'s Notebook'")
-
-  vacation[:notebook_id] = demo_notebook.id
-  
-  demo_user.notes.create!(vacation)
-  demo_user.notebooks.create!(capstoneNotebook)
-  demo_user.notes.create!(capstone)
 
 
   # user = User.create!({
@@ -81,7 +73,6 @@ tag_names = [
         user_id: user.id,
         tags: [tags.sample]
       }
-
       nb = Notebook.create!(notebook_data)
 
       5.times do |j|
@@ -98,3 +89,14 @@ tag_names = [
       end
     end
   end
+
+  demo_user = User.create!({email: 'DemoUser@pagevault.io', name: 'DemoUser', password:'password'})
+  demo_notebook = Notebook.create!(user_id: demo_user.id, title: "#{demo_user.name}'s Notebook'")
+
+  vacation[:notebook_id] = demo_notebook.id
+  vacation[:user_id] = demo_user.id
+  capstoneNotebook[:user_id] = demo_user.id
+  capstone[:user_id] = demo_user.id
+  Note.create!(vacation)
+  Notebook.create!(capstoneNotebook)
+  Note.create!(capstone)
