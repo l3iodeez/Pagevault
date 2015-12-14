@@ -22,7 +22,7 @@ var NotebooksIndexItem = React.createClass({
   updateTags: function (e) {
     e.stopPropagation();
     e.preventDefault();
-    
+
     if (this.state.tags.length === 0) {
       return;
     }
@@ -60,11 +60,17 @@ var NotebooksIndexItem = React.createClass({
       }
     }
     var modifiedDate = Helpers.formatDate(new Date(this.props.notebook.updated_at));
+    var sharedBy = (this.props.notebook.user_id !== CurrentUserStore.currentUser().id) ? (
+      <li>
+        Shared by: {this.props.notebook.owner.name}
+      </li>
+    ) : null ;
     return (
       <ul className="notebook-index-item" onClick={!this.state.confirming ? this.handleClick : null}>
         <button onClick={this.showConfirm} className="delete-notebook"><i className="fa fa-trash" /></button>
         <form onSubmit={this.updateTags} className="notebook-edit-form">
           <li>{this.props.notebook.title}</li>
+          {sharedBy}
           <li>{modifiedDate}</li>
           <li>{this.props.notebook.description}</li>
           <div className="tag-input-form notebook-tags">

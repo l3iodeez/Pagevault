@@ -62,9 +62,9 @@ var NotesIndex = React.createClass({
         </li>
         <div className="note-index index-item-container">
           { typeof this.state.notes === "undefined" ? null :
-            this.state.notes.map(function (note) {
+            this.state.notes.map(function (note, i) {
               return (
-                <NotesIndexItem key={note.id} note={note} />
+                <NotesIndexItem key={i} note={note} />
               );
             }.bind(this))
           }

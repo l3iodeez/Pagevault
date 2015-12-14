@@ -28,7 +28,7 @@
     getByID: function (shareId) {
       var foundShare = _shares.filter(function (share) {
         return share.id === shareId;
-      });
+      })[0];
       return foundShare;
     },
 

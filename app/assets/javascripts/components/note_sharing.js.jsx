@@ -6,14 +6,16 @@ var NoteSharing = React.createClass({
       searchResults: [],
     };
   },
-  sharesChanged: function () {
-    if (this.props.note) {
+  sharesChanged: function (e) {
+    if (this.props.note && SelectedStore.getNote()) {
       this.setState({
-        shares: ShareStore.getByNoteID(this.props.note.id)
+        shares: ShareStore.getByNoteID(SelectedStore.getNote().id).filter(function (el) {
+          return el.user_id !== CurrentUserStore.currentUser().id;
+        }.bind(this))
       });
     } else {
       this.timeoutID = setTimeout(function () {
-        this.sharesChanged();
+        this.sharesChanged(); // eliminate this by using waitFor on the dispatcher action
       }.bind(this), 500);
     }
   },
@@ -81,24 +83,40 @@ var NoteSharing = React.createClass({
     return (
       <div className="share-note-form" >
         <input type="text" placeholder= "search by name or email..." onChange={this.searchStringChanged} />
-        <ul>
-            {this.state.searchResults.map(function (user, i) {
-              return (
-                      <li key={user.id}  >
-                        {user.name} - {user.email}
-                        <i onClick={this.createShare} data-id={user.id}  className="fa fa-plus" />
-                      </li>
-                      );
-            }.bind(this))}
-          <li>Existing permissions</li>
-            {this.state.shares.map(function (share) {
-              return (<li key={share.id}  >
-                        {share.name} - {share.email}
-                        <input type="checkbox"  data-id={share.id} data-userid={share.user_id} checked={share.is_writable} onChange={this.updateShare}></input>
-                        <i onClick={this.deleteShare} data-writable={share.is_writable} className="fa fa-times" />
+        <div className="results-list">
+          <ul className="share-item-container">
+              {this.state.searchResults.map(function (user, i) {
+                return (
+                        <li className="search-result-item" key={user.id}  >
+                          <p className="name">{user.name}</p>
+                          <p className="email">{user.email}</p>
+                          <div className="add-share">
+                            <i onClick={this.createShare} data-id={user.id}  className="fa fa-plus" />
+                          </div>
+                        </li>
+                        );
+              }.bind(this))}
+          </ul>
+        </div>
+        <div className="existing-list">
+          <ul>
+            <li>Existing permissions</li>
+              {this.state.shares.map(function (share, i) {
+                return (<li key={i}  >
+                        <p className="name">{share.name}</p>
+                        <p className="email">{share.email}</p>
+                        <div className="add-share">
+                          <span>Allow edits?</span>
+                          <div className="fancyCheck">
+                            <input id={"share"+i} type="checkbox" data-id={share.id} data-userid={share.user_id} checked={share.is_writable} onChange={this.updateShare}></input>
+                            <label htmlFor={"share"+i} />
+                          </div>
+                          <i onClick={this.deleteShare} data-id={share.id} data-writable={share.is_writable} className="fa fa-times" />
+                        </div>
                       </li>);
-            }.bind(this))}
-        </ul>
+              }.bind(this))}
+          </ul>
+        </div>
       </div>
     );
   }

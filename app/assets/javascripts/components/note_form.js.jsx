@@ -9,6 +9,11 @@ var NoteForm = React.createClass({
     var body = selectedNote ? selectedNote.body : "";
     var is_archived  = selectedNote ? selectedNote.is_archived : "";
     var is_encrypted  = selectedNote ? selectedNote.is_encrypted : "";
+    var is_shared = selectedNote ? selectedNote.user_id !== CurrentUserStore.currentUser().id : false;
+    var is_writable = true;
+    if (is_shared) {
+      is_writable = ShareStore.getByNoteID(selectedNote.id).is_writable;
+    }
     var tags = selectedNote ? selectedNote.tags : "";
     return {
       id: id,
@@ -22,8 +27,16 @@ var NoteForm = React.createClass({
       tags: tags,
       tagsDirty: false,
       errorText: '',
-      locked: false
+      locked: false,
     };
+  },
+  isShared: function () {
+    if (SelectedStore.getNote()) {
+      return SelectedStore.getNote().owner.id !== CurrentUserStore.currentUser().id;
+    }
+  },
+  isWritable: function () {
+    return !isShared() || ShareStore.getByNoteID(selectedNote.id).is_writable;
   },
   importID: function () {
     this.setState({ id: SelectedStore.getNote().id });
@@ -76,19 +89,6 @@ var NoteForm = React.createClass({
   },
   newNoteReceived: function () {
 
-    // if (this.state.is_encrypted && this.state.saving === 'dirty') {
-    //   debugger
-    //   ModalActions.raiseModal({
-    //     type: "confirmDropChanges",
-    //     object: this.state,
-    //     callback: function () {
-    //       debugger
-    //       this.state.saving = "saved";
-    //       this.newNoteReceived();
-    //     }.bind(this)
-    //   });
-    //   return;
-    // }
     clearTimeout(this.timeoutID);
     if (!tinyMCE.activeEditor) {
       setTimeout(function () {
@@ -135,7 +135,7 @@ var NoteForm = React.createClass({
     this.handleSubmit();
   },
   handleSubmit: function (e, attrs, callback) {
-    if (this.state.body.match(/data:[\s\S]+;base64/)) {
+    if (!this.state.is_encrypted && this.state.body.match(/data:[\s\S]+;base64/)) {
       setTimeout(function () {
         this.handleSubmit();
       }.bind(this), 300);
@@ -299,6 +299,15 @@ var NoteForm = React.createClass({
       }.bind(this));
     }
   },
+  showSharing: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!this.state.id) {
+      ModalActions.raiseModal({type: "saveFirst"});
+    } else {
+      ModalActions.raiseModal({type: "noteSharing"});
+    }
+  },
   render: function() {
     var formHeight = window.innerHeight;
     var formClass = "note-form ";
@@ -388,10 +397,16 @@ var NoteForm = React.createClass({
       if (this.state.tags) {
         tags = this.state.tags;
       }
-      var sharingForm = <NoteSharing note={SelectedStore.getNote()} />;
+      var sharingButton;
+      if (!this.isShared()) {
+        sharingButton = (
+          <div className="sharing-options">
+            <button className="sharing-button" onClick={this.showSharing}>Sharing</button>
+          </div>
+        );
+      }
     return (
       <div className={formClass} >
-        {sharingForm}
         <div className={formClass + " header"}>
             <i className="fa fa-trash header-icon delete" onClick={this.showDeleteConfirm}></i>
             <form onSubmit={this.updateTags} className="tag-input-form note-tags">
@@ -411,7 +426,9 @@ var NoteForm = React.createClass({
                   </div>) : null}
             </form>
         </div>
+        {sharingButton}
         <EncryptionControl
+          noteId={this.state.id}
           enabled={this.state.is_encrypted}
           locked={this.state.locked}
           enableCrypt={this.enableCrypt}

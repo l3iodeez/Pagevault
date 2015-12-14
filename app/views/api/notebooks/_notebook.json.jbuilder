@@ -11,7 +11,9 @@ if !show_notes
   end
 end
 json.extract!(notebook, *fields )
-
+json.owner do
+  json.extract!(notebook.user, :id, :email, :name )
+end
 if show_notes && notebook.notes.first
   json.notes do
     json.array!(notebook.notes) do |note|

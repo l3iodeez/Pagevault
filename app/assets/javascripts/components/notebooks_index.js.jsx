@@ -39,10 +39,10 @@ var NotebooksIndex = React.createClass({
         </li>
         <div className="notebook-index index-item-container">
           { typeof this.state.notebooks === "undefined" ? null :
-            this.state.notebooks.map(function (notebook) {
+            this.state.notebooks.map(function (notebook, i) {
               return (
                 <NotebooksIndexItem
-                  key={notebook.id}
+                  key={i}
                   notebook={notebook}
                   toggleNotebookIndex={this.props.toggleNotebookIndex} />
               );

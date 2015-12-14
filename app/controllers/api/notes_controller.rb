@@ -4,7 +4,7 @@ class Api::NotesController < ApplicationController
 
   def index
     @notes = current_user.notes.order("updated_at DESC").includes(:tags)
-    @notes = @notes.concat(current_user.accessible_notes.order("updated_at DESC").includes(:tags))
+    .concat(current_user.accessible_notes.order("updated_at DESC").includes(:tags))
     render :index
   end
 
@@ -29,15 +29,21 @@ class Api::NotesController < ApplicationController
   end
 
   def update
-    reindex_if_changed
-    check_for_removed_images if note_params[:body] && !@note.is_encrypted
-    if @note.update(note_params.except(:tags))
-      @note.tag_ids = resolve_tags(params[:note][:tags]) if params[:note][:tags]
-      render :show
+
+    writeable_note_ids = current_user.access_grants.where(is_writable: true).map { |grant| grant.note_id }
+    unless @note.user == current_user || writeable_note_ids.include?(@note.id)
+        render json: 403, status: :forbidden
     else
-      render json: 422, status: :unprocessable_entity
+      reindex_if_changed
+      check_for_removed_images if note_params[:body] && !@note.is_encrypted
+      if @note.update(note_params.except(:tags))
+        @note.tag_ids = resolve_tags(params[:note][:tags]) if params[:note][:tags]
+        render :show
+      else
+        render json: 422, status: :unprocessable_entity
+      end
     end
-  end
+end
 
   def destroy
     @note.destroy
@@ -78,7 +84,6 @@ class Api::NotesController < ApplicationController
     new_image_ids = note_params[:body].scan(matcher).flatten.map {|id| id.to_i }
     removed_image_ids = stored_image_ids - new_image_ids
     removed_image_ids.each do |id|
-      # image = ImageUpload.where("updated_at < :minute AND id = :id", {:minute => 1.hour.ago, :id => id}).first
       image = ImageUpload.find(id)
       image.destroy if image
     end

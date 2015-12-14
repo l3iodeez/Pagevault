@@ -61,43 +61,41 @@ tag_names = [
   #       }
   # nb.notes.create!(note_data)
 
-  # tags = []
-  # tag_names.each do |tag|
-  #   tags << Tag.create!(tag: tag)
-  # end
-  #
-  # 10.times do |i|
-  #   p "user #{i+1}"
-  #   user_data = {
-  #     email: Faker::Internet.email,
-  #     name: Faker::Internet.user_name,
-  #     password: "password",
-  #   }
-  #   user = User.create!(user_data)
-  #
-  #   3.times do |k|
-  #     notebook_data = {
-  #       title:  "#{user.name}'s Notebook Number #{k+1}'",
-  #       description: "#{user.name}'s Notebook Number #{k+1}'",
-  #       user_id: user.id,
-  #       tags: [tags.sample]
-  #     }
-  #
-  #     nb = Notebook.create!(notebook_data)
-  #
-  #     5.times do |j|
-  #       note_data = {
-  #         title: "#{user.name}'s Note Number #{(j+1) * (k+1)}'",
-  #         body: lorem,
-  #         is_archived: false,
-  #         notebook_id: nb.id,
-  #         tags: [tags.sample, tags.sample, tags.sample]
-  #
-  #       }
-  #       note = user.notes.create!(note_data)
-  #       if user.id > 1
-  #         note.shares.create(user_id: (note.user_id - 1), is_writable: false)
-  #       end
-  #     end
-  #   end
-  # end
+  tags = []
+  tag_names.each do |tag|
+    tags << Tag.create!(tag: tag)
+  end
+
+  10.times do |i|
+    p "user #{i+1}"
+    user_data = {
+      email: Faker::Internet.email,
+      name: Faker::Internet.user_name,
+      password: "password",
+    }
+    user = User.create!(user_data)
+
+    3.times do |k|
+      notebook_data = {
+        title:  "#{user.name}'s Notebook Number #{k+1}'",
+        description: "#{user.name}'s Notebook Number #{k+1}'",
+        user_id: user.id,
+        tags: [tags.sample]
+      }
+
+      nb = Notebook.create!(notebook_data)
+
+      5.times do |j|
+        note_data = {
+          title: "#{user.name}'s Note Number #{(j+1) * (k+1)}'",
+          body: lorem,
+          is_archived: false,
+          notebook_id: nb.id,
+          tags: [tags.sample, tags.sample, tags.sample]
+
+        }
+        note = user.notes.create!(note_data)
+
+      end
+    end
+  end

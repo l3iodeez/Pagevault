@@ -2,9 +2,9 @@
   - [x] Better styling on encryption controls.
       - Encrypt/Decrypt button.
       - Delete button.
-  - [X] Provide warning message modal when encrypting notes.
+  - [x] Provide warning message modal when encrypting notes.
       - Should be able to be hidden on a per user basis.
-  - [X] About page
+  - [x] About page
     - Intro to app
     - Explanation of encryption methods.
     - Warning about losing access to encrypted notes.
@@ -15,10 +15,13 @@
       - This can be bypassed if the user changes the password in the component
       state before saving the note. I can't think of a way to prevent this without
       compromising password security. Needs research.
+  - [ ] Complete note sharing styling
+    - Align left
+
   - [ ] Notebook index items should be miniforms for editing notebook params.
   - [ ] Change "New notebook" link to an icon.
   - [ ] Lock note immediately upon encryption.
-  - [X] Show password strength when encrypting.
+  - [x] Show password strength when encrypting.
   - [ ] Create better seed file.
     - Resets all users.
     - Creates encrypted and unencrypted notes.

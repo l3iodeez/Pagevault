@@ -47,7 +47,7 @@
     },
 
     resetNotebooks: function (notebooks) {
-      _notebooks = notebooks.concat({id: 0, title: "Shared notes", description: "All notes shared with you by other users."});
+      _notebooks = notebooks;
       NotebookStore._notebooksChanged();
     },
 
@@ -67,8 +67,6 @@
       } else if (payload.actionType === NoteConstants.NOTE_RECEIVED) {
         if (CurrentUserStore.currentUser.id === payload.note.owner) {
           NotebookStore.getByID(payload.note.notebook_id).firstNote = payload.note;
-        } else {
-          NotebookStore.getByID(0).firstNote = payload.note;
         }
       } else if (payload.actionType === NoteConstants.NOTE_DELETED) {
         if (NoteStore.getByNotebookID(payload.note.notebook_id).length === 0) {

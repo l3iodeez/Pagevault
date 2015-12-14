@@ -2,7 +2,8 @@ class Api::SharesController < ApplicationController
   before_action :set_share, only: [:update, :destroy]
 
   def index
-    @shares = current_user.sharings
+    share_ids = current_user.sharing_ids
+    @shares = Share.where("user_id = ? OR id IN (?)", current_user.id, share_ids)
   end
   def create
     @share = Share.new(share_params)
@@ -30,6 +31,7 @@ class Api::SharesController < ApplicationController
     params.require(:share).permit(:user_id, :note_id, :is_writable)
   end
   def set_share
-    @share = current_user.sharings.find(params[:id])
+    share_ids = current_user.sharing_ids
+    @share = Share.where("user_id = ? OR id IN (?)", current_user.id, share_ids).find(params[:id])
   end
 end

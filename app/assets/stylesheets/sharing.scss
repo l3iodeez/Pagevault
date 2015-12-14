@@ -1,18 +1,70 @@
-
+.modal.sharing-modal {
+  width: 600px;
+  left: calc(50% - 300px);
+}
 .share-note-form {
   height: 300px;
-  width: 300px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  border: 3px solid black;
-  background-color: teal;
+  width: 600px;
+  text-align: left;
+  background-color: #FFF;
 }
 .share-note-form li {
-  border: 1px solid green;
-  z-index: 1000;
-  cursor: pointer;
+  display: block;
+  position: relative;
+  background-color: #fff;
+  margin: 3px 0;
+  border-radius: 5px;
+  padding: 2px;
 }
-.share-note-form input {
+.share-note-form input[type="text"] {
+  display: block;
+
   font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 5px;
+  width: 150px;
+  margin: 10px 5px;
+}
+.add-share {
+
+  position: absolute;
+  right: 2px;
+  top: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.add-share span {
+  font-size: 8px;
+  position: relative;
+  left: -12px;
+  top: -2px;
+}
+.share-note-form p {
+  font-size: 10px;
+}
+.share-note-form p.name {
+}
+.share-note-form p.email {
+  font-size: 8px;
+}
+.share-note-form label {
+  display: inline;
+}
+.results-list, .existing-list{
+  display: block;
+  float: left;
+  border-radius: 5px;
+  padding: 5px;
+
+  background-color: #eee;
+}
+.results-list{
+  width: 240px;
+
+}
+div.modal div.existing-list {
+  width: 335px;
+  margin-left: 5px;
+}
+.search-result-item {
 }

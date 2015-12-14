@@ -3,7 +3,7 @@ var Modals = React.createClass({
 // Setup functions
   getInitialState: function() {
     return {
-      modal: null,
+      modal:   null,
       editId: null,
       newNotebookTitle: "",
       newNotebookDescription: "",
@@ -24,7 +24,7 @@ var Modals = React.createClass({
     var modalInfo = ModalStore.currentModal();
     switch (modalInfo.type) {
     case "deleteNote":
-      this.setState({modal: this.deleteNoteModal(), editId: modalInfo.object.id});
+      this.setState({modal: this.deleteNoteModal(modalInfo.object.id), editId: modalInfo.object.id});
       break;
     case "deleteNotebook":
       this.setState({modal: this.deleteNotebookModal(), editId: modalInfo.object.id});
@@ -44,6 +44,12 @@ var Modals = React.createClass({
     case "decryptNote":
       this.setState({modal: this.decryptNoteModal(modalInfo.callback)});
       break;
+    case "noteSharing":
+      this.setState({modal: this.noteSharingModal()});
+      break;
+    case "saveFirst":
+      this.setState({modal: this.saveFirstModal()});
+      break;
     case "about":
       this.setState({modal: this.aboutModal()});
       break;
@@ -62,11 +68,18 @@ var Modals = React.createClass({
   closeModal: function () {
     ModalActions.closeModal();
   },
-  deleteNoteModal: function () {
+  deleteNoteModal: function (id) {
+    var note = NoteStore.getByID(id);
+    var message;
+    if (CurrentUserStore.currentUser().id === note.owner.id) {
+      message = "Delete this note?";
+    } else {
+      message = "Remove this from your notes?";
+    }
     return (
       <div className="modal confirm-delete">
         <div>
-          <p>Delete this note?</p>
+          <p>{ message }</p>
           <button onClick={this.deleteNote}>Yes</button>
           <button onClick={this.closeModal}>No</button>
         </div>
@@ -75,7 +88,12 @@ var Modals = React.createClass({
   },
   deleteNote: function (e) {
     e.preventDefault();
-    NotesAPIUtil.destroyNote({id: this.state.editId}, this.closeModal);
+    var note = NoteStore.getByID(this.state.editId);
+    if (CurrentUserStore.currentUser().id === note.owner.id) {
+      NotesAPIUtil.destroyNote({id: this.state.editId}, this.closeModal);
+    } else {
+      SharesAPIUtil.deleteShare(ShareStore.getByNoteID(this.state.editId)[0].id, this.closeModal);
+    }
   },
   deleteNotebookModal: function () {
     return (
@@ -120,6 +138,15 @@ var Modals = React.createClass({
     });
   },
 
+  noteSharingModal: function () {
+    return(
+      <div className="modal sharing-modal">
+        <NoteSharing note={SelectedStore.getNote()} />
+        <button onClick={this.closeModal}>Close</button>
+      </div>
+    );
+  },
+
   encryptWarningModal: function (callback) {
     var accept = function () {
       if (this.state.hideEncryptWarning) {
@@ -136,8 +163,11 @@ var Modals = React.createClass({
           encryption passwords.</p>
 
         <p><strong>If you lose or forget the password there will be no way to recover it.</strong></p>
-          <input id="hide-warning" type="checkbox" onChange={this.hideEncryptWarningChange}></input>
-          <label htmlFor="hide-warning">Don't show this warning again.</label>
+          <div className="fancyCheck">
+            <input id="hide-warning" type="checkbox" value="None" onChange={this.hideEncryptWarningChange}></input>
+            <label htmlFor="hide-warning"></label>
+          </div>
+          Don't show this warning again.
           <br />
           <button className="close-warning" onClick={accept}>I understand</button>
         </div>
@@ -198,6 +228,21 @@ var Modals = React.createClass({
           would be impossible, and notes could only be recognized by an ID number. Any data that
           is meant to be encrypted should be entered into the note body only. Additionally, any images
           embedded in encrypted notes are not themselved encrypted.</p>
+
+        <button onClick={this.closeModal}>Close</button>
+        </div>
+      </div>
+    );
+  },
+  saveFirstModal: function () {
+
+    return (
+      <div className="modal save-first-modal">
+        <div className="about-text">
+
+
+          <p>You must give your note a title before enabling
+          sharing or encryption.</p>
 
         <button onClick={this.closeModal}>Close</button>
         </div>

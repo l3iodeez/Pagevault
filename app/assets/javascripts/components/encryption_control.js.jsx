@@ -6,10 +6,14 @@ var EncryptionControl = React.createClass({
     };
   },
   enable: function () {
-    if (CurrentUserStore.currentUser().hide_encrypt_warning) {
-      ModalActions.raiseModal({type: "encryptNote", callback: this.props.enableCrypt });
+    if (!this.props.noteId) {
+      ModalActions.raiseModal({type: "saveFirst"});
     } else {
-      ModalActions.raiseModal({type: "encryptWarning", callback: this.props.enableCrypt });
+      if (CurrentUserStore.currentUser().hide_encrypt_warning) {
+        ModalActions.raiseModal({type: "encryptNote", callback: this.props.enableCrypt });
+      } else {
+        ModalActions.raiseModal({type: "encryptWarning", callback: this.props.enableCrypt });
+      }
     }
   },
   disable: function () {
@@ -23,7 +27,7 @@ var EncryptionControl = React.createClass({
   },
   render: function() {
     var disabled = (
-      <button onClick={this.enable}>Enable <i className="fa fa-lock"/></button>
+      <button onClick={this.enable}>Encrypt <i className="fa fa-lock"/></button>
     );
     var decrypted =(
       <button onClick={this.disable}>Disable <i className="fa fa-lock"/></button>

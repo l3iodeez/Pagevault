@@ -74,7 +74,7 @@
 .note-index-item li:nth-child(2) {
   height: 14px;
 }
-.note-index-item li:nth-child(3) {
+.note-index-item li:last-child {
   height: 58px;
 }
 .notebook-label {

@@ -24,9 +24,15 @@ var NotesIndexItem = React.createClass({
         );
       }
     }
+    var sharedBy = (this.props.note.owner.id !== CurrentUserStore.currentUser().id) ? (
+      <li>
+        Shared by: {this.props.note.owner.name}
+      </li>
+    ) : null ;
     return (
       <ul className={"note-index-item" + selected} onClick={this.handleClick}>
         <li>{this.props.note.title}</li>
+        {sharedBy}
         <li>{modifiedDate}</li>
         <li>{this.props.note.is_encrypted ? "NOTE BODY ENCRYPTED" : $("<div>" + this.props.note.body + "</div>").text()}</li>
         {indexThumbnail}

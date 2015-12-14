@@ -26,7 +26,6 @@
       });
     },
     updateShare: function (share) {
-      debugger
       $.ajax({
         url: '/api/shares/' + share.id,
         method: 'PATCH',
@@ -38,7 +37,7 @@
         }
       });
     },
-    deleteShare: function (shareId) {
+    deleteShare: function (shareId, callback) {
       $.ajax({
         url: '/api/shares/' + shareId,
         method: 'DELETE',
@@ -46,6 +45,7 @@
         contentType: 'application/json',
         success: function (data) {
           ShareActions.deleteShare(data);
+          callback && callback(data);
         }
       });
     }
