@@ -87,7 +87,7 @@ var NoteSharing = React.createClass({
           <ul className="share-item-container">
               {this.state.searchResults.map(function (user, i) {
                 return (
-                        <li className="search-result-item" key={user.id}  >
+                        <li className="search-result-item" key={i}  >
                           <p className="name">{user.name}</p>
                           <p className="email">{user.email}</p>
                           <div className="add-share">
@@ -99,10 +99,10 @@ var NoteSharing = React.createClass({
           </ul>
         </div>
         <div className="existing-list">
-          <h3>Existing permissions</h3>
+          <h3>Currently sharing with:</h3>
           <ul className="share-item-container">
               {this.state.shares.map(function (share, i) {
-                return (<li key={i}  >
+                return (<li className="search-result-item" key={i}  >
                         <p className="name">{share.name}</p>
                         <p className="email">{share.email}</p>
                         <div className="add-share">
