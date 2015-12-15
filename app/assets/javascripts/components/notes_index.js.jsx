@@ -24,7 +24,13 @@ var NotesIndex = React.createClass({
     if (this.state.notebook) {
       return;
     }
-    var recentNote = NoteStore.getByID(CurrentUserStore.currentUser().recent_note_id);
+    var recentNote;
+    if (CurrentUserStore.currentUser().recent_note_id) {
+      recentNote = NoteStore.getByID(CurrentUserStore.currentUser().recent_note_id);
+    } else {
+      recentNote = NotebookStore.getFirst().firstNote;
+    }
+
     var recentNotebook = NotebookStore.getByID(recentNote.notebook_id);
     SelectedStore.setNotebook(recentNotebook);
   },
