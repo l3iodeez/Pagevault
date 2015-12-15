@@ -22,6 +22,8 @@ class Api::NotesController < ApplicationController
     @note.tag_ids = resolve_tags(params[:note][:tags])
     @note.search_hash = @note.searchable.hash
     if @note.save
+      current_user.update!({recent_note_id:  @note.id})
+
       render :show
     else
       render json: 422, status: :unprocessable_entity
@@ -36,8 +38,9 @@ class Api::NotesController < ApplicationController
     else
       reindex_if_changed
       check_for_removed_images if note_params[:body] && !@note.is_encrypted
-      if @note.update(note_params.except(:tags))
-        @note.tag_ids = resolve_tags(params[:note][:tags]) if params[:note][:tags]
+        tag_ids = resolve_tags(params[:note][:tags]) if params[:note][:tags]
+      if @note.update(note_params.except(:tags).merge(tag_ids: tag_ids))
+        current_user.update!({recent_note_id:  @note.id})
         render :show
       else
         render json: 422, status: :unprocessable_entity

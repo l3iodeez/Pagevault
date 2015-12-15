@@ -22,6 +22,10 @@
       return (typeof _currentUser.id !== "undefined");
     },
 
+    updateRecentNote: function (id) {
+      _currentUser.recent_note_id = id;
+    },
+
     dispatcherId: AppDispatcher.register(function (payload) {
       switch (payload.actionType) {
 

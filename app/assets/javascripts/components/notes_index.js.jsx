@@ -24,7 +24,9 @@ var NotesIndex = React.createClass({
     if (this.state.notebook) {
       return;
     }
-    SelectedStore.setNotebook(NotebookStore.getFirst());
+    var recentNote = NoteStore.getByID(CurrentUserStore.currentUser().recent_note_id);
+    var recentNotebook = NotebookStore.getByID(recentNote.notebook_id);
+    SelectedStore.setNotebook(recentNotebook);
   },
   componentDidMount: function () {
     NoteStore.addChangeListener(this.notesChanged);
@@ -32,7 +34,7 @@ var NotesIndex = React.createClass({
     SelectedStore.addNoteChangeListener(this.selectedNoteChanged);
 
     SelectedStore.addNotebookChangeListener(this.selectedNotebookChanged);
-    NotebooksAPIUtil.fetchAllNotebooks(NotesAPIUtil.fetchAllNotes);
+    NotesAPIUtil.fetchAllNotes(NotebooksAPIUtil.fetchAllNotebooks);
   },
   componentWillUnmount: function () {
     NoteStore.removeChangeListener(this.notesChanged);

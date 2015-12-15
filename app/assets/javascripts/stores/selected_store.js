@@ -49,6 +49,10 @@
     },
 
     dispatcherId: AppDispatcher.register(function (payload) {
+      AppDispatcher.waitFor([NotebookStore.dispatcherId]);
+      AppDispatcher.waitFor([NoteStore.dispatcherId]);
+      var defaultNote;
+      var defaultNotebook;
       if (payload.actionType === NoteConstants.NOTE_SELECTED) {
         SelectedStore.setNote(payload.note);
       } else if ( payload.actionType === NoteConstants.NOTE_RECEIVED) {
@@ -56,12 +60,17 @@
           SelectedStore.setNote(payload.note);
         }
       } else if ( payload.actionType === NoteConstants.NOTES_RECEIVED) {
-        if (!_note) {
-          SelectedStore.setNote(NoteStore.getFirst(0));
+        if (!_note && NotebookStore.all().length > 0) {
+          defaultNote = NoteStore.getByID(CurrentUserStore.currentUser().recent_note_id);
+          defaultNotebook = NotebookStore.getByID(defaultNote.notebook_id);
+          SelectedStore.setNotebook(defaultNotebook);
+          SelectedStore.setNote(defaultNote);
         }
       } else if ( payload.actionType === NotebookConstants.NOTEBOOKS_RECEIVED) {
         if (!_notebook) {
-          SelectedStore.setNotebook(NotebookStore.getFirst());
+          defaultNote = NoteStore.getByID(CurrentUserStore.currentUser().recent_note_id);
+          defaultNotebook = NotebookStore.getByID(defaultNote.notebook_id);
+          SelectedStore.setNotebook(defaultNotebook);
         }
       } else if ( payload.actionType === NotebookConstants.NOTEBOOK_SELECTED) {
         SelectedStore.setNotebook(payload.notebook);
@@ -70,8 +79,6 @@
         }
       } else if ( payload.actionType === NotebookConstants.NOTEBOOK_DELETED) {
         if (SelectedStore.getNotebook().id === payload.notebook.id) {
-          AppDispatcher.waitFor([NotebookStore.dispatcherId]);
-          AppDispatcher.waitFor([NoteStore.dispatcherId]);
         var notebook = NotebookStore.getFirst();
           SelectedStore.setNotebook(notebook);
           SelectedStore.setNote(NoteStore.getByNotebookID(notebook.id)[0]);

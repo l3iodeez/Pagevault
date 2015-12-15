@@ -58,6 +58,7 @@
       _notebooks[note.notebook_id].firstNote = note;
     },
     dispatcherId: AppDispatcher.register(function (payload) {
+      AppDispatcher.waitFor([NoteStore.dispatcherId]);
       if (payload.actionType === NotebookConstants.NOTEBOOKS_RECEIVED) {
         NotebookStore.resetNotebooks(payload.notebooks);
       } else if (payload.actionType === NotebookConstants.NOTEBOOK_RECEIVED) {
@@ -65,9 +66,7 @@
       } else if (payload.actionType === NotebookConstants.NOTEBOOK_DELETED) {
         NotebookStore.deleteNotebook(payload.notebook);
       } else if (payload.actionType === NoteConstants.NOTE_RECEIVED) {
-        if (CurrentUserStore.currentUser.id === payload.note.owner) {
-          NotebookStore.getByID(payload.note.notebook_id).firstNote = payload.note;
-        }
+        NotebookStore.getByID(payload.note.notebook_id).firstNote = payload.note;
       } else if (payload.actionType === NoteConstants.NOTE_DELETED) {
         if (NoteStore.getByNotebookID(payload.note.notebook_id).length === 0) {
           NotebookStore.getByID(payload.note.notebook_id).firstNote = null;

@@ -50,6 +50,7 @@
         contentType: 'application/json',
         data: JSON.stringify({note: note}),
         success: function (data) {
+          CurrentUserStore.updateRecentNote(data.id);
           ApiActions.receiveSingleNote(data);
           callback && callback(data);
         }
