@@ -124,6 +124,7 @@ var NoteForm = React.createClass({
   },
   newNotebookSelected: function () {
     this.handleSubmit();
+
     SelectedStore.setNote(SelectedStore.getNotebook().firstNote);
   },
   componentDidMount: function () {

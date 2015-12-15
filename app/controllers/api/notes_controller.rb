@@ -22,7 +22,8 @@ class Api::NotesController < ApplicationController
     @note.tag_ids = resolve_tags(params[:note][:tags])
     @note.search_hash = @note.searchable.hash
     if @note.save
-      current_user.update!({recent_note_id:  @note.id})
+      current_user.recent_note_id = @note.id
+      current_user.save!
 
       render :show
     else
