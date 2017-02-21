@@ -50,6 +50,11 @@ class Api::NotesController < ApplicationController
 end
 
   def destroy
+    @user = @note.user
+    if @note.id == @user.recent_note_id
+      @user.recent_note_id = @user.notes.order(:updated_at).last.id
+      @user.save!
+    end
     @note.destroy
     render :show
   end
