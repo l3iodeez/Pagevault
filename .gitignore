@@ -16,3 +16,6 @@
 
 # Ignore byebug_history
 .byebug_history
+
+# Ignore local .env file
+.env
