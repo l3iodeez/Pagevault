@@ -16,7 +16,7 @@ class Api::ImageUploadsController < ApplicationController
     if @image_upload.save
       render :show
     else
-      render json: @image_upload.errors.fullmessages
+      render json: @image_upload.errors.full_messages
     end
   end
   def image_upload_params
