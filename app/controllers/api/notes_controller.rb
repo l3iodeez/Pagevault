@@ -3,8 +3,10 @@ class Api::NotesController < ApplicationController
   before_action :simulate_latency, except: [:index, :destroy]
 
   def index
-    @notes = current_user.notes.order("updated_at DESC").includes(:tags)
-    .concat(current_user.accessible_notes.order("updated_at DESC").includes(:tags))
+    user_note_ids = current_user.notes.map(&:id)
+    accessible_note_ids = current_user.accessible_notes.map(&:id)
+    @notes = Note.where(id: user_note_ids + accessible_note_ids).order("updated_at DESC").includes(:tags)
+
     render :index
   end
 

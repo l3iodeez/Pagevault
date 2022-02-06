@@ -13,7 +13,7 @@ module Pagevault
     # -- all .rb files in that directory are automatically loaded.
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
+    # Run 'rake -D time' for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
@@ -26,10 +26,11 @@ module Pagevault
 
     config.paperclip_defaults = {
       :storage => :s3,
-      :bucket => ENV["s3_bucket"],
+      :bucket => ENV['s3_bucket'],
       :s3_credentials => {
-        :access_key_id => ENV["s3_access_key_id"],
-        :secret_access_key => ENV["s3_secret_access_key"]
+        :access_key_id => ENV['s3_access_key_id'],
+        :secret_access_key => ENV['s3_secret_access_key'],
+        s3_region: ENV['AWS_REGION']
       }
     }
   end

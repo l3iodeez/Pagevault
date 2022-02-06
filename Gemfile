@@ -37,12 +37,12 @@ gem 'flux-rails-assets', '~> 2.1.0'
 # Use Font Awesome for icons
 gem 'font-awesome-sass'
 #Use tinymce for rich text
-gem 'tinymce-rails'
+gem 'tinymce-rails', '~> 4.3.0'
 
 #use paperclip for storing images
 gem 'paperclip'
 # Use AWS for file upload storage
-gem 'aws-sdk', '< 2.0'
+gem 'aws-sdk-s3', '~> 1.112.0'
 gem 'figaro'
 # Use Unicorn as the app server
 # gem 'unicorn'
